@@ -40,6 +40,68 @@
     img{display:block;max-width:100%}
     a{color:inherit;text-decoration:none}
 
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .site-nav {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .site-nav a {
+      text-decoration: none;
+      color: #111;
+      font-weight: 600;
+    }
+
+    .site-nav a:hover {
+      color: #c81e1e;
+    }
+
+    .nav-cta {
+      background: #c81e1e;
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      opacity: 0.92;
+    }
+
+    section {
+      scroll-margin-top: 90px;
+    }
+
     /* ── HERO ── */
     .hero {
       position:relative;
@@ -50,7 +112,6 @@
       overflow:hidden;
     }
 
-    /* Real photo background via CSS — Unsplash-style house photo */
     .hero__bg {
       position:absolute;
       inset:0;
@@ -191,7 +252,6 @@
       margin-top:.25rem;
     }
 
-    /* floating alert card */
     .hero__card {
       position:absolute;
       right:max(2rem, calc((100vw - var(--max))/2 + 2rem));
@@ -623,7 +683,6 @@
       flex-shrink:0;
     }
 
-    /* area visual: real house photo */
     .area__photo {
       border-radius:12px;
       overflow:hidden;
@@ -946,11 +1005,8 @@
       .hero__card{display:none}
       .hero__inner{padding-bottom:3.5rem}
       .hero__stats{gap:1.5rem}
-
       .trust__inner{justify-content:center;gap:.8rem}
-
       .sec{padding:4rem 0}
-
       .feat-grid{grid-template-columns:1fr}
       .pkg-grid{grid-template-columns:1fr}
       .proof-grid{grid-template-columns:1fr}
@@ -961,488 +1017,516 @@
       .contact-grid{grid-template-columns:1fr;gap:2.5rem}
       .form-row{grid-template-columns:1fr}
       .city-grid{grid-template-columns:1fr 1fr}
+
+      .nav-inner {
+        justify-content: center;
+      }
+
+      .site-nav {
+        justify-content: center;
+      }
+    }
+
+    @media(max-width:640px){
+      .site-header {
+        position: sticky;
+      }
+
+      .nav-inner {
+        padding: 14px 16px;
+        gap: 12px;
+      }
+
+      .site-nav {
+        gap: 14px;
+        font-size: .92rem;
+      }
+
+      .nav-cta {
+        width: 100%;
+        text-align: center;
+      }
     }
   </style>
 </head>
 <body>
-
-<!-- ═══════════════ HERO ═══════════════ -->
-<section class="hero" id="home">
-  <div class="hero__bg" role="img" aria-label="Modern Canadian home protected by AlertPRO"></div>
-
-  <div class="hero__inner">
-    <div class="hero__pill">
-      <div class="hero__pill-dot"></div>
-      Serving Whitby, Durham &amp; the GTA
+  <header class="site-header">
+    <div class="nav-inner">
+      <div class="logo">AlertPRO</div>
+      <nav class="site-nav">
+        <a href="#home">Home</a>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#areas">Service Areas</a>
+        <a href="#why-us">Why AlertPRO</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="nav-cta" href="#contact">Get a Quote</a>
     </div>
+  </header>
 
-    <h1 class="hero__h1">
-      Professional<br>
-      Home Security<br>
-      <mark>Done Right.</mark>
-    </h1>
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section class="hero" id="home">
+    <div class="hero__bg" role="img" aria-label="Modern Canadian home protected by AlertPRO"></div>
 
-    <p class="hero__sub">
-      24/7 monitored alarm systems installed by local Durham Region experts. Complete equipment included — one flat fee to get started.
-    </p>
-
-    <div class="hero__actions">
-      <a href="#contact" class="btn btn-red">Get a Free Quote</a>
-      <a href="tel:2892773306" class="btn btn-white-outline">📞 289-277-3306</a>
-    </div>
-
-    <div class="hero__stats">
-      <div>
-        <div class="hstat__val">$199</div>
-        <div class="hstat__lbl">Install & Activate</div>
+    <div class="hero__inner">
+      <div class="hero__pill">
+        <div class="hero__pill-dot"></div>
+        Serving Whitby, Durham &amp; the GTA
       </div>
-      <div>
-        <div class="hstat__val">$0</div>
-        <div class="hstat__lbl">Equipment Cost</div>
+
+      <h1 class="hero__h1">
+        Professional<br>
+        Home Security<br>
+        <mark>Done Right.</mark>
+      </h1>
+
+      <p class="hero__sub">
+        24/7 monitored alarm systems installed by local Durham Region experts. Complete equipment included — one flat fee to get started.
+      </p>
+
+      <div class="hero__actions">
+        <a href="#contact" class="btn btn-red">Get a Free Quote</a>
+        <a href="tel:2892773306" class="btn btn-white-outline">📞 289-277-3306</a>
       </div>
-      <div>
-        <div class="hstat__val">24<span>/7</span></div>
-        <div class="hstat__lbl">Live Monitoring</div>
-      </div>
-      <div>
-        <div class="hstat__val">20<span>%</span></div>
-        <div class="hstat__lbl">Insurance Savings</div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Floating status card -->
-  <div class="hero__card" aria-hidden="true">
-    <div class="hero__card-top">
-      <div class="hero__card-label">System Status</div>
-      <div class="hero__card-status">Armed</div>
-    </div>
-    <div class="card-zones">
-      <div class="cz">Front Door <span class="cz-ok">Secure</span></div>
-      <div class="cz">Motion Sensor <span class="cz-ok">Clear</span></div>
-      <div class="cz">Garage <span class="cz-ok">Secure</span></div>
-      <div class="cz">Smoke / CO <span class="cz-ok">Clear</span></div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════ TRUST STRIP ═══════════════ -->
-<div class="trust">
-  <div class="trust__inner">
-    <div class="ti">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      Canadian Owned &amp; Operated
-    </div>
-    <div class="ti">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      ULC Listed Monitoring Centre
-    </div>
-    <div class="ti">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      Qolsys IQ4 Smart Panels
-    </div>
-    <div class="ti">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      Same-Week Installation
-    </div>
-    <div class="ti">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      No Hidden Fees
-    </div>
-  </div>
-</div>
-
-
-<!-- ═══════════════ FEATURES ═══════════════ -->
-<section class="sec sec--gray" id="features">
-  <div class="wrap">
-    <div class="sec-hdr sec-hdr--c r">
-      <div class="eyebrow">What's Included</div>
-      <h2>Complete protection,<br>from every angle.</h2>
-      <p class="lead">Every AlertPRO plan includes professional equipment, certified installation, and round-the-clock monitoring — no add-on fees.</p>
-    </div>
-
-    <div class="feat-grid">
-      <article class="feat r">
-        <div class="feat__icon">📡</div>
-        <div class="feat__title">24/7 Professional Monitoring</div>
-        <p class="feat__desc">Our ULC-listed monitoring centre responds instantly to intrusion, fire, carbon monoxide and flood — dispatching emergency services without delay.</p>
-      </article>
-      <article class="feat r d1">
-        <div class="feat__icon">📱</div>
-        <div class="feat__title">Mobile App Control</div>
-        <p class="feat__desc">Arm and disarm, check live camera feeds, and receive instant alerts from anywhere in the world via our iOS and Android app.</p>
-      </article>
-      <article class="feat r d2">
-        <div class="feat__icon">🔧</div>
-        <div class="feat__title">Professional Installation</div>
-        <p class="feat__desc">Certified local technicians handle everything — proper sensor placement, clean wiring, and a full system test before they leave your home.</p>
-      </article>
-      <article class="feat r">
-        <div class="feat__icon">🏠</div>
-        <div class="feat__title">Home Insurance Savings</div>
-        <p class="feat__desc">Most Ontario insurers discount home insurance premiums up to 20% for professionally monitored systems — often covering your monthly fee entirely.</p>
-      </article>
-      <article class="feat r d1">
-        <div class="feat__icon">🎥</div>
-        <div class="feat__title">Smart Video Surveillance</div>
-        <p class="feat__desc">Motion-triggered indoor and outdoor cameras with customizable detection zones and full night vision — recording only when it matters.</p>
-      </article>
-      <article class="feat r d2">
-        <div class="feat__icon">🔥</div>
-        <div class="feat__title">Fire, Smoke &amp; CO Protection</div>
-        <p class="feat__desc">Monitored life-safety detectors that trigger immediate emergency dispatch — because when seconds count, every one matters.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════ PACKAGES ═══════════════ -->
-<section class="sec" id="packages">
-  <div class="wrap">
-    <div class="sec-hdr sec-hdr--c r">
-      <div class="eyebrow">Pricing</div>
-      <h2>Simple plans.<br>Honest prices.</h2>
-      <p class="lead">One flat installation fee. Monthly monitoring that often pays for itself through your home insurance discount.</p>
-    </div>
-
-    <div class="pkg-grid">
-      <article class="pkg r">
-        <div class="pkg__head">
-          <div class="pkg__name">Essentials</div>
-          <div class="pkg__sub">Ideal for condos &amp; apartments</div>
+      <div class="hero__stats">
+        <div>
+          <div class="hstat__val">$199</div>
+          <div class="hstat__lbl">Install & Activate</div>
         </div>
-        <div class="pkg__body">
-          <div class="pkg__price">
-            <span class="pkg__price-val">$45</span>
-            <span class="pkg__price-per">/month</span>
+        <div>
+          <div class="hstat__val">$0</div>
+          <div class="hstat__lbl">Equipment Cost</div>
+        </div>
+        <div>
+          <div class="hstat__val">24<span>/7</span></div>
+          <div class="hstat__lbl">Live Monitoring</div>
+        </div>
+        <div>
+          <div class="hstat__val">20<span>%</span></div>
+          <div class="hstat__lbl">Insurance Savings</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__card" aria-hidden="true">
+      <div class="hero__card-top">
+        <div class="hero__card-label">System Status</div>
+        <div class="hero__card-status">Armed</div>
+      </div>
+      <div class="card-zones">
+        <div class="cz">Front Door <span class="cz-ok">Secure</span></div>
+        <div class="cz">Motion Sensor <span class="cz-ok">Clear</span></div>
+        <div class="cz">Garage <span class="cz-ok">Secure</span></div>
+        <div class="cz">Smoke / CO <span class="cz-ok">Clear</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust">
+    <div class="trust__inner">
+      <div class="ti">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Canadian Owned &amp; Operated
+      </div>
+      <div class="ti">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        ULC Listed Monitoring Centre
+      </div>
+      <div class="ti">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Qolsys IQ4 Smart Panels
+      </div>
+      <div class="ti">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Same-Week Installation
+      </div>
+      <div class="ti">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        No Hidden Fees
+      </div>
+    </div>
+  </div>
+
+  <section class="sec sec--gray" id="features">
+    <div class="wrap">
+      <div class="sec-hdr sec-hdr--c r">
+        <div class="eyebrow">What's Included</div>
+        <h2>Complete protection,<br>from every angle.</h2>
+        <p class="lead">Every AlertPRO plan includes professional equipment, certified installation, and round-the-clock monitoring — no add-on fees.</p>
+      </div>
+
+      <div class="feat-grid">
+        <article class="feat r">
+          <div class="feat__icon">📡</div>
+          <div class="feat__title">24/7 Professional Monitoring</div>
+          <p class="feat__desc">Our ULC-listed monitoring centre responds instantly to intrusion, fire, carbon monoxide and flood — dispatching emergency services without delay.</p>
+        </article>
+        <article class="feat r d1">
+          <div class="feat__icon">📱</div>
+          <div class="feat__title">Mobile App Control</div>
+          <p class="feat__desc">Arm and disarm, check live camera feeds, and receive instant alerts from anywhere in the world via our iOS and Android app.</p>
+        </article>
+        <article class="feat r d2">
+          <div class="feat__icon">🔧</div>
+          <div class="feat__title">Professional Installation</div>
+          <p class="feat__desc">Certified local technicians handle everything — proper sensor placement, clean wiring, and a full system test before they leave your home.</p>
+        </article>
+        <article class="feat r">
+          <div class="feat__icon">🏠</div>
+          <div class="feat__title">Home Insurance Savings</div>
+          <p class="feat__desc">Most Ontario insurers discount home insurance premiums up to 20% for professionally monitored systems — often covering your monthly fee entirely.</p>
+        </article>
+        <article class="feat r d1">
+          <div class="feat__icon">🎥</div>
+          <div class="feat__title">Smart Video Surveillance</div>
+          <p class="feat__desc">Motion-triggered indoor and outdoor cameras with customizable detection zones and full night vision — recording only when it matters.</p>
+        </article>
+        <article class="feat r d2">
+          <div class="feat__icon">🔥</div>
+          <div class="feat__title">Fire, Smoke &amp; CO Protection</div>
+          <p class="feat__desc">Monitored life-safety detectors that trigger immediate emergency dispatch — because when seconds count, every one matters.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="pricing">
+    <div class="wrap">
+      <div class="sec-hdr sec-hdr--c r">
+        <div class="eyebrow">Pricing</div>
+        <h2>Simple plans.<br>Honest prices.</h2>
+        <p class="lead">One flat installation fee. Monthly monitoring that often pays for itself through your home insurance discount.</p>
+      </div>
+
+      <div class="pkg-grid">
+        <article class="pkg r">
+          <div class="pkg__head">
+            <div class="pkg__name">Essentials</div>
+            <div class="pkg__sub">Ideal for condos &amp; apartments</div>
           </div>
-          <div class="pkg__install"><strong>$199</strong> one-time installation &amp; activation</div>
-          <ul class="pkg__list">
-            <li><div class="chk">✓</div>Qolsys IQ4 Smart Panel</li>
-            <li><div class="chk">✓</div>2 Door / Window Sensors</li>
-            <li><div class="chk">✓</div>1 Motion Detector</li>
-            <li><div class="chk">✓</div>24/7 Professional Monitoring</li>
-            <li><div class="chk">✓</div>Mobile App Access</li>
-            <li><div class="chk">✓</div>Smoke &amp; CO Detector</li>
-          </ul>
-          <a href="#contact" class="pkg__btn pkg__btn--ghost">Get Started</a>
-        </div>
-      </article>
-
-      <article class="pkg pkg--best r d1">
-        <div class="pkg__head">
-          <div class="pkg__best-pill">Most Popular</div>
-          <div class="pkg__name">Home Guard</div>
-          <div class="pkg__sub">Best for detached &amp; semi-detached homes</div>
-        </div>
-        <div class="pkg__body">
-          <div class="pkg__price">
-            <span class="pkg__price-val">$55</span>
-            <span class="pkg__price-per">/month</span>
+          <div class="pkg__body">
+            <div class="pkg__price">
+              <span class="pkg__price-val">$45</span>
+              <span class="pkg__price-per">/month</span>
+            </div>
+            <div class="pkg__install"><strong>$199</strong> one-time installation &amp; activation</div>
+            <ul class="pkg__list">
+              <li><div class="chk">✓</div>Qolsys IQ4 Smart Panel</li>
+              <li><div class="chk">✓</div>2 Door / Window Sensors</li>
+              <li><div class="chk">✓</div>1 Motion Detector</li>
+              <li><div class="chk">✓</div>24/7 Professional Monitoring</li>
+              <li><div class="chk">✓</div>Mobile App Access</li>
+              <li><div class="chk">✓</div>Smoke &amp; CO Detector</li>
+            </ul>
+            <a href="#contact" class="pkg__btn pkg__btn--ghost">Get Started</a>
           </div>
-          <div class="pkg__install"><strong>$199</strong> one-time installation &amp; activation</div>
-          <ul class="pkg__list">
-            <li><div class="chk">✓</div>Qolsys IQ4 Smart Panel</li>
-            <li><div class="chk">✓</div>4 Door / Window Sensors</li>
-            <li><div class="chk">✓</div>2 Motion Detectors</li>
-            <li><div class="chk">✓</div>24/7 Professional Monitoring</li>
-            <li><div class="chk">✓</div>Mobile App + Smart Home</li>
-            <li><div class="chk">✓</div>Smoke, CO &amp; Flood Detection</li>
-            <li><div class="chk">✓</div>1 Indoor Security Camera</li>
-          </ul>
-          <a href="#contact" class="pkg__btn pkg__btn--solid">Get Started</a>
-        </div>
-      </article>
+        </article>
 
-      <article class="pkg r d2">
-        <div class="pkg__head">
-          <div class="pkg__name">Total Protection</div>
-          <div class="pkg__sub">Complete coverage for larger homes</div>
-        </div>
-        <div class="pkg__body">
-          <div class="pkg__price">
-            <span class="pkg__price-val">$69</span>
-            <span class="pkg__price-per">/month</span>
+        <article class="pkg pkg--best r d1">
+          <div class="pkg__head">
+            <div class="pkg__best-pill">Most Popular</div>
+            <div class="pkg__name">Home Guard</div>
+            <div class="pkg__sub">Best for detached &amp; semi-detached homes</div>
           </div>
-          <div class="pkg__install"><strong>$199</strong> one-time installation &amp; activation</div>
-          <ul class="pkg__list">
-            <li><div class="chk">✓</div>Qolsys IQ4 Smart Panel</li>
-            <li><div class="chk">✓</div>6+ Door / Window Sensors</li>
-            <li><div class="chk">✓</div>3 Motion Detectors</li>
-            <li><div class="chk">✓</div>24/7 Professional Monitoring</li>
-            <li><div class="chk">✓</div>Full Smart Home Integration</li>
-            <li><div class="chk">✓</div>Complete Life Safety Suite</li>
-            <li><div class="chk">✓</div>2 HD Outdoor Cameras</li>
-            <li><div class="chk">✓</div>Video Doorbell Included</li>
-          </ul>
-          <a href="#contact" class="pkg__btn pkg__btn--ghost">Get Started</a>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
+          <div class="pkg__body">
+            <div class="pkg__price">
+              <span class="pkg__price-val">$55</span>
+              <span class="pkg__price-per">/month</span>
+            </div>
+            <div class="pkg__install"><strong>$199</strong> one-time installation &amp; activation</div>
+            <ul class="pkg__list">
+              <li><div class="chk">✓</div>Qolsys IQ4 Smart Panel</li>
+              <li><div class="chk">✓</div>4 Door / Window Sensors</li>
+              <li><div class="chk">✓</div>2 Motion Detectors</li>
+              <li><div class="chk">✓</div>24/7 Professional Monitoring</li>
+              <li><div class="chk">✓</div>Mobile App + Smart Home</li>
+              <li><div class="chk">✓</div>Smoke, CO &amp; Flood Detection</li>
+              <li><div class="chk">✓</div>1 Indoor Security Camera</li>
+            </ul>
+            <a href="#contact" class="pkg__btn pkg__btn--solid">Get Started</a>
+          </div>
+        </article>
 
-
-<!-- ═══════════════ STATS BAR ═══════════════ -->
-<div class="stats-bar">
-  <div class="stats-bar__inner">
-    <div class="r">
-      <div class="sb-val">3×</div>
-      <div class="sb-lbl">More likely to be targeted without monitoring</div>
-    </div>
-    <div class="r d1">
-      <div class="sb-val">20%</div>
-      <div class="sb-lbl">Average Ontario insurance discount</div>
-    </div>
-    <div class="r d2">
-      <div class="sb-val">24/7</div>
-      <div class="sb-lbl">Live monitoring, every day of the year</div>
-    </div>
-    <div class="r d3">
-      <div class="sb-val">$199</div>
-      <div class="sb-lbl">One flat installation fee, no surprises</div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ═══════════════ TESTIMONIALS ═══════════════ -->
-<section class="sec sec--ink" id="reviews">
-  <div class="wrap">
-    <div class="sec-hdr sec-hdr--c r">
-      <div class="eyebrow">Customer Reviews</div>
-      <h2>Trusted by homeowners<br>across Durham Region.</h2>
-    </div>
-
-    <div class="proof-grid">
-      <div class="proof r">
-        <div class="proof__stars">★★★★★</div>
-        <p class="proof__text">"Had AlertPRO installed last spring. The technician was on time, professional, and explained everything clearly. The app is dead simple to use. Couldn't be happier."</p>
-        <div class="proof__name">Michael T.</div>
-        <div class="proof__loc">Whitby, ON</div>
-      </div>
-      <div class="proof r d1">
-        <div class="proof__stars">★★★★★</div>
-        <p class="proof__text">"My insurance dropped by $180 a year after getting the system. Between that and the peace of mind, it practically pays for itself. Great local company."</p>
-        <div class="proof__name">Sandra K.</div>
-        <div class="proof__loc">Oshawa, ON</div>
-      </div>
-      <div class="proof r d2">
-        <div class="proof__stars">★★★★★</div>
-        <p class="proof__text">"After our neighbour got broken into, we called AlertPRO. They had us set up within the week. The monitoring team actually called within seconds when we tested it."</p>
-        <div class="proof__name">James &amp; Priya R.</div>
-        <div class="proof__loc">Ajax, ON</div>
+        <article class="pkg r d2">
+          <div class="pkg__head">
+            <div class="pkg__name">Total Protection</div>
+            <div class="pkg__sub">Complete coverage for larger homes</div>
+          </div>
+          <div class="pkg__body">
+            <div class="pkg__price">
+              <span class="pkg__price-val">$69</span>
+              <span class="pkg__price-per">/month</span>
+            </div>
+            <div class="pkg__install"><strong>$199</strong> one-time installation &amp; activation</div>
+            <ul class="pkg__list">
+              <li><div class="chk">✓</div>Qolsys IQ4 Smart Panel</li>
+              <li><div class="chk">✓</div>6+ Door / Window Sensors</li>
+              <li><div class="chk">✓</div>3 Motion Detectors</li>
+              <li><div class="chk">✓</div>24/7 Professional Monitoring</li>
+              <li><div class="chk">✓</div>Full Smart Home Integration</li>
+              <li><div class="chk">✓</div>Complete Life Safety Suite</li>
+              <li><div class="chk">✓</div>2 HD Outdoor Cameras</li>
+              <li><div class="chk">✓</div>Video Doorbell Included</li>
+            </ul>
+            <a href="#contact" class="pkg__btn pkg__btn--ghost">Get Started</a>
+          </div>
+        </article>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-
-<!-- ═══════════════ SERVICE AREA ═══════════════ -->
-<section class="sec sec--gray" id="area">
-  <div class="wrap">
-    <div class="area-grid">
-      <div>
-        <div class="eyebrow r">Service Area</div>
-        <h2 class="r">Based in Whitby.<br>Built for Durham.</h2>
-        <p class="lead r">We're a local company — our installers live and work in the same communities we protect. Fast scheduling, no long waits, no out-of-town crews.</p>
-
-        <div class="city-grid r">
-          <div class="city"><div class="city-dot"></div>Whitby</div>
-          <div class="city"><div class="city-dot"></div>Oshawa</div>
-          <div class="city"><div class="city-dot"></div>Ajax</div>
-          <div class="city"><div class="city-dot"></div>Pickering</div>
-          <div class="city"><div class="city-dot"></div>Clarington</div>
-          <div class="city"><div class="city-dot"></div>Bowmanville</div>
-          <div class="city"><div class="city-dot"></div>Scarborough</div>
-          <div class="city"><div class="city-dot"></div>Markham</div>
-        </div>
-
-        <div style="margin-top:2rem" class="r">
-          <a href="#contact" class="btn btn-red">Check My City</a>
-        </div>
-      </div>
-
+  <div class="stats-bar">
+    <div class="stats-bar__inner">
       <div class="r">
-        <div class="area__photo">
-          <img
-            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop"
-            alt="Residential street in Durham Region Ontario"
-            loading="lazy"
-          />
-          <div class="area__photo-badge">
-            <div class="area__photo-badge-icon">📍</div>
-            <div>
-              <div class="area__photo-badge-title">Whitby, Ontario</div>
-              <div class="area__photo-badge-sub">AlertPRO Headquarters</div>
-            </div>
-          </div>
-        </div>
+        <div class="sb-val">3×</div>
+        <div class="sb-lbl">More likely to be targeted without monitoring</div>
+      </div>
+      <div class="r d1">
+        <div class="sb-val">20%</div>
+        <div class="sb-lbl">Average Ontario insurance discount</div>
+      </div>
+      <div class="r d2">
+        <div class="sb-val">24/7</div>
+        <div class="sb-lbl">Live monitoring, every day of the year</div>
+      </div>
+      <div class="r d3">
+        <div class="sb-val">$199</div>
+        <div class="sb-lbl">One flat installation fee, no surprises</div>
       </div>
     </div>
   </div>
-</section>
 
-
-<!-- ═══════════════ WHY ALERTPRO ═══════════════ -->
-<section class="sec" id="why">
-  <div class="wrap">
-    <div class="why-grid">
-      <div class="r">
-        <div class="why__photo">
-          <img
-            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&auto=format&fit=crop"
-            alt="Professional home security technician installing alarm panel"
-            loading="lazy"
-          />
-        </div>
+  <section class="sec sec--ink" id="reviews">
+    <div class="wrap">
+      <div class="sec-hdr sec-hdr--c r">
+        <div class="eyebrow">Customer Reviews</div>
+        <h2>Trusted by homeowners<br>across Durham Region.</h2>
       </div>
 
-      <div>
-        <div class="eyebrow r">Why AlertPRO</div>
-        <h2 class="r">We're your neighbours,<br>not a call centre.</h2>
-        <p class="lead r" style="margin-bottom:2rem">AlertPRO is a Durham Region company. When something happens, you talk to a local person who cares — not an overseas agent reading from a script.</p>
-
-        <div class="why-points">
-          <div class="wp r">
-            <div class="wp__icon">🤝</div>
-            <div>
-              <div class="wp__title">Real people answer your calls</div>
-              <p class="wp__desc">No phone trees. No hold music. Our local team picks up and resolves your issue immediately.</p>
-            </div>
-          </div>
-          <div class="wp r d1">
-            <div class="wp__icon">🔧</div>
-            <div>
-              <div class="wp__title">Certified local technicians</div>
-              <p class="wp__desc">Our installers live in Durham Region and do clean, professional work — with a full system test every time.</p>
-            </div>
-          </div>
-          <div class="wp r d2">
-            <div class="wp__icon">📶</div>
-            <div>
-              <div class="wp__title">Cellular backup keeps you covered</div>
-              <p class="wp__desc">The Qolsys IQ4 stays connected if your internet or power goes down. Real threats don't follow a schedule.</p>
-            </div>
-          </div>
-          <div class="wp r d3">
-            <div class="wp__icon">💰</div>
-            <div>
-              <div class="wp__title">Transparent pricing, always</div>
-              <p class="wp__desc">$199 installation. Flat monthly rate. No hidden fees, no confusing contracts, no surprises on your bill.</p>
-            </div>
-          </div>
+      <div class="proof-grid">
+        <div class="proof r">
+          <div class="proof__stars">★★★★★</div>
+          <p class="proof__text">"Had AlertPRO installed last spring. The technician was on time, professional, and explained everything clearly. The app is dead simple to use. Couldn't be happier."</p>
+          <div class="proof__name">Michael T.</div>
+          <div class="proof__loc">Whitby, ON</div>
+        </div>
+        <div class="proof r d1">
+          <div class="proof__stars">★★★★★</div>
+          <p class="proof__text">"My insurance dropped by $180 a year after getting the system. Between that and the peace of mind, it practically pays for itself. Great local company."</p>
+          <div class="proof__name">Sandra K.</div>
+          <div class="proof__loc">Oshawa, ON</div>
+        </div>
+        <div class="proof r d2">
+          <div class="proof__stars">★★★★★</div>
+          <p class="proof__text">"After our neighbour got broken into, we called AlertPRO. They had us set up within the week. The monitoring team actually called within seconds when we tested it."</p>
+          <div class="proof__name">James &amp; Priya R.</div>
+          <div class="proof__loc">Ajax, ON</div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
+  <section class="sec sec--gray" id="areas">
+    <div class="wrap">
+      <div class="area-grid">
+        <div>
+          <div class="eyebrow r">Service Area</div>
+          <h2 class="r">Based in Whitby.<br>Built for Durham.</h2>
+          <p class="lead r">We're a local company — our installers live and work in the same communities we protect. Fast scheduling, no long waits, no out-of-town crews.</p>
 
-<!-- ═══════════════ CONTACT ═══════════════ -->
-<section class="sec sec--gray" id="contact">
-  <div class="wrap">
-    <div class="contact-grid">
-      <div>
-        <div class="eyebrow r">Get in Touch</div>
-        <h2 class="r">Get your free<br>quote today.</h2>
-        <p class="lead r">Our local team will follow up same day — no pressure, no pushy sales. Just honest advice on the right system for your home.</p>
-
-        <div class="contact-items r">
-          <div class="ci">
-            <div class="ci-icon">📞</div>
-            <div>
-              <div class="ci-lbl">Phone</div>
-              <div class="ci-val"><a href="tel:2892773306">289-277-3306</a></div>
-            </div>
+          <div class="city-grid r">
+            <div class="city"><div class="city-dot"></div>Whitby</div>
+            <div class="city"><div class="city-dot"></div>Oshawa</div>
+            <div class="city"><div class="city-dot"></div>Ajax</div>
+            <div class="city"><div class="city-dot"></div>Pickering</div>
+            <div class="city"><div class="city-dot"></div>Clarington</div>
+            <div class="city"><div class="city-dot"></div>Bowmanville</div>
+            <div class="city"><div class="city-dot"></div>Scarborough</div>
+            <div class="city"><div class="city-dot"></div>Markham</div>
           </div>
-          <div class="ci">
-            <div class="ci-icon">✉️</div>
-            <div>
-              <div class="ci-lbl">Email</div>
-              <div class="ci-val"><a href="mailto:sales@alertpro.ca">sales@alertpro.ca</a></div>
-            </div>
-          </div>
-          <div class="ci">
-            <div class="ci-icon">📍</div>
-            <div>
-              <div class="ci-lbl">Address</div>
-              <div class="ci-val">209 Dundas St E, Whitby ON L1N 7H8</div>
-            </div>
+
+          <div style="margin-top:2rem" class="r">
+            <a href="#contact" class="btn btn-red">Check My City</a>
           </div>
         </div>
-      </div>
 
-      <div class="r">
-        <div class="form">
-          <div class="form__title">Request a Free Quote</div>
-          <div class="form__sub">We'll call you back within a few hours.</div>
-
-          <form class="form-rows" id="apForm" novalidate>
-            <div class="form-row">
-              <div class="field">
-                <label for="fn">First Name</label>
-                <input type="text" id="fn" name="contact[first_name]" placeholder="Jane" autocomplete="given-name" required>
-              </div>
-              <div class="field">
-                <label for="ln">Last Name</label>
-                <input type="text" id="ln" name="contact[last_name]" placeholder="Smith" autocomplete="family-name" required>
+        <div class="r">
+          <div class="area__photo">
+            <img
+              src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop"
+              alt="Residential street in Durham Region Ontario"
+              loading="lazy"
+            />
+            <div class="area__photo-badge">
+              <div class="area__photo-badge-icon">📍</div>
+              <div>
+                <div class="area__photo-badge-title">Whitby, Ontario</div>
+                <div class="area__photo-badge-sub">AlertPRO Headquarters</div>
               </div>
             </div>
-            <div class="field">
-              <label for="em">Email Address</label>
-              <input type="email" id="em" name="contact[email]" placeholder="jane@example.com" autocomplete="email" required>
-            </div>
-            <div class="field">
-              <label for="ph">Phone Number</label>
-              <input type="tel" id="ph" name="contact[phone]" placeholder="905-555-0100" autocomplete="tel">
-            </div>
-            <div class="field">
-              <label for="cy">Your City</label>
-              <select id="cy" name="contact[city]">
-                <option value="">Select your city…</option>
-                <option>Whitby</option>
-                <option>Oshawa</option>
-                <option>Ajax</option>
-                <option>Pickering</option>
-                <option>Clarington</option>
-                <option>Bowmanville</option>
-                <option>Scarborough</option>
-                <option>Markham</option>
-                <option>Other (GTA / Ontario)</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="msg">Anything we should know? (optional)</label>
-              <textarea id="msg" name="contact[body]" placeholder="e.g. new home, cottage, have pets…"></textarea>
-            </div>
-            <button type="submit" class="form-submit">Send My Free Quote Request →</button>
-            <div class="form-ok" id="formOk">✅ Thanks! We'll be in touch shortly.</div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<script>
-  // Scroll reveal
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); }});
-  }, {threshold:.08, rootMargin:'0px 0px -30px 0px'});
-  document.querySelectorAll('.r').forEach(el => obs.observe(el));
+  <section class="sec" id="why-us">
+    <div class="wrap">
+      <div class="why-grid">
+        <div class="r">
+          <div class="why__photo">
+            <img
+              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&auto=format&fit=crop"
+              alt="Professional home security technician installing alarm panel"
+              loading="lazy"
+            />
+          </div>
+        </div>
 
-  // Form
-  document.getElementById('apForm').addEventListener('submit', e => {
-    e.preventDefault();
-    document.getElementById('formOk').style.display = 'block';
-    e.target.querySelectorAll('input,select,textarea,button').forEach(el => el.disabled = true);
-    // Connect to Formspree: fetch('https://formspree.io/f/YOUR_ID', {method:'POST', body:new FormData(e.target)})
-  });
-</script>
+        <div>
+          <div class="eyebrow r">Why AlertPRO</div>
+          <h2 class="r">We're your neighbours,<br>not a call centre.</h2>
+          <p class="lead r" style="margin-bottom:2rem">AlertPRO is a Durham Region company. When something happens, you talk to a local person who cares — not an overseas agent reading from a script.</p>
 
+          <div class="why-points">
+            <div class="wp r">
+              <div class="wp__icon">🤝</div>
+              <div>
+                <div class="wp__title">Real people answer your calls</div>
+                <p class="wp__desc">No phone trees. No hold music. Our local team picks up and resolves your issue immediately.</p>
+              </div>
+            </div>
+            <div class="wp r d1">
+              <div class="wp__icon">🔧</div>
+              <div>
+                <div class="wp__title">Certified local technicians</div>
+                <p class="wp__desc">Our installers live in Durham Region and do clean, professional work — with a full system test every time.</p>
+              </div>
+            </div>
+            <div class="wp r d2">
+              <div class="wp__icon">📶</div>
+              <div>
+                <div class="wp__title">Cellular backup keeps you covered</div>
+                <p class="wp__desc">The Qolsys IQ4 stays connected if your internet or power goes down. Real threats don't follow a schedule.</p>
+              </div>
+            </div>
+            <div class="wp r d3">
+              <div class="wp__icon">💰</div>
+              <div>
+                <div class="wp__title">Transparent pricing, always</div>
+                <p class="wp__desc">$199 installation. Flat monthly rate. No hidden fees, no confusing contracts, no surprises on your bill.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--gray" id="contact">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div>
+          <div class="eyebrow r">Get in Touch</div>
+          <h2 class="r">Get your free<br>quote today.</h2>
+          <p class="lead r">Our local team will follow up same day — no pressure, no pushy sales. Just honest advice on the right system for your home.</p>
+
+          <div class="contact-items r">
+            <div class="ci">
+              <div class="ci-icon">📞</div>
+              <div>
+                <div class="ci-lbl">Phone</div>
+                <div class="ci-val"><a href="tel:2892773306">289-277-3306</a></div>
+              </div>
+            </div>
+            <div class="ci">
+              <div class="ci-icon">✉️</div>
+              <div>
+                <div class="ci-lbl">Email</div>
+                <div class="ci-val"><a href="mailto:sales@alertpro.ca">sales@alertpro.ca</a></div>
+              </div>
+            </div>
+            <div class="ci">
+              <div class="ci-icon">📍</div>
+              <div>
+                <div class="ci-lbl">Address</div>
+                <div class="ci-val">209 Dundas St E, Whitby ON L1N 7H8</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="r">
+          <div class="form">
+            <div class="form__title">Request a Free Quote</div>
+            <div class="form__sub">We'll call you back within a few hours.</div>
+
+            <form class="form-rows" id="apForm" novalidate>
+              <div class="form-row">
+                <div class="field">
+                  <label for="fn">First Name</label>
+                  <input type="text" id="fn" name="contact[first_name]" placeholder="Jane" autocomplete="given-name" required>
+                </div>
+                <div class="field">
+                  <label for="ln">Last Name</label>
+                  <input type="text" id="ln" name="contact[last_name]" placeholder="Smith" autocomplete="family-name" required>
+                </div>
+              </div>
+              <div class="field">
+                <label for="em">Email Address</label>
+                <input type="email" id="em" name="contact[email]" placeholder="jane@example.com" autocomplete="email" required>
+              </div>
+              <div class="field">
+                <label for="ph">Phone Number</label>
+                <input type="tel" id="ph" name="contact[phone]" placeholder="905-555-0100" autocomplete="tel">
+              </div>
+              <div class="field">
+                <label for="cy">Your City</label>
+                <select id="cy" name="contact[city]">
+                  <option value="">Select your city…</option>
+                  <option>Whitby</option>
+                  <option>Oshawa</option>
+                  <option>Ajax</option>
+                  <option>Pickering</option>
+                  <option>Clarington</option>
+                  <option>Bowmanville</option>
+                  <option>Scarborough</option>
+                  <option>Markham</option>
+                  <option>Other (GTA / Ontario)</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="msg">Anything we should know? (optional)</label>
+                <textarea id="msg" name="contact[body]" placeholder="e.g. new home, cottage, have pets…"></textarea>
+              </div>
+              <button type="submit" class="form-submit">Send My Free Quote Request →</button>
+              <div class="form-ok" id="formOk">✅ Thanks! We'll be in touch shortly.</div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: .08, rootMargin: '0px 0px -30px 0px' });
+
+    document.querySelectorAll('.r').forEach(el => obs.observe(el));
+
+    document.getElementById('apForm').addEventListener('submit', e => {
+      e.preventDefault();
+      document.getElementById('formOk').style.display = 'block';
+      e.target.querySelectorAll('input,select,textarea,button').forEach(el => el.disabled = true);
+    });
+  </script>
 </body>
 </html>

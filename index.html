@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AlertPRO | Home Security & Alarm Systems – Whitby, Durham & GTA</title>
+  <meta name="description" content="AlertPRO provides professionally installed, 24/7 monitored home alarm systems in Whitby, Oshawa, Durham Region and the GTA. Complete system free — $199 installation. Call 289-277-3306." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.alertpro.ca/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="AlertPRO | Home Security — Whitby & Durham Region" />
+  <meta property="og:description" content="Professional alarm systems with 24/7 monitoring across Durham Region and the GTA. Free system, $199 install." />
+  <meta property="og:url" content="https://www.alertpro.ca/" />
+
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"LocalBusiness","name":"AlertPRO","description":"Professional home security alarm systems with 24/7 monitoring in Whitby, Durham Region and the GTA.","url":"https://www.alertpro.ca","telephone":"+1-289-277-3306","email":"sales@alertpro.ca","address":{"@type":"PostalAddress","streetAddress":"209 Dundas St E","addressLocality":"Whitby","addressRegion":"ON","postalCode":"L1N 7H8","addressCountry":"CA"},"areaServed":["Whitby","Oshawa","Ajax","Pickering","Durham Region","GTA","Ontario"]}
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --red:     #cc1f1a;
+      --red-h:   #a81815;
+      --ink:     #0d0f12;
+      --ink-2:   #1c2027;
+      --gray-6:  #666e7a;
+      --gray-3:  #b8bec8;
+      --gray-1:  #f2f4f7;
+      --border:  #e2e5ea;
+      --white:   #ffffff;
+      --f:       'Inter', system-ui, sans-serif;
+      --max:     1200px;
+      --r:       6px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;font-size:16px}
+    body{font-family:var(--f);color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    img{display:block;max-width:100%}
+    a{color:inherit;text-decoration:none}
+
+    /* ── HERO ── */
+    .hero {
+      position:relative;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      overflow:hidden;
+    }
+
+    /* Real photo background via CSS — Unsplash-style house photo */
+    .hero__bg {
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(to right, rgba(10,12,16,0.88) 0%, rgba(10,12,16,0.55) 55%, rgba(10,12,16,0.2) 100%),
+        url('https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1800&q=85&auto=format&fit=crop') center/cover no-repeat;
+    }
+
+    .hero__inner {
+      position:relative;
+      z-index:2;
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 2rem 5rem;
+      width:100%;
+    }
+
+    .hero__pill {
+      display:inline-flex;
+      align-items:center;
+      gap:.45rem;
+      background:rgba(204,31,26,0.15);
+      border:1px solid rgba(204,31,26,0.4);
+      color:#ff8a85;
+      font-size:.72rem;
+      font-weight:700;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      padding:.35rem 1rem;
+      border-radius:100px;
+      margin-bottom:1.6rem;
+    }
+
+    .hero__pill-dot {
+      width:5px;height:5px;
+      border-radius:50%;
+      background:#ff8a85;
+      animation:blink 1.4s ease infinite;
+    }
+
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+    .hero__h1 {
+      font-size:clamp(2.8rem,5.5vw,5.2rem);
+      font-weight:800;
+      line-height:1.05;
+      letter-spacing:-.035em;
+      color:var(--white);
+      max-width:680px;
+      margin-bottom:1.4rem;
+    }
+
+    .hero__h1 mark {
+      background:none;
+      color:var(--red);
+      -webkit-text-fill-color:var(--red);
+    }
+
+    .hero__sub {
+      font-size:1.1rem;
+      font-weight:400;
+      color:rgba(255,255,255,.65);
+      line-height:1.7;
+      max-width:480px;
+      margin-bottom:2.5rem;
+    }
+
+    .hero__actions {
+      display:flex;
+      align-items:center;
+      gap:1rem;
+      flex-wrap:wrap;
+      margin-bottom:3.5rem;
+    }
+
+    .btn {
+      display:inline-flex;
+      align-items:center;
+      gap:.5rem;
+      font-family:var(--f);
+      font-weight:700;
+      font-size:.9rem;
+      letter-spacing:.01em;
+      padding:.9rem 1.9rem;
+      border-radius:var(--r);
+      border:none;
+      cursor:pointer;
+      transition:all .18s ease;
+      text-decoration:none;
+    }
+
+    .btn-red {
+      background:var(--red);
+      color:var(--white);
+      box-shadow:0 2px 12px rgba(204,31,26,.4);
+    }
+    .btn-red:hover{background:var(--red-h);transform:translateY(-2px);box-shadow:0 6px 20px rgba(204,31,26,.45)}
+
+    .btn-white-outline {
+      background:rgba(255,255,255,.08);
+      color:rgba(255,255,255,.9);
+      border:1.5px solid rgba(255,255,255,.25);
+      backdrop-filter:blur(8px);
+    }
+    .btn-white-outline:hover{background:rgba(255,255,255,.15);color:var(--white)}
+
+    .btn-outline {
+      background:transparent;
+      color:var(--ink);
+      border:1.5px solid var(--border);
+    }
+    .btn-outline:hover{border-color:var(--ink);background:var(--gray-1)}
+
+    .hero__stats {
+      display:flex;
+      gap:3rem;
+      flex-wrap:wrap;
+      padding-top:2.2rem;
+      border-top:1px solid rgba(255,255,255,.1);
+    }
+
+    .hstat__val {
+      font-size:1.9rem;
+      font-weight:800;
+      color:var(--white);
+      letter-spacing:-.03em;
+      line-height:1;
+    }
+
+    .hstat__val span{color:var(--red)}
+
+    .hstat__lbl {
+      font-size:.72rem;
+      font-weight:600;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.4);
+      margin-top:.25rem;
+    }
+
+    /* floating alert card */
+    .hero__card {
+      position:absolute;
+      right:max(2rem, calc((100vw - var(--max))/2 + 2rem));
+      bottom:5rem;
+      background:var(--white);
+      border-radius:10px;
+      padding:1.3rem 1.6rem;
+      box-shadow:0 20px 60px rgba(0,0,0,.35);
+      min-width:240px;
+      animation:floatUp .8s .3s both;
+    }
+
+    @keyframes floatUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    .hero__card-top {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:1rem;
+    }
+
+    .hero__card-label {
+      font-size:.68rem;
+      font-weight:700;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      color:var(--gray-6);
+    }
+
+    .hero__card-status {
+      display:flex;
+      align-items:center;
+      gap:.35rem;
+      font-size:.68rem;
+      font-weight:700;
+      color:#16a34a;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
+
+    .hero__card-status::before {
+      content:'';
+      width:6px;height:6px;
+      border-radius:50%;
+      background:#16a34a;
+      animation:blink 1.5s ease infinite;
+    }
+
+    .card-zones {
+      display:flex;
+      flex-direction:column;
+      gap:.4rem;
+    }
+
+    .cz {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:.8rem;
+      color:var(--ink);
+      font-weight:500;
+      padding:.4rem .6rem;
+      background:var(--gray-1);
+      border-radius:4px;
+    }
+
+    .cz-ok {
+      font-size:.63rem;
+      font-weight:700;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      color:#16a34a;
+      background:#dcfce7;
+      padding:.15rem .5rem;
+      border-radius:100px;
+    }
+
+    /* ── TRUST STRIP ── */
+    .trust {
+      background:var(--ink-2);
+      padding:1.1rem 0;
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+
+    .trust__inner {
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 2rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:.5rem;
+    }
+
+    .ti {
+      display:flex;
+      align-items:center;
+      gap:.55rem;
+      font-size:.78rem;
+      font-weight:600;
+      color:rgba(255,255,255,.55);
+      letter-spacing:.04em;
+    }
+
+    .ti svg {
+      color:var(--red);
+      flex-shrink:0;
+    }
+
+    /* ── SHARED SECTION ── */
+    .sec{padding:5.5rem 0}
+    .sec--gray{background:var(--gray-1)}
+    .sec--ink{background:var(--ink);color:var(--white)}
+
+    .wrap {
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 2rem;
+    }
+
+    .eyebrow {
+      font-size:.72rem;
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:var(--red);
+      margin-bottom:.7rem;
+    }
+
+    h2 {
+      font-size:clamp(2rem,3.5vw,3rem);
+      font-weight:800;
+      letter-spacing:-.03em;
+      line-height:1.08;
+      color:var(--ink);
+      margin-bottom:1rem;
+    }
+
+    .sec--ink h2{color:var(--white)}
+
+    .lead {
+      font-size:1rem;
+      font-weight:400;
+      color:var(--gray-6);
+      line-height:1.75;
+      max-width:520px;
+    }
+
+    .sec--ink .lead{color:rgba(255,255,255,.45)}
+
+    .sec-hdr{margin-bottom:3.5rem}
+    .sec-hdr--c{text-align:center}
+    .sec-hdr--c .lead{margin:0 auto}
+
+    /* ── FEATURES ── */
+    .feat-grid {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:1.5rem;
+    }
+
+    .feat {
+      background:var(--white);
+      border:1px solid var(--border);
+      border-radius:10px;
+      padding:2rem;
+      transition:box-shadow .2s, transform .2s, border-color .2s;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .feat::after {
+      content:'';
+      position:absolute;
+      top:0;left:0;right:0;
+      height:3px;
+      background:var(--red);
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:transform .3s;
+    }
+
+    .feat:hover{box-shadow:0 8px 32px rgba(0,0,0,.09);transform:translateY(-3px);border-color:transparent}
+    .feat:hover::after{transform:scaleX(1)}
+
+    .feat__icon {
+      width:48px;height:48px;
+      border-radius:10px;
+      background:#fdf0ef;
+      border:1px solid rgba(204,31,26,.12);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:22px;
+      margin-bottom:1.3rem;
+    }
+
+    .feat__title {
+      font-size:.95rem;
+      font-weight:700;
+      color:var(--ink);
+      margin-bottom:.5rem;
+      letter-spacing:-.01em;
+    }
+
+    .feat__desc {
+      font-size:.865rem;
+      color:var(--gray-6);
+      line-height:1.7;
+    }
+
+    /* ── PACKAGES ── */
+    .pkg-grid {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:1.5rem;
+      align-items:start;
+    }
+
+    .pkg {
+      border:1.5px solid var(--border);
+      border-radius:12px;
+      overflow:hidden;
+      background:var(--white);
+      transition:box-shadow .25s, transform .25s;
+    }
+
+    .pkg:hover{box-shadow:0 12px 40px rgba(0,0,0,.1);transform:translateY(-4px)}
+
+    .pkg--best {
+      border-color:var(--red);
+      box-shadow:0 4px 24px rgba(204,31,26,.12);
+    }
+
+    .pkg__head {
+      padding:1.6rem 1.8rem 1.3rem;
+      border-bottom:1.5px solid var(--border);
+    }
+
+    .pkg--best .pkg__head{
+      background:var(--red);
+      border-color:var(--red);
+    }
+
+    .pkg__best-pill {
+      display:inline-block;
+      font-size:.65rem;
+      font-weight:800;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      color:var(--red);
+      background:var(--white);
+      padding:.22rem .7rem;
+      border-radius:100px;
+      margin-bottom:.7rem;
+    }
+
+    .pkg__name {
+      font-size:1.25rem;
+      font-weight:800;
+      letter-spacing:-.02em;
+      color:var(--ink);
+      margin-bottom:.2rem;
+    }
+
+    .pkg--best .pkg__name{color:var(--white)}
+
+    .pkg__sub {
+      font-size:.8rem;
+      color:var(--gray-6);
+    }
+
+    .pkg--best .pkg__sub{color:rgba(255,255,255,.65)}
+
+    .pkg__body{padding:1.8rem}
+
+    .pkg__price {
+      display:flex;
+      align-items:baseline;
+      gap:.25rem;
+      margin-bottom:.25rem;
+    }
+
+    .pkg__price-val {
+      font-size:2.8rem;
+      font-weight:800;
+      letter-spacing:-.04em;
+      color:var(--ink);
+      line-height:1;
+    }
+
+    .pkg__price-per{font-size:.85rem;color:var(--gray-6);font-weight:500}
+
+    .pkg__install {
+      font-size:.76rem;
+      color:var(--gray-6);
+      margin-bottom:1.6rem;
+      padding-bottom:1.6rem;
+      border-bottom:1px solid var(--border);
+    }
+
+    .pkg__install strong{color:var(--gray-6);font-weight:700}
+
+    .pkg__list{list-style:none;display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.8rem}
+
+    .pkg__list li {
+      display:flex;
+      align-items:flex-start;
+      gap:.6rem;
+      font-size:.86rem;
+      color:var(--gray-6);
+    }
+
+    .chk {
+      width:17px;height:17px;
+      border-radius:50%;
+      background:var(--red);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--white);
+      font-size:9px;
+      font-weight:700;
+      flex-shrink:0;
+      margin-top:1px;
+    }
+
+    .pkg__btn {
+      display:block;
+      width:100%;
+      text-align:center;
+      padding:.85rem;
+      border-radius:var(--r);
+      font-weight:700;
+      font-size:.875rem;
+      letter-spacing:.01em;
+      cursor:pointer;
+      border:none;
+      transition:all .18s;
+      text-decoration:none;
+    }
+
+    .pkg__btn--solid{background:var(--red);color:var(--white);box-shadow:0 2px 12px rgba(204,31,26,.3)}
+    .pkg__btn--solid:hover{background:var(--red-h)}
+    .pkg__btn--ghost{background:transparent;color:var(--ink);border:1.5px solid var(--border)}
+    .pkg__btn--ghost:hover{border-color:var(--ink);background:var(--gray-1)}
+
+    /* ── SOCIAL PROOF ── */
+    .proof-grid {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:1.5rem;
+    }
+
+    .proof {
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:10px;
+      padding:2rem;
+      transition:border-color .2s;
+    }
+
+    .proof:hover{border-color:rgba(204,31,26,.35)}
+
+    .proof__stars {
+      color:var(--red);
+      font-size:1.1rem;
+      letter-spacing:.05em;
+      margin-bottom:1rem;
+    }
+
+    .proof__text {
+      font-size:.9rem;
+      color:rgba(255,255,255,.65);
+      line-height:1.7;
+      margin-bottom:1.3rem;
+      font-style:italic;
+    }
+
+    .proof__name {
+      font-size:.8rem;
+      font-weight:700;
+      color:var(--white);
+      letter-spacing:.02em;
+    }
+
+    .proof__loc {
+      font-size:.73rem;
+      color:rgba(255,255,255,.35);
+      margin-top:.15rem;
+    }
+
+    /* ── AREA ── */
+    .area-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:5rem;
+      align-items:center;
+    }
+
+    .city-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:.5rem;
+      margin-top:1.8rem;
+    }
+
+    .city {
+      display:flex;
+      align-items:center;
+      gap:.55rem;
+      padding:.65rem 1rem;
+      background:var(--white);
+      border:1.5px solid var(--border);
+      border-radius:var(--r);
+      font-size:.86rem;
+      font-weight:600;
+      color:var(--ink);
+      transition:border-color .2s, color .2s;
+    }
+
+    .city:hover{border-color:var(--red);color:var(--red)}
+
+    .city-dot {
+      width:7px;height:7px;
+      border-radius:50%;
+      background:var(--red);
+      flex-shrink:0;
+    }
+
+    /* area visual: real house photo */
+    .area__photo {
+      border-radius:12px;
+      overflow:hidden;
+      aspect-ratio:4/3;
+      position:relative;
+      box-shadow:0 24px 64px rgba(0,0,0,.18);
+    }
+
+    .area__photo img {
+      width:100%;height:100%;
+      object-fit:cover;
+    }
+
+    .area__photo-badge {
+      position:absolute;
+      bottom:1.5rem;
+      left:1.5rem;
+      background:var(--white);
+      border-radius:8px;
+      padding:.9rem 1.2rem;
+      box-shadow:0 8px 24px rgba(0,0,0,.18);
+      display:flex;
+      align-items:center;
+      gap:.8rem;
+    }
+
+    .area__photo-badge-icon {
+      width:38px;height:38px;
+      border-radius:8px;
+      background:#fdf0ef;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+    }
+
+    .area__photo-badge-title {
+      font-size:.82rem;
+      font-weight:700;
+      color:var(--ink);
+    }
+
+    .area__photo-badge-sub {
+      font-size:.72rem;
+      color:var(--gray-6);
+      margin-top:.1rem;
+    }
+
+    /* ── WHY ── */
+    .why-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:5rem;
+      align-items:center;
+    }
+
+    .why__photo {
+      border-radius:12px;
+      overflow:hidden;
+      aspect-ratio:3/4;
+      box-shadow:0 24px 64px rgba(0,0,0,.14);
+    }
+
+    .why__photo img {
+      width:100%;height:100%;
+      object-fit:cover;
+    }
+
+    .why-points {
+      display:flex;
+      flex-direction:column;
+      gap:0;
+    }
+
+    .wp {
+      display:flex;
+      gap:1.2rem;
+      align-items:flex-start;
+      padding:1.6rem 0;
+      border-bottom:1px solid var(--border);
+    }
+
+    .wp:last-child{border-bottom:none}
+
+    .wp__icon {
+      width:44px;height:44px;
+      border-radius:10px;
+      background:#fdf0ef;
+      border:1px solid rgba(204,31,26,.12);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+      flex-shrink:0;
+      margin-top:2px;
+    }
+
+    .wp__title {
+      font-size:.95rem;
+      font-weight:700;
+      color:var(--ink);
+      margin-bottom:.3rem;
+      letter-spacing:-.01em;
+    }
+
+    .wp__desc {
+      font-size:.86rem;
+      color:var(--gray-6);
+      line-height:1.65;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background:var(--red);
+      padding:3rem 0;
+    }
+
+    .stats-bar__inner {
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 2rem;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:2rem;
+      text-align:center;
+    }
+
+    .sb-val {
+      font-size:2.8rem;
+      font-weight:800;
+      color:var(--white);
+      letter-spacing:-.04em;
+      line-height:1;
+      margin-bottom:.4rem;
+    }
+
+    .sb-lbl {
+      font-size:.78rem;
+      font-weight:600;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.65);
+    }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display:grid;
+      grid-template-columns:5fr 7fr;
+      gap:5rem;
+      align-items:start;
+    }
+
+    .contact-items {
+      display:flex;
+      flex-direction:column;
+      gap:.9rem;
+      margin-top:2.2rem;
+    }
+
+    .ci {
+      display:flex;
+      align-items:center;
+      gap:.9rem;
+      padding:1rem 1.2rem;
+      background:var(--gray-1);
+      border:1px solid var(--border);
+      border-radius:8px;
+      transition:border-color .2s;
+    }
+
+    .ci:hover{border-color:rgba(204,31,26,.25)}
+
+    .ci-icon {
+      width:40px;height:40px;
+      border-radius:8px;
+      background:#fdf0ef;
+      border:1px solid rgba(204,31,26,.12);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:17px;
+      flex-shrink:0;
+    }
+
+    .ci-lbl {
+      font-size:.68rem;
+      font-weight:700;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      color:var(--gray-6);
+      margin-bottom:.12rem;
+    }
+
+    .ci-val {
+      font-size:.95rem;
+      font-weight:600;
+      color:var(--ink);
+    }
+
+    .ci-val a{color:inherit;transition:color .2s}
+    .ci-val a:hover{color:var(--red)}
+
+    /* ── FORM ── */
+    .form {
+      background:var(--gray-1);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:2.5rem;
+    }
+
+    .form__title {
+      font-size:1.15rem;
+      font-weight:700;
+      color:var(--ink);
+      letter-spacing:-.02em;
+      margin-bottom:.3rem;
+    }
+
+    .form__sub {
+      font-size:.84rem;
+      color:var(--gray-6);
+      margin-bottom:1.8rem;
+      padding-bottom:1.8rem;
+      border-bottom:1px solid var(--border);
+    }
+
+    .form-rows {
+      display:flex;
+      flex-direction:column;
+      gap:.9rem;
+    }
+
+    .form-row {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:.9rem;
+    }
+
+    .field {
+      display:flex;
+      flex-direction:column;
+      gap:.3rem;
+    }
+
+    .field label {
+      font-size:.7rem;
+      font-weight:700;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+      color:var(--gray-6);
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width:100%;
+      padding:.8rem 1rem;
+      background:var(--white);
+      border:1.5px solid var(--border);
+      border-radius:var(--r);
+      font-family:var(--f);
+      font-size:.93rem;
+      color:var(--ink);
+      outline:none;
+      transition:border-color .2s, box-shadow .2s;
+      -webkit-appearance:none;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color:var(--red);
+      box-shadow:0 0 0 3px rgba(204,31,26,.08);
+    }
+
+    .field textarea{resize:vertical;min-height:85px}
+
+    .form-submit {
+      width:100%;
+      margin-top:.5rem;
+      padding:1rem;
+      background:var(--red);
+      color:var(--white);
+      font-family:var(--f);
+      font-size:.9rem;
+      font-weight:700;
+      letter-spacing:.02em;
+      border:none;
+      border-radius:var(--r);
+      cursor:pointer;
+      transition:all .18s;
+      box-shadow:0 2px 12px rgba(204,31,26,.3);
+    }
+
+    .form-submit:hover{background:var(--red-h);transform:translateY(-1px)}
+
+    .form-ok {
+      display:none;
+      margin-top:.8rem;
+      background:#f0fdf4;
+      border:1px solid #86efac;
+      border-radius:var(--r);
+      padding:.9rem;
+      font-size:.875rem;
+      font-weight:600;
+      color:#166534;
+      text-align:center;
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .r{opacity:0;transform:translateY(18px);transition:opacity .65s ease, transform .65s ease}
+    .r.in{opacity:1;transform:none}
+    .r.d1{transition-delay:.1s}
+    .r.d2{transition-delay:.2s}
+    .r.d3{transition-delay:.3s}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:960px){
+      .hero__h1{font-size:2.8rem}
+      .hero__card{display:none}
+      .hero__inner{padding-bottom:3.5rem}
+      .hero__stats{gap:1.5rem}
+
+      .trust__inner{justify-content:center;gap:.8rem}
+
+      .sec{padding:4rem 0}
+
+      .feat-grid{grid-template-columns:1fr}
+      .pkg-grid{grid-template-columns:1fr}
+      .proof-grid{grid-template-columns:1fr}
+      .area-grid{grid-template-columns:1fr;gap:2.5rem}
+      .why-grid{grid-template-columns:1fr;gap:2.5rem}
+      .why__photo{aspect-ratio:16/9}
+      .stats-bar__inner{grid-template-columns:1fr 1fr;gap:2rem}
+      .contact-grid{grid-template-columns:1fr;gap:2.5rem}
+      .form-row{grid-template-columns:1fr}
+      .city-grid{grid-template-columns:1fr 1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero" id="home">
+  <div class="hero__bg" role="img" aria-label="Modern Canadian home protected by AlertPRO"></div>
+
+  <div class="hero__inner">
+    <div class="hero__pill">
+      <div class="hero__pill-dot"></div>
+      Serving Whitby, Durham &amp; the GTA
+    </div>
+
+    <h1 class="hero__h1">
+      Professional<br>
+      Home Security<br>
+      <mark>Done Right.</mark>
+    </h1>
+
+    <p class="hero__sub">
+      24/7 monitored alarm systems installed by local Durham Region experts. Complete equipment included — one flat fee to get started.
+    </p>
+
+    <div class="hero__actions">
+      <a href="#contact" class="btn btn-red">Get a Free Quote</a>
+      <a href="tel:2892773306" class="btn btn-white-outline">📞 289-277-3306</a>
+    </div>
+
+    <div class="hero__stats">
+      <div>
+        <div class="hstat__val">$199</div>
+        <div class="hstat__lbl">Install & Activate</div>
+      </div>
+      <div>
+        <div class="hstat__val">$0</div>
+        <div class="hstat__lbl">Equipment Cost</div>
+      </div>
+      <div>
+        <div class="hstat__val">24<span>/7</span></div>
+        <div class="hstat__lbl">Live Monitoring</div>
+      </div>
+      <div>
+        <div class="hstat__val">20<span>%</span></div>
+        <div class="hstat__lbl">Insurance Savings</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating status card -->
+  <div class="hero__card" aria-hidden="true">
+    <div class="hero__card-top">
+      <div class="hero__card-label">System Status</div>
+      <div class="hero__card-status">Armed</div>
+    </div>
+    <div class="card-zones">
+      <div class="cz">Front Door <span class="cz-ok">Secure</span></div>
+      <div class="cz">Motion Sensor <span class="cz-ok">Clear</span></div>
+      <div class="cz">Garage <span class="cz-ok">Secure</span></div>
+      <div class="cz">Smoke / CO <span class="cz-ok">Clear</span></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════ TRUST STRIP ═══════════════ -->
+<div class="trust">
+  <div class="trust__inner">
+    <div class="ti">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Canadian Owned &amp; Operated
+    </div>
+    <div class="ti">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      ULC Listed Monitoring Centre
+    </div>
+    <div class="ti">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Qolsys IQ4 Smart Panels
+    </div>
+    <div class="ti">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Same-Week Installation
+    </div>
+    <div class="ti">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      No Hidden Fees
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ FEATURES ═══════════════ -->
+<section class="sec sec--gray" id="features">
+  <div class="wrap">
+    <div class="sec-hdr sec-hdr--c r">
+      <div class="eyebrow">What's Included</div>
+      <h2>Complete protection,<br>from every angle.</h2>
+      <p class="lead">Every AlertPRO plan includes professional equipment, certified installation, and round-the-clock monitoring — no add-on fees.</p>
+    </div>
+
+    <div class="feat-grid">
+      <article class="feat r">
+        <div class="feat__icon">📡</div>
+        <div class="feat__title">24/7 Professional Monitoring</div>
+        <p class="feat__desc">Our ULC-listed monitoring centre responds instantly to intrusion, fire, carbon monoxide and flood — dispatching emergency services without delay.</p>
+      </article>
+      <article class="feat r d1">
+        <div class="feat__icon">📱</div>
+        <div class="feat__title">Mobile App Control</div>
+        <p class="feat__desc">Arm and disarm, check live camera feeds, and receive instant alerts from anywhere in the world via our iOS and Android app.</p>
+      </article>
+      <article class="feat r d2">
+        <div class="feat__icon">🔧</div>
+        <div class="feat__title">Professional Installation</div>
+        <p class="feat__desc">Certified local technicians handle everything — proper sensor placement, clean wiring, and a full system test before they leave your home.</p>
+      </article>
+      <article class="feat r">
+        <div class="feat__icon">🏠</div>
+        <div class="feat__title">Home Insurance Savings</div>
+        <p class="feat__desc">Most Ontario insurers discount home insurance premiums up to 20% for professionally monitored systems — often covering your monthly fee entirely.</p>
+      </article>
+      <article class="feat r d1">
+        <div class="feat__icon">🎥</div>
+        <div class="feat__title">Smart Video Surveillance</div>
+        <p class="feat__desc">Motion-triggered indoor and outdoor cameras with customizable detection zones and full night vision — recording only when it matters.</p>
+      </article>
+      <article class="feat r d2">
+        <div class="feat__icon">🔥</div>
+        <div class="feat__title">Fire, Smoke &amp; CO Protection</div>
+        <p class="feat__desc">Monitored life-safety detectors that trigger immediate emergency dispatch — because when seconds count, every one matters.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════ PACKAGES ═══════════════ -->
+<section class="sec" id="packages">
+  <div class="wrap">
+    <div class="sec-hdr sec-hdr--c r">
+      <div class="eyebrow">Pricing</div>
+      <h2>Simple plans.<br>Honest prices.</h2>
+      <p class="lead">One flat installation fee. Monthly monitoring that often pays for itself through your home insurance discount.</p>
+    </div>
+
+    <div class="pkg-grid">
+      <article class="pkg r">
+        <div class="pkg__head">
+          <div class="pkg__name">Essentials</div>
+          <div class="pkg__sub">Ideal for condos &amp; apartments</div>
+        </div>
+        <div class="pkg__body">
+          <div class="pkg__price">
+            <span class="pkg__price-val">$45</span>
+            <span class="pkg__price-per">/month</span>
+          </div>
+          <div class="pkg__install"><strong>$199</strong> one-time installation &amp; activation</div>
+          <ul class="pkg__list">
+            <li><div class="chk">✓</div>Qolsys IQ4 Smart Panel</li>
+            <li><div class="chk">✓</div>2 Door / Window Sensors</li>
+            <li><div class="chk">✓</div>1 Motion Detector</li>
+            <li><div class="chk">✓</div>24/7 Professional Monitoring</li>
+            <li><div class="chk">✓</div>Mobile App Access</li>
+            <li><div class="chk">✓</div>Smoke &amp; CO Detector</li>
+          </ul>
+          <a href="#contact" class="pkg__btn pkg__btn--ghost">Get Started</a>
+        </div>
+      </article>
+
+      <article class="pkg pkg--best r d1">
+        <div class="pkg__head">
+          <div class="pkg__best-pill">Most Popular</div>
+          <div class="pkg__name">Home Guard</div>
+          <div class="pkg__sub">Best for detached &amp; semi-detached homes</div>
+        </div>
+        <div class="pkg__body">
+          <div class="pkg__price">
+            <span class="pkg__price-val">$55</span>
+            <span class="pkg__price-per">/month</span>
+          </div>
+          <div class="pkg__install"><strong>$199</strong> one-time installation &amp; activation</div>
+          <ul class="pkg__list">
+            <li><div class="chk">✓</div>Qolsys IQ4 Smart Panel</li>
+            <li><div class="chk">✓</div>4 Door / Window Sensors</li>
+            <li><div class="chk">✓</div>2 Motion Detectors</li>
+            <li><div class="chk">✓</div>24/7 Professional Monitoring</li>
+            <li><div class="chk">✓</div>Mobile App + Smart Home</li>
+            <li><div class="chk">✓</div>Smoke, CO &amp; Flood Detection</li>
+            <li><div class="chk">✓</div>1 Indoor Security Camera</li>
+          </ul>
+          <a href="#contact" class="pkg__btn pkg__btn--solid">Get Started</a>
+        </div>
+      </article>
+
+      <article class="pkg r d2">
+        <div class="pkg__head">
+          <div class="pkg__name">Total Protection</div>
+          <div class="pkg__sub">Complete coverage for larger homes</div>
+        </div>
+        <div class="pkg__body">
+          <div class="pkg__price">
+            <span class="pkg__price-val">$69</span>
+            <span class="pkg__price-per">/month</span>
+          </div>
+          <div class="pkg__install"><strong>$199</strong> one-time installation &amp; activation</div>
+          <ul class="pkg__list">
+            <li><div class="chk">✓</div>Qolsys IQ4 Smart Panel</li>
+            <li><div class="chk">✓</div>6+ Door / Window Sensors</li>
+            <li><div class="chk">✓</div>3 Motion Detectors</li>
+            <li><div class="chk">✓</div>24/7 Professional Monitoring</li>
+            <li><div class="chk">✓</div>Full Smart Home Integration</li>
+            <li><div class="chk">✓</div>Complete Life Safety Suite</li>
+            <li><div class="chk">✓</div>2 HD Outdoor Cameras</li>
+            <li><div class="chk">✓</div>Video Doorbell Included</li>
+          </ul>
+          <a href="#contact" class="pkg__btn pkg__btn--ghost">Get Started</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════ STATS BAR ═══════════════ -->
+<div class="stats-bar">
+  <div class="stats-bar__inner">
+    <div class="r">
+      <div class="sb-val">3×</div>
+      <div class="sb-lbl">More likely to be targeted without monitoring</div>
+    </div>
+    <div class="r d1">
+      <div class="sb-val">20%</div>
+      <div class="sb-lbl">Average Ontario insurance discount</div>
+    </div>
+    <div class="r d2">
+      <div class="sb-val">24/7</div>
+      <div class="sb-lbl">Live monitoring, every day of the year</div>
+    </div>
+    <div class="r d3">
+      <div class="sb-val">$199</div>
+      <div class="sb-lbl">One flat installation fee, no surprises</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ TESTIMONIALS ═══════════════ -->
+<section class="sec sec--ink" id="reviews">
+  <div class="wrap">
+    <div class="sec-hdr sec-hdr--c r">
+      <div class="eyebrow">Customer Reviews</div>
+      <h2>Trusted by homeowners<br>across Durham Region.</h2>
+    </div>
+
+    <div class="proof-grid">
+      <div class="proof r">
+        <div class="proof__stars">★★★★★</div>
+        <p class="proof__text">"Had AlertPRO installed last spring. The technician was on time, professional, and explained everything clearly. The app is dead simple to use. Couldn't be happier."</p>
+        <div class="proof__name">Michael T.</div>
+        <div class="proof__loc">Whitby, ON</div>
+      </div>
+      <div class="proof r d1">
+        <div class="proof__stars">★★★★★</div>
+        <p class="proof__text">"My insurance dropped by $180 a year after getting the system. Between that and the peace of mind, it practically pays for itself. Great local company."</p>
+        <div class="proof__name">Sandra K.</div>
+        <div class="proof__loc">Oshawa, ON</div>
+      </div>
+      <div class="proof r d2">
+        <div class="proof__stars">★★★★★</div>
+        <p class="proof__text">"After our neighbour got broken into, we called AlertPRO. They had us set up within the week. The monitoring team actually called within seconds when we tested it."</p>
+        <div class="proof__name">James &amp; Priya R.</div>
+        <div class="proof__loc">Ajax, ON</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════ SERVICE AREA ═══════════════ -->
+<section class="sec sec--gray" id="area">
+  <div class="wrap">
+    <div class="area-grid">
+      <div>
+        <div class="eyebrow r">Service Area</div>
+        <h2 class="r">Based in Whitby.<br>Built for Durham.</h2>
+        <p class="lead r">We're a local company — our installers live and work in the same communities we protect. Fast scheduling, no long waits, no out-of-town crews.</p>
+
+        <div class="city-grid r">
+          <div class="city"><div class="city-dot"></div>Whitby</div>
+          <div class="city"><div class="city-dot"></div>Oshawa</div>
+          <div class="city"><div class="city-dot"></div>Ajax</div>
+          <div class="city"><div class="city-dot"></div>Pickering</div>
+          <div class="city"><div class="city-dot"></div>Clarington</div>
+          <div class="city"><div class="city-dot"></div>Bowmanville</div>
+          <div class="city"><div class="city-dot"></div>Scarborough</div>
+          <div class="city"><div class="city-dot"></div>Markham</div>
+        </div>
+
+        <div style="margin-top:2rem" class="r">
+          <a href="#contact" class="btn btn-red">Check My City</a>
+        </div>
+      </div>
+
+      <div class="r">
+        <div class="area__photo">
+          <img
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop"
+            alt="Residential street in Durham Region Ontario"
+            loading="lazy"
+          />
+          <div class="area__photo-badge">
+            <div class="area__photo-badge-icon">📍</div>
+            <div>
+              <div class="area__photo-badge-title">Whitby, Ontario</div>
+              <div class="area__photo-badge-sub">AlertPRO Headquarters</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════ WHY ALERTPRO ═══════════════ -->
+<section class="sec" id="why">
+  <div class="wrap">
+    <div class="why-grid">
+      <div class="r">
+        <div class="why__photo">
+          <img
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&auto=format&fit=crop"
+            alt="Professional home security technician installing alarm panel"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <div>
+        <div class="eyebrow r">Why AlertPRO</div>
+        <h2 class="r">We're your neighbours,<br>not a call centre.</h2>
+        <p class="lead r" style="margin-bottom:2rem">AlertPRO is a Durham Region company. When something happens, you talk to a local person who cares — not an overseas agent reading from a script.</p>
+
+        <div class="why-points">
+          <div class="wp r">
+            <div class="wp__icon">🤝</div>
+            <div>
+              <div class="wp__title">Real people answer your calls</div>
+              <p class="wp__desc">No phone trees. No hold music. Our local team picks up and resolves your issue immediately.</p>
+            </div>
+          </div>
+          <div class="wp r d1">
+            <div class="wp__icon">🔧</div>
+            <div>
+              <div class="wp__title">Certified local technicians</div>
+              <p class="wp__desc">Our installers live in Durham Region and do clean, professional work — with a full system test every time.</p>
+            </div>
+          </div>
+          <div class="wp r d2">
+            <div class="wp__icon">📶</div>
+            <div>
+              <div class="wp__title">Cellular backup keeps you covered</div>
+              <p class="wp__desc">The Qolsys IQ4 stays connected if your internet or power goes down. Real threats don't follow a schedule.</p>
+            </div>
+          </div>
+          <div class="wp r d3">
+            <div class="wp__icon">💰</div>
+            <div>
+              <div class="wp__title">Transparent pricing, always</div>
+              <p class="wp__desc">$199 installation. Flat monthly rate. No hidden fees, no confusing contracts, no surprises on your bill.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════ CONTACT ═══════════════ -->
+<section class="sec sec--gray" id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div>
+        <div class="eyebrow r">Get in Touch</div>
+        <h2 class="r">Get your free<br>quote today.</h2>
+        <p class="lead r">Our local team will follow up same day — no pressure, no pushy sales. Just honest advice on the right system for your home.</p>
+
+        <div class="contact-items r">
+          <div class="ci">
+            <div class="ci-icon">📞</div>
+            <div>
+              <div class="ci-lbl">Phone</div>
+              <div class="ci-val"><a href="tel:2892773306">289-277-3306</a></div>
+            </div>
+          </div>
+          <div class="ci">
+            <div class="ci-icon">✉️</div>
+            <div>
+              <div class="ci-lbl">Email</div>
+              <div class="ci-val"><a href="mailto:sales@alertpro.ca">sales@alertpro.ca</a></div>
+            </div>
+          </div>
+          <div class="ci">
+            <div class="ci-icon">📍</div>
+            <div>
+              <div class="ci-lbl">Address</div>
+              <div class="ci-val">209 Dundas St E, Whitby ON L1N 7H8</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="r">
+        <div class="form">
+          <div class="form__title">Request a Free Quote</div>
+          <div class="form__sub">We'll call you back within a few hours.</div>
+
+          <form class="form-rows" id="apForm" novalidate>
+            <div class="form-row">
+              <div class="field">
+                <label for="fn">First Name</label>
+                <input type="text" id="fn" name="contact[first_name]" placeholder="Jane" autocomplete="given-name" required>
+              </div>
+              <div class="field">
+                <label for="ln">Last Name</label>
+                <input type="text" id="ln" name="contact[last_name]" placeholder="Smith" autocomplete="family-name" required>
+              </div>
+            </div>
+            <div class="field">
+              <label for="em">Email Address</label>
+              <input type="email" id="em" name="contact[email]" placeholder="jane@example.com" autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="ph">Phone Number</label>
+              <input type="tel" id="ph" name="contact[phone]" placeholder="905-555-0100" autocomplete="tel">
+            </div>
+            <div class="field">
+              <label for="cy">Your City</label>
+              <select id="cy" name="contact[city]">
+                <option value="">Select your city…</option>
+                <option>Whitby</option>
+                <option>Oshawa</option>
+                <option>Ajax</option>
+                <option>Pickering</option>
+                <option>Clarington</option>
+                <option>Bowmanville</option>
+                <option>Scarborough</option>
+                <option>Markham</option>
+                <option>Other (GTA / Ontario)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="msg">Anything we should know? (optional)</label>
+              <textarea id="msg" name="contact[body]" placeholder="e.g. new home, cottage, have pets…"></textarea>
+            </div>
+            <button type="submit" class="form-submit">Send My Free Quote Request →</button>
+            <div class="form-ok" id="formOk">✅ Thanks! We'll be in touch shortly.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); }});
+  }, {threshold:.08, rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.r').forEach(el => obs.observe(el));
+
+  // Form
+  document.getElementById('apForm').addEventListener('submit', e => {
+    e.preventDefault();
+    document.getElementById('formOk').style.display = 'block';
+    e.target.querySelectorAll('input,select,textarea,button').forEach(el => el.disabled = true);
+    // Connect to Formspree: fetch('https://formspree.io/f/YOUR_ID', {method:'POST', body:new FormData(e.target)})
+  });
+</script>
+
+</body>
+</html>

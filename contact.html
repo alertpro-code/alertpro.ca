@@ -442,21 +442,23 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--ink); margin-bottom: 1r
     const btn = e.target.querySelector('.form-submit');
     btn.textContent = 'Sending…';
     btn.disabled = true;
-
-    // ── TO CONNECT FORM: go to formspree.io, create a free account,
-    //    create a form, copy your endpoint URL, and replace the URL below.
-    // const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-    //   method: 'POST',
-    //   body: new FormData(e.target),
-    //   headers: { 'Accept': 'application/json' }
-    // });
-    // if (res.ok) { ... }
-
-    // Simulated success for now:
-    setTimeout(() => {
-      document.getElementById('formOk').style.display = 'block';
-      e.target.querySelectorAll('input,select,textarea,button').forEach(el => el.disabled = true);
-    }, 600);
+    try {
+      const res = await fetch('https://formspree.io/f/mojkjnpa', {
+        method: 'POST',
+        body: new FormData(e.target),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        document.getElementById('formOk').style.display = 'block';
+        e.target.querySelectorAll('input,select,textarea,button').forEach(el => el.disabled = true);
+      } else {
+        btn.textContent = 'Something went wrong — please call us at 289-277-3306';
+        btn.disabled = false;
+      }
+    } catch(err) {
+      btn.textContent = 'Network error — please call 289-277-3306';
+      btn.disabled = false;
+    }
   });
 </script>
 </body>

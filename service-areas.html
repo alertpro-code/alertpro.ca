@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home Security Service Areas | AlertPRO – Whitby, Oshawa, Ajax, Pickering & Durham</title>
+  <meta name="description" content="AlertPRO installs and monitors home alarm systems across Durham Region including Whitby, Oshawa, Ajax, Pickering, Clarington, Bowmanville, Scarborough and Markham." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.alertpro.ca/service-areas.html" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"LocalBusiness","name":"AlertPRO","url":"https://www.alertpro.ca","telephone":"+1-289-277-3306","address":{"@type":"PostalAddress","streetAddress":"209 Dundas St E","addressLocality":"Whitby","addressRegion":"ON","postalCode":"L1N 7H8","addressCountry":"CA"},"areaServed":[{"@type":"City","name":"Whitby"},{"@type":"City","name":"Oshawa"},{"@type":"City","name":"Ajax"},{"@type":"City","name":"Pickering"},{"@type":"City","name":"Clarington"},{"@type":"City","name":"Bowmanville"},{"@type":"City","name":"Scarborough"},{"@type":"City","name":"Markham"}]}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+/* ============================================
+   AlertPRO — shared.css
+   Shared across all pages
+   ============================================ */
+
+:root {
+  --red:     #cc1f1a;
+  --red-h:   #a81815;
+  --red-pale:#fdf0ef;
+  --ink:     #0d0f12;
+  --ink-2:   #1c2027;
+  --gray-7:  #444c56;
+  --gray-6:  #666e7a;
+  --gray-3:  #b8bec8;
+  --gray-1:  #f2f4f7;
+  --border:  #e2e5ea;
+  --white:   #ffffff;
+  --max:     1200px;
+  --radius:  8px;
+  --f:       'Inter', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--f); color: var(--ink); background: var(--white); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+/* ── NAV ── */
+.site-header {
+  position: sticky; top: 0; z-index: 1000;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
+}
+.nav-inner {
+  max-width: var(--max); margin: 0 auto; padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px; gap: 2rem;
+}
+.nav-logo {
+  font-size: 1.35rem; font-weight: 800; letter-spacing: .02em;
+  color: var(--ink); flex-shrink: 0; display: flex; align-items: center; gap: .5rem;
+}
+.nav-logo-dot { color: var(--red); }
+.site-nav { display: flex; gap: 1.8rem; align-items: center; flex: 1; justify-content: center; }
+.site-nav a { font-size: .875rem; font-weight: 600; color: var(--gray-6); transition: color .15s; white-space: nowrap; }
+.site-nav a:hover, .site-nav a.active { color: var(--red); }
+.nav-actions { display: flex; align-items: center; gap: .75rem; flex-shrink: 0; }
+.nav-phone { font-size: .82rem; font-weight: 700; color: var(--gray-7); white-space: nowrap; }
+.nav-phone:hover { color: var(--red); }
+.nav-cta {
+  background: var(--red); color: var(--white) !important;
+  padding: .6rem 1.3rem; border-radius: 100px;
+  font-size: .82rem; font-weight: 700; white-space: nowrap;
+  transition: background .15s, transform .15s;
+}
+.nav-cta:hover { background: var(--red-h); transform: translateY(-1px); }
+.nav-toggle {
+  display: none; width: 40px; height: 40px;
+  border: 1.5px solid var(--border); background: var(--white);
+  border-radius: var(--radius); cursor: pointer;
+  align-items: center; justify-content: center; flex-direction: column; gap: 5px;
+}
+.nav-toggle span { display: block; width: 17px; height: 1.5px; background: var(--ink); border-radius: 2px; transition: .25s; }
+.nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.mobile-menu { display: none; border-top: 1px solid var(--border); background: var(--white); }
+.mobile-menu.open { display: block; }
+.mobile-menu a { display: block; padding: 14px 2rem; font-weight: 600; font-size: .95rem; color: var(--ink); border-bottom: 1px solid var(--border); }
+.mobile-menu a:hover { color: var(--red); background: var(--gray-1); }
+.mobile-menu .mob-cta { background: var(--red); color: var(--white) !important; text-align: center; margin: 1rem 2rem 1.5rem; border-radius: 100px; border-bottom: none; }
+
+/* ── FOOTER ── */
+.site-footer { background: var(--ink); color: rgba(255,255,255,.5); padding: 4rem 0 2rem; }
+.footer-inner { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+.footer-brand-name { font-size: 1.3rem; font-weight: 800; color: var(--white); margin-bottom: .6rem; }
+.footer-brand-name span { color: var(--red); }
+.footer-brand-desc { font-size: .82rem; line-height: 1.7; color: rgba(255,255,255,.4); max-width: 240px; margin-bottom: 1.2rem; }
+.footer-brand-phone { font-size: .9rem; font-weight: 700; color: var(--white); }
+.footer-brand-phone:hover { color: var(--red); }
+.footer-col-title { font-size: .7rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 1rem; }
+.footer-col a { display: block; font-size: .83rem; color: rgba(255,255,255,.45); margin-bottom: .55rem; transition: color .15s; }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.06); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer-copy { font-size: .75rem; }
+.footer-bottom-links { display: flex; gap: 1.5rem; }
+.footer-bottom-links a { font-size: .75rem; color: rgba(255,255,255,.3); }
+.footer-bottom-links a:hover { color: var(--white); }
+
+/* ── BUTTONS ── */
+.btn { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--f); font-weight: 700; font-size: .9rem; padding: .85rem 1.8rem; border-radius: var(--radius); border: none; cursor: pointer; transition: all .18s; text-decoration: none; }
+.btn-red { background: var(--red); color: var(--white); box-shadow: 0 2px 12px rgba(204,31,26,.35); }
+.btn-red:hover { background: var(--red-h); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(204,31,26,.45); }
+.btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--border); }
+.btn-outline:hover { border-color: var(--ink); background: var(--gray-1); }
+.btn-white { background: var(--white); color: var(--red); font-weight: 700; }
+.btn-white:hover { background: var(--gray-1); }
+.btn-ghost-white { background: rgba(255,255,255,.08); color: rgba(255,255,255,.9); border: 1.5px solid rgba(255,255,255,.2); backdrop-filter: blur(8px); }
+.btn-ghost-white:hover { background: rgba(255,255,255,.15); color: var(--white); }
+
+/* ── SHARED SECTION STYLES ── */
+.sec { padding: 5.5rem 0; }
+.sec--gray { background: var(--gray-1); }
+.sec--ink { background: var(--ink); color: var(--white); }
+.sec--red { background: var(--red); color: var(--white); }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
+.eyebrow { font-size: .7rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--red); margin-bottom: .6rem; }
+.sec--ink .eyebrow { color: rgba(204,31,26,.8); }
+.sec--red .eyebrow { color: rgba(255,255,255,.7); }
+h1, h2 { font-weight: 800; letter-spacing: -.03em; line-height: 1.08; }
+h1 { font-size: clamp(2.4rem, 4.5vw, 4rem); color: var(--ink); margin-bottom: 1.2rem; }
+h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--ink); margin-bottom: 1rem; }
+.sec--ink h2, .sec--ink h1 { color: var(--white); }
+.sec--red h2 { color: var(--white); }
+.lead { font-size: 1rem; font-weight: 400; color: var(--gray-6); line-height: 1.75; max-width: 520px; }
+.sec--ink .lead { color: rgba(255,255,255,.45); }
+.sec--red .lead { color: rgba(255,255,255,.75); }
+.sec-hdr { margin-bottom: 3.5rem; }
+.sec-hdr--c { text-align: center; }
+.sec-hdr--c .lead { margin: 0 auto; }
+
+/* ── PAGE HERO (inner pages) ── */
+.page-hero {
+  background: var(--ink); padding: 5rem 0 4rem; position: relative; overflow: hidden;
+}
+.page-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(204,31,26,.1) 0%, transparent 65%),
+    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+  background-size: auto, 60px 60px, 60px 60px;
+}
+.page-hero .wrap { position: relative; z-index: 2; }
+.page-hero h1 { color: var(--white); max-width: 700px; }
+.page-hero .lead { color: rgba(255,255,255,.55); max-width: 560px; margin-top: .8rem; }
+.page-hero-breadcrumb { font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 1.2rem; display: flex; align-items: center; gap: .5rem; }
+.page-hero-breadcrumb a { color: rgba(255,255,255,.4); }
+.page-hero-breadcrumb a:hover { color: var(--white); }
+.page-hero-breadcrumb span { color: rgba(255,255,255,.2); }
+
+/* ── TRUST STRIP ── */
+.trust { background: var(--ink-2); padding: 1rem 0; }
+.trust-inner { max-width: var(--max); margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .4rem; }
+.ti { display: flex; align-items: center; gap: .5rem; font-size: .76rem; font-weight: 600; color: rgba(255,255,255,.5); }
+.ti svg { color: var(--red); flex-shrink: 0; }
+
+/* ── CARDS / FEATURES ── */
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 2rem; }
+.card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 2rem; transition: box-shadow .2s, transform .2s; position: relative; overflow: hidden; }
+.card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform .3s; }
+.card:hover { box-shadow: 0 8px 32px rgba(0,0,0,.09); transform: translateY(-3px); }
+.card:hover::after { transform: scaleX(1); }
+.card-icon { width: 48px; height: 48px; border-radius: 10px; background: var(--red-pale); border: 1px solid rgba(204,31,26,.12); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 1.2rem; }
+.card-title { font-size: .95rem; font-weight: 700; color: var(--ink); margin-bottom: .45rem; letter-spacing: -.01em; }
+.card-desc { font-size: .865rem; color: var(--gray-6); line-height: 1.7; }
+
+/* ── SCROLL REVEAL ── */
+.r { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+.r.in { opacity: 1; transform: none; }
+.r.d1 { transition-delay: .1s; }
+.r.d2 { transition-delay: .2s; }
+.r.d3 { transition-delay: .3s; }
+
+/* ── CTA BAND ── */
+.cta-band { background: var(--red); padding: 4rem 0; text-align: center; }
+.cta-band h2 { color: var(--white); margin-bottom: .8rem; }
+.cta-band p { color: rgba(255,255,255,.75); font-size: 1rem; max-width: 480px; margin: 0 auto 2rem; line-height: 1.7; }
+.cta-band-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  .site-nav, .nav-phone { display: none !important; }
+  .nav-toggle { display: inline-flex !important; }
+  .nav-cta { display: none; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .sec { padding: 4rem 0; }
+  .page-hero { padding: 3.5rem 0 3rem; }
+}
+@media (max-width: 640px) {
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .nav-inner { padding: 0 1.2rem; }
+}
+
+</style>
+  <style>
+    .area-nav { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 4rem; }
+    .area-nav a { padding: .55rem 1.1rem; border: 1.5px solid var(--border); border-radius: 100px; font-size: .82rem; font-weight: 600; color: var(--gray-6); transition: all .15s; }
+    .area-nav a:hover { border-color: var(--red); color: var(--red); background: var(--red-pale); }
+
+    .area-section { scroll-margin-top: 88px; padding: 4.5rem 0; border-bottom: 1px solid var(--border); }
+    .area-section:last-of-type { border-bottom: none; }
+    .area-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4.5rem; align-items: center; }
+    .area-grid.flip { direction: rtl; }
+    .area-grid.flip > * { direction: ltr; }
+    .area-photo { border-radius: 12px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 16px 48px rgba(0,0,0,.12); position: relative; }
+    .area-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .area-photo-badge { position: absolute; bottom: 1.2rem; left: 1.2rem; background: var(--white); border-radius: 8px; padding: .75rem 1rem; display: flex; align-items: center; gap: .65rem; box-shadow: 0 8px 24px rgba(0,0,0,.15); }
+    .area-badge-icon { font-size: 1.2rem; }
+    .area-badge-title { font-size: .8rem; font-weight: 700; color: var(--ink); }
+    .area-badge-sub { font-size: .7rem; color: var(--gray-6); }
+
+    .area-content .eyebrow { margin-bottom: .4rem; }
+    .area-content h2 { font-size: clamp(1.7rem, 2.5vw, 2.2rem); margin-bottom: .8rem; }
+    .area-content p { font-size: .9rem; color: var(--gray-6); line-height: 1.75; margin-bottom: 1.2rem; }
+    .area-points { display: flex; flex-direction: column; gap: .45rem; margin-bottom: 1.8rem; }
+    .area-point { display: flex; align-items: flex-start; gap: .55rem; font-size: .875rem; color: var(--gray-6); }
+    .area-point-dot { width: 16px; height: 16px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 8px; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+
+    /* All areas grid */
+    .all-areas { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.2rem; }
+    .area-card { border: 1.5px solid var(--border); border-radius: 10px; padding: 1.5rem; text-align: center; transition: all .2s; cursor: pointer; text-decoration: none; display: block; }
+    .area-card:hover { border-color: var(--red); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+    .area-card-icon { font-size: 1.8rem; margin-bottom: .6rem; }
+    .area-card-name { font-size: .95rem; font-weight: 700; color: var(--ink); margin-bottom: .25rem; }
+    .area-card-desc { font-size: .75rem; color: var(--gray-6); }
+
+    @media(max-width:960px){
+      .area-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .area-grid.flip { direction: ltr; }
+      .all-areas { grid-template-columns: 1fr 1fr; }
+    }
+    @media(max-width:640px){ .all-areas { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Alert<span class="nav-logo-dot">PRO</span></a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="packages.html">Packages & Pricing</a>
+      <a href="service-areas.html" class="active">Service Areas</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="tel:2892773306" class="nav-phone">📞 289-277-3306</a>
+      <a href="contact.html" class="nav-cta">Free Quote</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="packages.html">Packages & Pricing</a>
+    <a href="service-areas.html">Service Areas</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="mob-cta">Get a Free Quote</a>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="wrap">
+    <div class="page-hero-breadcrumb"><a href="index.html">Home</a> <span>›</span> Service Areas</div>
+    <div class="eyebrow">Where We Work</div>
+    <h1>Home security for<br>Durham Region & the GTA.</h1>
+    <p class="lead">AlertPRO is based in Whitby and serves communities across Durham Region, eastern GTA and beyond. Local technicians, same-week installs.</p>
+  </div>
+</div>
+
+<div class="trust">
+  <div class="trust-inner">
+    <div class="ti"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Based in Whitby, ON</div>
+    <div class="ti"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Local Durham Region technicians</div>
+    <div class="ti"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Same-week installation available</div>
+    <div class="ti"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Serving 8+ communities</div>
+  </div>
+</div>
+
+<!-- ALL AREAS OVERVIEW -->
+<section class="sec sec--gray">
+  <div class="wrap">
+    <div class="sec-hdr sec-hdr--c r">
+      <div class="eyebrow">Coverage Map</div>
+      <h2>All service areas.</h2>
+      <p class="lead">We serve all of Durham Region and the eastern GTA. Don't see your city? Call us — we may still be able to help.</p>
+    </div>
+    <div class="all-areas r">
+      <a href="#whitby" class="area-card"><div class="area-card-icon">📍</div><div class="area-card-name">Whitby</div><div class="area-card-desc">Our home base</div></a>
+      <a href="#oshawa" class="area-card"><div class="area-card-icon">🏙️</div><div class="area-card-name">Oshawa</div><div class="area-card-desc">Durham's largest city</div></a>
+      <a href="#ajax" class="area-card"><div class="area-card-icon">🏘️</div><div class="area-card-name">Ajax</div><div class="area-card-desc">Growing community</div></a>
+      <a href="#pickering" class="area-card"><div class="area-card-icon">🌊</div><div class="area-card-name">Pickering</div><div class="area-card-desc">Gateway to Durham</div></a>
+      <a href="#clarington" class="area-card"><div class="area-card-icon">🌾</div><div class="area-card-name">Clarington</div><div class="area-card-desc">Bowmanville & beyond</div></a>
+      <a href="#bowmanville" class="area-card"><div class="area-card-icon">🏡</div><div class="area-card-name">Bowmanville</div><div class="area-card-desc">Clarington's heart</div></a>
+      <a href="#scarborough" class="area-card"><div class="area-card-icon">🌆</div><div class="area-card-name">Scarborough</div><div class="area-card-desc">East Toronto</div></a>
+      <a href="#markham" class="area-card"><div class="area-card-icon">🏗️</div><div class="area-card-name">Markham</div><div class="area-card-desc">York Region</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- WHITBY -->
+<section class="area-section" id="whitby">
+  <div class="wrap">
+    <div class="area-grid">
+      <div class="area-content">
+        <div class="eyebrow r">Whitby, Ontario</div>
+        <h2 class="r">Home Security<br>in Whitby</h2>
+        <p class="r">AlertPRO is headquartered right here in Whitby. Our technicians live and work in this community — when you call us, you're talking to a neighbour. We offer the fastest response times and same-week installation across all Whitby neighbourhoods including Pringle Creek, Rolling Acres, Brooklin, and downtown Whitby.</p>
+        <div class="area-points r">
+          <div class="area-point"><div class="area-point-dot">✓</div>Serving all Whitby neighbourhoods</div>
+          <div class="area-point"><div class="area-point-dot">✓</div>Same-day consultations available</div>
+          <div class="area-point"><div class="area-point-dot">✓</div>Local technicians — not contractors</div>
+          <div class="area-point"><div class="area-point-dot">✓</div>24/7 monitored alarm systems from $45/mo</div>
+        </div>
+        <a href="contact.html" class="btn btn-red r">Get a Free Quote in Whitby</a>
+      </div>
+      <div class="r">
+        <div class="area-photo">
+          <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80&auto=format&fit=crop" alt="Home security installation in Whitby Ontario" loading="lazy" />
+          <div class="area-photo-badge"><div class="area-badge-icon">📍</div><div><div class="area-badge-title">Whitby, ON</div><div class="area-badge-sub">AlertPRO Headquarters</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OSHAWA -->
+<section class="area-section sec--gray" id="oshawa">
+  <div class="wrap">
+    <div class="area-grid flip">
+      <div class="area-content">
+        <div class="eyebrow r">Oshawa, Ontario</div>
+        <h2 class="r">Home Security<br>in Oshawa</h2>
+        <p class="r">As Durham Region's largest city, Oshawa is one of our most active service areas. From Lakeview to Northwood, Pinecrest to Windfields, AlertPRO provides fast, professional alarm system installation across all Oshawa neighbourhoods. With a growing population and busy urban streets, a monitored home security system gives Oshawa families genuine peace of mind.</p>
+        <div class="area-points r">
+          <div class="area-point"><div class="area-point-dot">✓</div>All Oshawa neighbourhoods covered</div>
+          <div class="area-point"><div class="area-point-dot">✓</div>Apartments, condos and detached homes</div>
+          <div class="area-point"><div class="area-point-dot">✓</div>Insurance discounts up to 20%</div>
+          <div class="area-point"><div class="area-point-dot">✓</div>Professional install from $199</div>
+        </div>
+        <a href="contact.html" class="btn btn-red r">Get a Free Quote in Oshawa</a>
+      </div>
+      <div class="r">
+        <div class="area-photo">
+          <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80&auto=format&fit=crop" alt="Home security alarm system in Oshawa Ontario" loading="lazy" />
+          <div class="area-photo-badge"><div class="area-badge-icon">🏙️</div><div><div class="area-badge-title">Oshawa, ON</div><div class="area-badge-sub">Durham Region's Largest City</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AJAX -->
+<section class="area-section" id="ajax">
+  <div class="wrap">
+    <div class="area-grid">
+      <div class="area-content">
+        <div class="eyebrow r">Ajax, Ontario</div>
+        <h2 class="r">Home Security<br>in Ajax</h2>
+        <p class="r">Ajax is one of Durham Region's fastest-growing communities, with new subdivisions and families putting down roots every year. AlertPRO serves all of Ajax — from the lakefront communities near Waterfront Trail to newer developments in North Ajax and Audley. Our local technicians know the area and can usually book your installation within days of your call.</p>
+        <div class="area-points r">
+          <div class="area-point"><div class="area-point-dot">✓</div>North Ajax, South Ajax & lakefront</div>
+          <div class="area-point"><div class="area-point-dot">✓</div>New construction homes welcome</div>
+          <div class="area-point"><div class="area-point-dot">✓</div>Smart home & automation ready</div>
+          <div class="area-point"><div class="area-point-dot">✓</div>Same-week installation available</div>
+        </div>
+        <a href="contact.html" class="btn btn-red r">Get a Free Quote in Ajax</a>
+      </div>
+      <div class="r">
+        <div class="area-photo">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop" alt="Residential neighbourhood in Ajax Ontario" loading="lazy" />
+          <div class="area-photo-badge"><div class="area-badge-icon">🏘️</div><div><div class="area-badge-title">Ajax, ON</div><div class="area-badge-sub">Durham Region</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PICKERING -->
+<section class="area-section sec--gray" id="pickering">
+  <div class="wrap">
+    <div class="area-grid flip">
+      <div class="area-content">
+        <div class="eyebrow r">Pickering, Ontario</div>
+        <h2 class="r">Home Security<br>in Pickering</h2>
+        <p class="r">Sitting at the western gateway of Durham Region, Pickering is home to a mix of established neighbourhoods and new developments. AlertPRO serves all of Pickering — from Bay Ridges and Rougemount to Duffin Heights and Seaton. Our monitored alarm systems protect families across Pickering with 24/7 coverage and rapid emergency response.</p>
+        <div class="area-points r">
+          <div class="area-point"><div class="area-point-dot">✓</div>Bay Ridges, Duffin Heights & Seaton</div>
+          <div class="area-point"><div class="area-point-dot">✓</div>Quick GTA-edge response times</div>
+          <div class="area-point"><div class="area-point-dot">✓</div>Video doorbell & outdoor cameras</div>
+          <div class="area-point"><div class="area-point-dot">✓</div>Monitoring from $45/month</div>
+        </div>
+        <a href="contact.html" class="btn btn-red r">Get a Free Quote in Pickering</a>
+      </div>
+      <div class="r">
+        <div class="area-photo">
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&auto=format&fit=crop" alt="Home in Pickering Ontario with security system" loading="lazy" />
+          <div class="area-photo-badge"><div class="area-badge-icon">🌊</div><div><div class="area-badge-title">Pickering, ON</div><div class="area-badge-sub">Gateway to Durham</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLARINGTON -->
+<section class="area-section" id="clarington">
+  <div class="wrap">
+    <div class="area-grid">
+      <div class="area-content">
+        <div class="eyebrow r">Clarington, Ontario</div>
+        <h2 class="r">Home Security<br>in Clarington</h2>
+        <p class="r">Clarington spans a large area at the eastern end of Durham Region, including the communities of Bowmanville, Newcastle, Orono, and Courtice. AlertPRO serves all of Clarington with professional alarm installation and 24/7 monitoring — giving rural and suburban homeowners the same level of protection as any urban neighbourhood.</p>
+        <div class="area-points r">
+          <div class="area-point"><div class="area-point-dot">✓</div>Bowmanville, Newcastle & Courtice</div>
+          <div class="area-point"><div class="area-point-dot">✓</div>Cellular monitoring — no internet needed</div>
+          <div class="area-point"><div class="area-point-dot">✓</div>Rural property experts</div>
+          <div class="area-point"><div class="area-point-dot">✓</div>Full coverage regardless of location</div>
+        </div>
+        <a href="contact.html" class="btn btn-red r">Get a Free Quote in Clarington</a>
+      </div>
+      <div class="r">
+        <div class="area-photo">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&auto=format&fit=crop" alt="Home security in Clarington Ontario" loading="lazy" />
+          <div class="area-photo-badge"><div class="area-badge-icon">🌾</div><div><div class="area-badge-title">Clarington, ON</div><div class="area-badge-sub">Eastern Durham Region</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCARBOROUGH + MARKHAM combined -->
+<section class="area-section sec--gray" id="scarborough">
+  <div class="wrap">
+    <div class="sec-hdr r">
+      <div class="eyebrow">Greater Toronto Area</div>
+      <h2>Scarborough &amp; Markham</h2>
+      <p class="lead">AlertPRO extends service into the eastern GTA — including Scarborough and Markham. Same flat $199 installation, same 24/7 monitoring, same local team.</p>
+    </div>
+    <div class="grid-2">
+      <div class="card r" id="markham">
+        <div class="card-icon">🌆</div>
+        <div class="card-title">Scarborough</div>
+        <p class="card-desc" style="margin-top:.5rem">Serving east Toronto neighbourhoods including Agincourt, Malvern, West Hill, and Birchcliffe. Same-week installation and full 24/7 coverage.</p>
+        <div style="margin-top:1.3rem"><a href="contact.html" class="btn btn-red" style="font-size:.82rem;padding:.7rem 1.3rem">Get a Quote</a></div>
+      </div>
+      <div class="card r d1">
+        <div class="card-icon">🏗️</div>
+        <div class="card-title">Markham</div>
+        <p class="card-desc" style="margin-top:.5rem">Serving Markham's diverse communities including Unionville, Cornell, Milliken, and Berczy Park. Professional installation, smart home integration available.</p>
+        <div style="margin-top:1.3rem"><a href="contact.html" class="btn btn-red" style="font-size:.82rem;padding:.7rem 1.3rem">Get a Quote</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-band">
+  <div class="wrap">
+    <h2 class="r">Don't see your city?</h2>
+    <p class="r">We may still be able to help. Call us or fill out a quote form and we'll let you know if we serve your area — often we do.</p>
+    <div class="cta-band-actions r">
+      <a href="contact.html" class="btn btn-white">Check My Address</a>
+      <a href="tel:2892773306" class="btn btn-ghost-white">📞 289-277-3306</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div><div class="footer-brand-name">Alert<span>PRO</span></div><p class="footer-brand-desc">Professional home security and alarm monitoring serving Whitby, Durham Region and the GTA.</p><a href="tel:2892773306" class="footer-brand-phone">📞 289-277-3306</a></div>
+      <div class="footer-col"><div class="footer-col-title">Company</div><a href="index.html">Home</a><a href="about.html">About Us</a><a href="contact.html">Contact</a></div>
+      <div class="footer-col"><div class="footer-col-title">Services</div><a href="packages.html">Packages & Pricing</a><a href="service-areas.html">Service Areas</a></div>
+      <div class="footer-col"><div class="footer-col-title">Service Areas</div><a href="#whitby">Whitby</a><a href="#oshawa">Oshawa</a><a href="#ajax">Ajax</a><a href="#pickering">Pickering</a><a href="#clarington">Clarington</a></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 AlertPRO · 209 Dundas St E, Whitby ON · <a href="mailto:sales@alertpro.ca" style="color:inherit">sales@alertpro.ca</a></div>
+      <div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target);}}),{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+  const t=document.getElementById('navToggle'),m=document.getElementById('mobileMenu');
+  t.addEventListener('click',()=>{const o=m.classList.toggle('open');t.classList.toggle('open',o);});
+  m.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{m.classList.remove('open');t.classList.remove('open');}));
+</script>
+</body>
+</html>

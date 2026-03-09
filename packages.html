@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home Security Packages & Pricing | AlertPRO – Whitby & Durham Region</title>
+  <meta name="description" content="Compare AlertPRO home security packages. Professional alarm monitoring from $45/month. $199 flat installation. Serving Whitby, Oshawa, Ajax, Pickering and Durham Region." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.alertpro.ca/packages.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+/* ============================================
+   AlertPRO — shared.css
+   Shared across all pages
+   ============================================ */
+
+:root {
+  --red:     #cc1f1a;
+  --red-h:   #a81815;
+  --red-pale:#fdf0ef;
+  --ink:     #0d0f12;
+  --ink-2:   #1c2027;
+  --gray-7:  #444c56;
+  --gray-6:  #666e7a;
+  --gray-3:  #b8bec8;
+  --gray-1:  #f2f4f7;
+  --border:  #e2e5ea;
+  --white:   #ffffff;
+  --max:     1200px;
+  --radius:  8px;
+  --f:       'Inter', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--f); color: var(--ink); background: var(--white); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+/* ── NAV ── */
+.site-header {
+  position: sticky; top: 0; z-index: 1000;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
+}
+.nav-inner {
+  max-width: var(--max); margin: 0 auto; padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px; gap: 2rem;
+}
+.nav-logo {
+  font-size: 1.35rem; font-weight: 800; letter-spacing: .02em;
+  color: var(--ink); flex-shrink: 0; display: flex; align-items: center; gap: .5rem;
+}
+.nav-logo-dot { color: var(--red); }
+.site-nav { display: flex; gap: 1.8rem; align-items: center; flex: 1; justify-content: center; }
+.site-nav a { font-size: .875rem; font-weight: 600; color: var(--gray-6); transition: color .15s; white-space: nowrap; }
+.site-nav a:hover, .site-nav a.active { color: var(--red); }
+.nav-actions { display: flex; align-items: center; gap: .75rem; flex-shrink: 0; }
+.nav-phone { font-size: .82rem; font-weight: 700; color: var(--gray-7); white-space: nowrap; }
+.nav-phone:hover { color: var(--red); }
+.nav-cta {
+  background: var(--red); color: var(--white) !important;
+  padding: .6rem 1.3rem; border-radius: 100px;
+  font-size: .82rem; font-weight: 700; white-space: nowrap;
+  transition: background .15s, transform .15s;
+}
+.nav-cta:hover { background: var(--red-h); transform: translateY(-1px); }
+.nav-toggle {
+  display: none; width: 40px; height: 40px;
+  border: 1.5px solid var(--border); background: var(--white);
+  border-radius: var(--radius); cursor: pointer;
+  align-items: center; justify-content: center; flex-direction: column; gap: 5px;
+}
+.nav-toggle span { display: block; width: 17px; height: 1.5px; background: var(--ink); border-radius: 2px; transition: .25s; }
+.nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.mobile-menu { display: none; border-top: 1px solid var(--border); background: var(--white); }
+.mobile-menu.open { display: block; }
+.mobile-menu a { display: block; padding: 14px 2rem; font-weight: 600; font-size: .95rem; color: var(--ink); border-bottom: 1px solid var(--border); }
+.mobile-menu a:hover { color: var(--red); background: var(--gray-1); }
+.mobile-menu .mob-cta { background: var(--red); color: var(--white) !important; text-align: center; margin: 1rem 2rem 1.5rem; border-radius: 100px; border-bottom: none; }
+
+/* ── FOOTER ── */
+.site-footer { background: var(--ink); color: rgba(255,255,255,.5); padding: 4rem 0 2rem; }
+.footer-inner { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+.footer-brand-name { font-size: 1.3rem; font-weight: 800; color: var(--white); margin-bottom: .6rem; }
+.footer-brand-name span { color: var(--red); }
+.footer-brand-desc { font-size: .82rem; line-height: 1.7; color: rgba(255,255,255,.4); max-width: 240px; margin-bottom: 1.2rem; }
+.footer-brand-phone { font-size: .9rem; font-weight: 700; color: var(--white); }
+.footer-brand-phone:hover { color: var(--red); }
+.footer-col-title { font-size: .7rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 1rem; }
+.footer-col a { display: block; font-size: .83rem; color: rgba(255,255,255,.45); margin-bottom: .55rem; transition: color .15s; }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.06); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer-copy { font-size: .75rem; }
+.footer-bottom-links { display: flex; gap: 1.5rem; }
+.footer-bottom-links a { font-size: .75rem; color: rgba(255,255,255,.3); }
+.footer-bottom-links a:hover { color: var(--white); }
+
+/* ── BUTTONS ── */
+.btn { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--f); font-weight: 700; font-size: .9rem; padding: .85rem 1.8rem; border-radius: var(--radius); border: none; cursor: pointer; transition: all .18s; text-decoration: none; }
+.btn-red { background: var(--red); color: var(--white); box-shadow: 0 2px 12px rgba(204,31,26,.35); }
+.btn-red:hover { background: var(--red-h); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(204,31,26,.45); }
+.btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--border); }
+.btn-outline:hover { border-color: var(--ink); background: var(--gray-1); }
+.btn-white { background: var(--white); color: var(--red); font-weight: 700; }
+.btn-white:hover { background: var(--gray-1); }
+.btn-ghost-white { background: rgba(255,255,255,.08); color: rgba(255,255,255,.9); border: 1.5px solid rgba(255,255,255,.2); backdrop-filter: blur(8px); }
+.btn-ghost-white:hover { background: rgba(255,255,255,.15); color: var(--white); }
+
+/* ── SHARED SECTION STYLES ── */
+.sec { padding: 5.5rem 0; }
+.sec--gray { background: var(--gray-1); }
+.sec--ink { background: var(--ink); color: var(--white); }
+.sec--red { background: var(--red); color: var(--white); }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
+.eyebrow { font-size: .7rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--red); margin-bottom: .6rem; }
+.sec--ink .eyebrow { color: rgba(204,31,26,.8); }
+.sec--red .eyebrow { color: rgba(255,255,255,.7); }
+h1, h2 { font-weight: 800; letter-spacing: -.03em; line-height: 1.08; }
+h1 { font-size: clamp(2.4rem, 4.5vw, 4rem); color: var(--ink); margin-bottom: 1.2rem; }
+h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--ink); margin-bottom: 1rem; }
+.sec--ink h2, .sec--ink h1 { color: var(--white); }
+.sec--red h2 { color: var(--white); }
+.lead { font-size: 1rem; font-weight: 400; color: var(--gray-6); line-height: 1.75; max-width: 520px; }
+.sec--ink .lead { color: rgba(255,255,255,.45); }
+.sec--red .lead { color: rgba(255,255,255,.75); }
+.sec-hdr { margin-bottom: 3.5rem; }
+.sec-hdr--c { text-align: center; }
+.sec-hdr--c .lead { margin: 0 auto; }
+
+/* ── PAGE HERO (inner pages) ── */
+.page-hero {
+  background: var(--ink); padding: 5rem 0 4rem; position: relative; overflow: hidden;
+}
+.page-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(204,31,26,.1) 0%, transparent 65%),
+    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+  background-size: auto, 60px 60px, 60px 60px;
+}
+.page-hero .wrap { position: relative; z-index: 2; }
+.page-hero h1 { color: var(--white); max-width: 700px; }
+.page-hero .lead { color: rgba(255,255,255,.55); max-width: 560px; margin-top: .8rem; }
+.page-hero-breadcrumb { font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 1.2rem; display: flex; align-items: center; gap: .5rem; }
+.page-hero-breadcrumb a { color: rgba(255,255,255,.4); }
+.page-hero-breadcrumb a:hover { color: var(--white); }
+.page-hero-breadcrumb span { color: rgba(255,255,255,.2); }
+
+/* ── TRUST STRIP ── */
+.trust { background: var(--ink-2); padding: 1rem 0; }
+.trust-inner { max-width: var(--max); margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .4rem; }
+.ti { display: flex; align-items: center; gap: .5rem; font-size: .76rem; font-weight: 600; color: rgba(255,255,255,.5); }
+.ti svg { color: var(--red); flex-shrink: 0; }
+
+/* ── CARDS / FEATURES ── */
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 2rem; }
+.card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 2rem; transition: box-shadow .2s, transform .2s; position: relative; overflow: hidden; }
+.card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform .3s; }
+.card:hover { box-shadow: 0 8px 32px rgba(0,0,0,.09); transform: translateY(-3px); }
+.card:hover::after { transform: scaleX(1); }
+.card-icon { width: 48px; height: 48px; border-radius: 10px; background: var(--red-pale); border: 1px solid rgba(204,31,26,.12); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 1.2rem; }
+.card-title { font-size: .95rem; font-weight: 700; color: var(--ink); margin-bottom: .45rem; letter-spacing: -.01em; }
+.card-desc { font-size: .865rem; color: var(--gray-6); line-height: 1.7; }
+
+/* ── SCROLL REVEAL ── */
+.r { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+.r.in { opacity: 1; transform: none; }
+.r.d1 { transition-delay: .1s; }
+.r.d2 { transition-delay: .2s; }
+.r.d3 { transition-delay: .3s; }
+
+/* ── CTA BAND ── */
+.cta-band { background: var(--red); padding: 4rem 0; text-align: center; }
+.cta-band h2 { color: var(--white); margin-bottom: .8rem; }
+.cta-band p { color: rgba(255,255,255,.75); font-size: 1rem; max-width: 480px; margin: 0 auto 2rem; line-height: 1.7; }
+.cta-band-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  .site-nav, .nav-phone { display: none !important; }
+  .nav-toggle { display: inline-flex !important; }
+  .nav-cta { display: none; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .sec { padding: 4rem 0; }
+  .page-hero { padding: 3.5rem 0 3rem; }
+}
+@media (max-width: 640px) {
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .nav-inner { padding: 0 1.2rem; }
+}
+
+</style>
+  <style>
+    .pkg-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; align-items: start; }
+    .pkg { border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--white); transition: box-shadow .25s, transform .25s; }
+    .pkg:hover { box-shadow: 0 12px 40px rgba(0,0,0,.1); transform: translateY(-4px); }
+    .pkg--best { border-color: var(--red); box-shadow: 0 4px 24px rgba(204,31,26,.12); }
+    .pkg-head { padding: 1.6rem 2rem 1.3rem; border-bottom: 1.5px solid var(--border); }
+    .pkg--best .pkg-head { background: var(--red); border-color: var(--red); }
+    .pkg-pill { display: inline-block; font-size: .64rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--red); background: var(--white); padding: .2rem .7rem; border-radius: 100px; margin-bottom: .6rem; }
+    .pkg-name { font-size: 1.35rem; font-weight: 800; letter-spacing: -.02em; color: var(--ink); }
+    .pkg--best .pkg-name { color: var(--white); }
+    .pkg-sub { font-size: .8rem; color: var(--gray-6); margin-top: .2rem; }
+    .pkg--best .pkg-sub { color: rgba(255,255,255,.65); }
+    .pkg-body { padding: 2rem; }
+    .pkg-price { display: flex; align-items: baseline; gap: .3rem; margin-bottom: .25rem; }
+    .pkg-amount { font-size: 3rem; font-weight: 800; letter-spacing: -.04em; color: var(--ink); line-height: 1; }
+    .pkg-per { font-size: .88rem; color: var(--gray-6); }
+    .pkg-install { font-size: .78rem; color: var(--gray-6); margin-bottom: 1.8rem; padding-bottom: 1.8rem; border-bottom: 1px solid var(--border); }
+    .pkg-install strong { color: var(--gray-7); }
+    .pkg-list { list-style: none; display: flex; flex-direction: column; gap: .6rem; margin-bottom: 2rem; }
+    .pkg-list li { display: flex; align-items: flex-start; gap: .6rem; font-size: .875rem; color: var(--gray-6); }
+    .chk { width: 17px; height: 17px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 9px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .pkg-btn { display: block; width: 100%; text-align: center; padding: .9rem; border-radius: 6px; font-weight: 700; font-size: .875rem; cursor: pointer; border: none; transition: all .18s; text-decoration: none; }
+    .pkg-btn--solid { background: var(--red); color: var(--white); box-shadow: 0 2px 12px rgba(204,31,26,.3); }
+    .pkg-btn--solid:hover { background: var(--red-h); }
+    .pkg-btn--ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--border); }
+    .pkg-btn--ghost:hover { border-color: var(--ink); background: var(--gray-1); }
+
+    /* Compare table */
+    .compare-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    .compare-table th { padding: 1rem 1.2rem; text-align: left; font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-6); border-bottom: 2px solid var(--border); }
+    .compare-table th:first-child { width: 40%; }
+    .compare-table td { padding: .9rem 1.2rem; font-size: .875rem; color: var(--gray-6); border-bottom: 1px solid var(--border); }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table td:first-child { font-weight: 600; color: var(--ink); }
+    .compare-table .yes { color: #16a34a; font-weight: 700; font-size: 1rem; }
+    .compare-table .no { color: var(--gray-3); font-size: 1rem; }
+    .compare-table .best-col { background: rgba(204,31,26,.04); }
+    .compare-table th.best-col { color: var(--red); }
+    .compare-table tr:hover td { background: var(--gray-1); }
+
+    /* FAQ */
+    .faq { display: flex; flex-direction: column; gap: 0; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-q { width: 100%; text-align: left; background: none; border: none; padding: 1.4rem 0; font-family: var(--f); font-size: .95rem; font-weight: 700; color: var(--ink); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .faq-q:hover { color: var(--red); }
+    .faq-icon { font-size: 1.3rem; color: var(--red); flex-shrink: 0; transition: transform .25s; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-a { display: none; padding: 0 0 1.4rem; font-size: .875rem; color: var(--gray-6); line-height: 1.75; max-width: 680px; }
+    .faq-item.open .faq-a { display: block; }
+
+    @media(max-width:960px){ .pkg-grid{grid-template-columns:1fr} }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Alert<span class="nav-logo-dot">PRO</span></a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="packages.html" class="active">Packages & Pricing</a>
+      <a href="service-areas.html">Service Areas</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="tel:2892773306" class="nav-phone">📞 289-277-3306</a>
+      <a href="contact.html" class="nav-cta">Free Quote</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="packages.html">Packages & Pricing</a>
+    <a href="service-areas.html">Service Areas</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="mob-cta">Get a Free Quote</a>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="wrap">
+    <div class="page-hero-breadcrumb"><a href="index.html">Home</a> <span>›</span> Packages & Pricing</div>
+    <div class="eyebrow">Transparent Pricing</div>
+    <h1>Simple plans.<br>Honest prices.</h1>
+    <p class="lead">One flat $199 installation fee. Monthly monitoring that often pays for itself through your home insurance discount. No contracts, no surprises.</p>
+  </div>
+</div>
+
+<div class="trust">
+  <div class="trust-inner">
+    <div class="ti"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> $199 flat installation — no hidden fees</div>
+    <div class="ti"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Free equipment included</div>
+    <div class="ti"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Up to 20% insurance discount</div>
+    <div class="ti"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Same-week installation available</div>
+  </div>
+</div>
+
+<!-- PACKAGES -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-hdr sec-hdr--c r">
+      <div class="eyebrow">Choose Your Plan</div>
+      <h2>The right protection<br>for every home.</h2>
+      <p class="lead">All plans include professional installation, free equipment, and 24/7 ULC-listed monitoring. Pick the coverage that fits your home.</p>
+    </div>
+    <div class="pkg-grid">
+      <article class="pkg r">
+        <div class="pkg-head"><div class="pkg-name">Essentials</div><div class="pkg-sub">Ideal for condos &amp; apartments</div></div>
+        <div class="pkg-body">
+          <div class="pkg-price"><span class="pkg-amount">$45</span><span class="pkg-per">/month</span></div>
+          <div class="pkg-install"><strong>$199</strong> one-time installation &amp; activation</div>
+          <ul class="pkg-list">
+            <li><div class="chk">✓</div>Qolsys IQ4 Smart Panel</li>
+            <li><div class="chk">✓</div>2 Door / Window Sensors</li>
+            <li><div class="chk">✓</div>1 Interior Motion Detector</li>
+            <li><div class="chk">✓</div>24/7 ULC Listed Monitoring</li>
+            <li><div class="chk">✓</div>Mobile App (iOS &amp; Android)</li>
+            <li><div class="chk">✓</div>Monitored Smoke Detector</li>
+            <li><div class="chk">✓</div>Monitored CO Detector</li>
+            <li><div class="chk">✓</div>Cellular Backup Connection</li>
+            <li><div class="chk">✓</div>Battery Backup (8+ hours)</li>
+          </ul>
+          <a href="contact.html" class="pkg-btn pkg-btn--ghost">Get Started</a>
+        </div>
+      </article>
+
+      <article class="pkg pkg--best r d1">
+        <div class="pkg-head">
+          <div class="pkg-pill">Most Popular</div>
+          <div class="pkg-name">Home Guard</div>
+          <div class="pkg-sub">Best for detached &amp; semi-detached homes</div>
+        </div>
+        <div class="pkg-body">
+          <div class="pkg-price"><span class="pkg-amount">$55</span><span class="pkg-per">/month</span></div>
+          <div class="pkg-install"><strong>$199</strong> one-time installation &amp; activation</div>
+          <ul class="pkg-list">
+            <li><div class="chk">✓</div>Qolsys IQ4 Smart Panel</li>
+            <li><div class="chk">✓</div>4 Door / Window Sensors</li>
+            <li><div class="chk">✓</div>2 Interior Motion Detectors</li>
+            <li><div class="chk">✓</div>24/7 ULC Listed Monitoring</li>
+            <li><div class="chk">✓</div>Mobile App + Smart Home Control</li>
+            <li><div class="chk">✓</div>Smoke, CO &amp; Flood Detection</li>
+            <li><div class="chk">✓</div>1 Indoor HD Security Camera</li>
+            <li><div class="chk">✓</div>Cellular + WiFi Backup</li>
+            <li><div class="chk">✓</div>Battery Backup (8+ hours)</li>
+            <li><div class="chk">✓</div>Smart Lock Integration Ready</li>
+          </ul>
+          <a href="contact.html" class="pkg-btn pkg-btn--solid">Get Started</a>
+        </div>
+      </article>
+
+      <article class="pkg r d2">
+        <div class="pkg-head"><div class="pkg-name">Total Protection</div><div class="pkg-sub">Complete coverage for larger homes</div></div>
+        <div class="pkg-body">
+          <div class="pkg-price"><span class="pkg-amount">$69</span><span class="pkg-per">/month</span></div>
+          <div class="pkg-install"><strong>$199</strong> one-time installation &amp; activation</div>
+          <ul class="pkg-list">
+            <li><div class="chk">✓</div>Qolsys IQ4 Smart Panel</li>
+            <li><div class="chk">✓</div>6+ Door / Window Sensors</li>
+            <li><div class="chk">✓</div>3 Interior Motion Detectors</li>
+            <li><div class="chk">✓</div>24/7 ULC Listed Monitoring</li>
+            <li><div class="chk">✓</div>Full Smart Home Integration</li>
+            <li><div class="chk">✓</div>Smoke, CO, Flood &amp; Heat</li>
+            <li><div class="chk">✓</div>2 HD Outdoor Security Cameras</li>
+            <li><div class="chk">✓</div>Video Doorbell Camera</li>
+            <li><div class="chk">✓</div>Cellular + WiFi Backup</li>
+            <li><div class="chk">✓</div>Smart Lock + Garage Integration</li>
+          </ul>
+          <a href="contact.html" class="pkg-btn pkg-btn--ghost">Get Started</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE TABLE -->
+<section class="sec sec--gray" id="compare">
+  <div class="wrap">
+    <div class="sec-hdr r">
+      <div class="eyebrow">Feature Comparison</div>
+      <h2>See what's in each plan.</h2>
+      <p class="lead">Every plan includes our Qolsys IQ4 smart panel, professional installation, and 24/7 monitored protection.</p>
+    </div>
+    <div class="r" style="overflow-x:auto">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Essentials</th>
+            <th class="best-col">Home Guard</th>
+            <th>Total Protection</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Monthly Fee</td><td>$45/mo</td><td class="best-col">$55/mo</td><td>$69/mo</td></tr>
+          <tr><td>Installation Fee</td><td>$199</td><td class="best-col">$199</td><td>$199</td></tr>
+          <tr><td>Door / Window Sensors</td><td>2</td><td class="best-col">4</td><td>6+</td></tr>
+          <tr><td>Motion Detectors</td><td>1</td><td class="best-col">2</td><td>3</td></tr>
+          <tr><td>24/7 ULC Monitoring</td><td><span class="yes">✓</span></td><td class="best-col"><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>Mobile App Control</td><td><span class="yes">✓</span></td><td class="best-col"><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>Smoke &amp; CO Detection</td><td><span class="yes">✓</span></td><td class="best-col"><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>Flood Detection</td><td><span class="no">—</span></td><td class="best-col"><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>Indoor Security Camera</td><td><span class="no">—</span></td><td class="best-col">1 HD Camera</td><td>2 HD Cameras</td></tr>
+          <tr><td>Video Doorbell</td><td><span class="no">—</span></td><td class="best-col"><span class="no">—</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>Smart Home Integration</td><td><span class="no">—</span></td><td class="best-col"><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>Cellular Backup</td><td><span class="yes">✓</span></td><td class="best-col"><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+          <tr><td>Battery Backup</td><td><span class="yes">✓</span></td><td class="best-col"><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-hdr r">
+      <div class="eyebrow">FAQ</div>
+      <h2>Common questions<br>about our plans.</h2>
+    </div>
+    <div class="faq r" style="max-width:760px">
+      <div class="faq-item">
+        <button class="faq-q">Is there a contract? <span class="faq-icon">+</span></button>
+        <div class="faq-a">AlertPRO offers flexible monitoring agreements. We believe in earning your business every month through great service — not locking you in. Ask our team for current terms when you get your quote.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What happens if my power goes out? <span class="faq-icon">+</span></button>
+        <div class="faq-a">Every AlertPRO system includes a built-in battery backup that keeps your panel running for 8+ hours during a power outage. The Qolsys IQ4 also uses cellular communication as a backup if your internet goes down — your home stays protected no matter what.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How much will I save on home insurance? <span class="faq-icon">+</span></button>
+        <div class="faq-a">Most Ontario home insurers offer discounts of 5–20% for professionally monitored alarm systems. The exact amount depends on your insurer and policy. Many AlertPRO customers find their annual insurance savings completely offset their monthly monitoring fee — effectively making protection free.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How long does installation take? <span class="faq-icon">+</span></button>
+        <div class="faq-a">A typical residential installation takes 2–4 hours depending on the size of your home and the package you choose. Our technician will arrive with all equipment, complete the install, test every sensor and zone, and walk you through the app before leaving.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can I add more sensors or cameras later? <span class="faq-icon">+</span></button>
+        <div class="faq-a">Absolutely. The Qolsys IQ4 system is modular and expandable. You can add door/window sensors, motion detectors, cameras, smart locks, and more at any time. Just call our team and we'll schedule a technician visit.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Do I need internet for the system to work? <span class="faq-icon">+</span></button>
+        <div class="faq-a">No. While internet connectivity enables the mobile app and smart home features, your alarm system's core monitoring function runs over cellular — the same networks your cell phone uses. Internet outages do not affect your protection.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-band">
+  <div class="wrap">
+    <h2 class="r">Not sure which plan is right for you?</h2>
+    <p class="r">Call us or fill out a quick quote form — our local team will recommend the best fit for your home and budget.</p>
+    <div class="cta-band-actions r">
+      <a href="contact.html" class="btn btn-white">Get a Free Quote</a>
+      <a href="tel:2892773306" class="btn btn-ghost-white">📞 289-277-3306</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div><div class="footer-brand-name">Alert<span>PRO</span></div><p class="footer-brand-desc">Professional home security and alarm monitoring serving Whitby, Durham Region and the GTA.</p><a href="tel:2892773306" class="footer-brand-phone">📞 289-277-3306</a></div>
+      <div class="footer-col"><div class="footer-col-title">Company</div><a href="index.html">Home</a><a href="about.html">About Us</a><a href="contact.html">Contact</a></div>
+      <div class="footer-col"><div class="footer-col-title">Services</div><a href="packages.html">Packages & Pricing</a><a href="service-areas.html">Service Areas</a></div>
+      <div class="footer-col"><div class="footer-col-title">Service Areas</div><a href="service-areas.html#whitby">Whitby</a><a href="service-areas.html#oshawa">Oshawa</a><a href="service-areas.html#ajax">Ajax</a><a href="service-areas.html#pickering">Pickering</a></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 AlertPRO · 209 Dundas St E, Whitby ON · <a href="mailto:sales@alertpro.ca" style="color:inherit">sales@alertpro.ca</a></div>
+      <div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target);}}),{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+  const t=document.getElementById('navToggle'),m=document.getElementById('mobileMenu');
+  t.addEventListener('click',()=>{const o=m.classList.toggle('open');t.classList.toggle('open',o);});
+  m.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{m.classList.remove('open');t.classList.remove('open');}));
+  document.querySelectorAll('.faq-q').forEach(btn=>{btn.addEventListener('click',()=>{const item=btn.parentElement;item.classList.toggle('open');});});
+</script>
+</body>
+</html>

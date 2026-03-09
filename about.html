@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About AlertPRO | Local Home Security Company – Whitby, Durham Region</title>
+  <meta name="description" content="AlertPRO is a locally owned home security company based in Whitby, Ontario. We install and monitor alarm systems for homeowners across Durham Region and the GTA." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.alertpro.ca/about.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+/* ============================================
+   AlertPRO — shared.css
+   Shared across all pages
+   ============================================ */
+
+:root {
+  --red:     #cc1f1a;
+  --red-h:   #a81815;
+  --red-pale:#fdf0ef;
+  --ink:     #0d0f12;
+  --ink-2:   #1c2027;
+  --gray-7:  #444c56;
+  --gray-6:  #666e7a;
+  --gray-3:  #b8bec8;
+  --gray-1:  #f2f4f7;
+  --border:  #e2e5ea;
+  --white:   #ffffff;
+  --max:     1200px;
+  --radius:  8px;
+  --f:       'Inter', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--f); color: var(--ink); background: var(--white); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+/* ── NAV ── */
+.site-header {
+  position: sticky; top: 0; z-index: 1000;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
+}
+.nav-inner {
+  max-width: var(--max); margin: 0 auto; padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px; gap: 2rem;
+}
+.nav-logo {
+  font-size: 1.35rem; font-weight: 800; letter-spacing: .02em;
+  color: var(--ink); flex-shrink: 0; display: flex; align-items: center; gap: .5rem;
+}
+.nav-logo-dot { color: var(--red); }
+.site-nav { display: flex; gap: 1.8rem; align-items: center; flex: 1; justify-content: center; }
+.site-nav a { font-size: .875rem; font-weight: 600; color: var(--gray-6); transition: color .15s; white-space: nowrap; }
+.site-nav a:hover, .site-nav a.active { color: var(--red); }
+.nav-actions { display: flex; align-items: center; gap: .75rem; flex-shrink: 0; }
+.nav-phone { font-size: .82rem; font-weight: 700; color: var(--gray-7); white-space: nowrap; }
+.nav-phone:hover { color: var(--red); }
+.nav-cta {
+  background: var(--red); color: var(--white) !important;
+  padding: .6rem 1.3rem; border-radius: 100px;
+  font-size: .82rem; font-weight: 700; white-space: nowrap;
+  transition: background .15s, transform .15s;
+}
+.nav-cta:hover { background: var(--red-h); transform: translateY(-1px); }
+.nav-toggle {
+  display: none; width: 40px; height: 40px;
+  border: 1.5px solid var(--border); background: var(--white);
+  border-radius: var(--radius); cursor: pointer;
+  align-items: center; justify-content: center; flex-direction: column; gap: 5px;
+}
+.nav-toggle span { display: block; width: 17px; height: 1.5px; background: var(--ink); border-radius: 2px; transition: .25s; }
+.nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.mobile-menu { display: none; border-top: 1px solid var(--border); background: var(--white); }
+.mobile-menu.open { display: block; }
+.mobile-menu a { display: block; padding: 14px 2rem; font-weight: 600; font-size: .95rem; color: var(--ink); border-bottom: 1px solid var(--border); }
+.mobile-menu a:hover { color: var(--red); background: var(--gray-1); }
+.mobile-menu .mob-cta { background: var(--red); color: var(--white) !important; text-align: center; margin: 1rem 2rem 1.5rem; border-radius: 100px; border-bottom: none; }
+
+/* ── FOOTER ── */
+.site-footer { background: var(--ink); color: rgba(255,255,255,.5); padding: 4rem 0 2rem; }
+.footer-inner { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+.footer-brand-name { font-size: 1.3rem; font-weight: 800; color: var(--white); margin-bottom: .6rem; }
+.footer-brand-name span { color: var(--red); }
+.footer-brand-desc { font-size: .82rem; line-height: 1.7; color: rgba(255,255,255,.4); max-width: 240px; margin-bottom: 1.2rem; }
+.footer-brand-phone { font-size: .9rem; font-weight: 700; color: var(--white); }
+.footer-brand-phone:hover { color: var(--red); }
+.footer-col-title { font-size: .7rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 1rem; }
+.footer-col a { display: block; font-size: .83rem; color: rgba(255,255,255,.45); margin-bottom: .55rem; transition: color .15s; }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,.06); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer-copy { font-size: .75rem; }
+.footer-bottom-links { display: flex; gap: 1.5rem; }
+.footer-bottom-links a { font-size: .75rem; color: rgba(255,255,255,.3); }
+.footer-bottom-links a:hover { color: var(--white); }
+
+/* ── BUTTONS ── */
+.btn { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--f); font-weight: 700; font-size: .9rem; padding: .85rem 1.8rem; border-radius: var(--radius); border: none; cursor: pointer; transition: all .18s; text-decoration: none; }
+.btn-red { background: var(--red); color: var(--white); box-shadow: 0 2px 12px rgba(204,31,26,.35); }
+.btn-red:hover { background: var(--red-h); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(204,31,26,.45); }
+.btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--border); }
+.btn-outline:hover { border-color: var(--ink); background: var(--gray-1); }
+.btn-white { background: var(--white); color: var(--red); font-weight: 700; }
+.btn-white:hover { background: var(--gray-1); }
+.btn-ghost-white { background: rgba(255,255,255,.08); color: rgba(255,255,255,.9); border: 1.5px solid rgba(255,255,255,.2); backdrop-filter: blur(8px); }
+.btn-ghost-white:hover { background: rgba(255,255,255,.15); color: var(--white); }
+
+/* ── SHARED SECTION STYLES ── */
+.sec { padding: 5.5rem 0; }
+.sec--gray { background: var(--gray-1); }
+.sec--ink { background: var(--ink); color: var(--white); }
+.sec--red { background: var(--red); color: var(--white); }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
+.eyebrow { font-size: .7rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--red); margin-bottom: .6rem; }
+.sec--ink .eyebrow { color: rgba(204,31,26,.8); }
+.sec--red .eyebrow { color: rgba(255,255,255,.7); }
+h1, h2 { font-weight: 800; letter-spacing: -.03em; line-height: 1.08; }
+h1 { font-size: clamp(2.4rem, 4.5vw, 4rem); color: var(--ink); margin-bottom: 1.2rem; }
+h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--ink); margin-bottom: 1rem; }
+.sec--ink h2, .sec--ink h1 { color: var(--white); }
+.sec--red h2 { color: var(--white); }
+.lead { font-size: 1rem; font-weight: 400; color: var(--gray-6); line-height: 1.75; max-width: 520px; }
+.sec--ink .lead { color: rgba(255,255,255,.45); }
+.sec--red .lead { color: rgba(255,255,255,.75); }
+.sec-hdr { margin-bottom: 3.5rem; }
+.sec-hdr--c { text-align: center; }
+.sec-hdr--c .lead { margin: 0 auto; }
+
+/* ── PAGE HERO (inner pages) ── */
+.page-hero {
+  background: var(--ink); padding: 5rem 0 4rem; position: relative; overflow: hidden;
+}
+.page-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(204,31,26,.1) 0%, transparent 65%),
+    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+  background-size: auto, 60px 60px, 60px 60px;
+}
+.page-hero .wrap { position: relative; z-index: 2; }
+.page-hero h1 { color: var(--white); max-width: 700px; }
+.page-hero .lead { color: rgba(255,255,255,.55); max-width: 560px; margin-top: .8rem; }
+.page-hero-breadcrumb { font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 1.2rem; display: flex; align-items: center; gap: .5rem; }
+.page-hero-breadcrumb a { color: rgba(255,255,255,.4); }
+.page-hero-breadcrumb a:hover { color: var(--white); }
+.page-hero-breadcrumb span { color: rgba(255,255,255,.2); }
+
+/* ── TRUST STRIP ── */
+.trust { background: var(--ink-2); padding: 1rem 0; }
+.trust-inner { max-width: var(--max); margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .4rem; }
+.ti { display: flex; align-items: center; gap: .5rem; font-size: .76rem; font-weight: 600; color: rgba(255,255,255,.5); }
+.ti svg { color: var(--red); flex-shrink: 0; }
+
+/* ── CARDS / FEATURES ── */
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 2rem; }
+.card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 2rem; transition: box-shadow .2s, transform .2s; position: relative; overflow: hidden; }
+.card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform .3s; }
+.card:hover { box-shadow: 0 8px 32px rgba(0,0,0,.09); transform: translateY(-3px); }
+.card:hover::after { transform: scaleX(1); }
+.card-icon { width: 48px; height: 48px; border-radius: 10px; background: var(--red-pale); border: 1px solid rgba(204,31,26,.12); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 1.2rem; }
+.card-title { font-size: .95rem; font-weight: 700; color: var(--ink); margin-bottom: .45rem; letter-spacing: -.01em; }
+.card-desc { font-size: .865rem; color: var(--gray-6); line-height: 1.7; }
+
+/* ── SCROLL REVEAL ── */
+.r { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+.r.in { opacity: 1; transform: none; }
+.r.d1 { transition-delay: .1s; }
+.r.d2 { transition-delay: .2s; }
+.r.d3 { transition-delay: .3s; }
+
+/* ── CTA BAND ── */
+.cta-band { background: var(--red); padding: 4rem 0; text-align: center; }
+.cta-band h2 { color: var(--white); margin-bottom: .8rem; }
+.cta-band p { color: rgba(255,255,255,.75); font-size: 1rem; max-width: 480px; margin: 0 auto 2rem; line-height: 1.7; }
+.cta-band-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  .site-nav, .nav-phone { display: none !important; }
+  .nav-toggle { display: inline-flex !important; }
+  .nav-cta { display: none; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .sec { padding: 4rem 0; }
+  .page-hero { padding: 3.5rem 0 3rem; }
+}
+@media (max-width: 640px) {
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .nav-inner { padding: 0 1.2rem; }
+}
+
+</style>
+  <style>
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .about-photo { border-radius: 12px; overflow: hidden; aspect-ratio: 4/5; box-shadow: 0 24px 64px rgba(0,0,0,.14); }
+    .about-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .about-body p { font-size: .95rem; color: var(--gray-6); line-height: 1.8; margin-bottom: 1.2rem; }
+    .about-body h2 { margin-bottom: 1.2rem; }
+
+    .value-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+    .value-card { padding: 2rem; border: 1px solid var(--border); border-radius: 10px; background: var(--white); }
+    .value-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .value-title { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: .5rem; }
+    .value-desc { font-size: .875rem; color: var(--gray-6); line-height: 1.7; }
+
+    .team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+    .team-card { text-align: center; }
+    .team-avatar { width: 100px; height: 100px; border-radius: 50%; background: var(--gray-1); border: 3px solid var(--border); margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; overflow: hidden; }
+    .team-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .team-name { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: .2rem; }
+    .team-role { font-size: .8rem; color: var(--red); font-weight: 600; margin-bottom: .5rem; text-transform: uppercase; letter-spacing: .06em; }
+    .team-bio { font-size: .84rem; color: var(--gray-6); line-height: 1.65; }
+
+    .cert-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+    .cert { display: flex; align-items: center; gap: .65rem; padding: .8rem 1.2rem; background: var(--white); border: 1.5px solid var(--border); border-radius: 8px; font-size: .82rem; font-weight: 600; color: var(--ink); }
+    .cert-icon { font-size: 1.2rem; }
+
+    @media(max-width:960px){
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-photo { aspect-ratio: 16/9; }
+      .value-grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Alert<span class="nav-logo-dot">PRO</span></a>
+    <nav class="site-nav">
+      <a href="index.html">Home</a>
+      <a href="packages.html">Packages & Pricing</a>
+      <a href="service-areas.html">Service Areas</a>
+      <a href="about.html" class="active">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="tel:2892773306" class="nav-phone">📞 289-277-3306</a>
+      <a href="contact.html" class="nav-cta">Free Quote</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="packages.html">Packages & Pricing</a>
+    <a href="service-areas.html">Service Areas</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="mob-cta">Get a Free Quote</a>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="wrap">
+    <div class="page-hero-breadcrumb"><a href="index.html">Home</a> <span>›</span> About</div>
+    <div class="eyebrow">Our Story</div>
+    <h1>Local people.<br>Professional protection.</h1>
+    <p class="lead">AlertPRO was built on a simple idea: Durham Region homeowners deserve the same quality of home security as anyone else — without national company pricing or overseas call centres.</p>
+  </div>
+</div>
+
+<!-- STORY -->
+<section class="sec">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="r">
+        <div class="about-photo">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&auto=format&fit=crop" alt="AlertPRO team installing home security system in Whitby Ontario" loading="lazy" />
+        </div>
+      </div>
+      <div class="about-body">
+        <div class="eyebrow r">Who We Are</div>
+        <h2 class="r">A Durham Region company, through and through.</h2>
+        <p class="r">AlertPRO was founded and is headquartered in Whitby, Ontario. We started because we saw a gap in the market: large national security companies were charging premium prices while delivering impersonal service through contractors and overseas monitoring centres.</p>
+        <p class="r">We do things differently. Our technicians are local employees — not subcontractors. They live in the same communities they protect. When you call us, you speak with someone who knows your neighbourhood, not someone reading from a script.</p>
+        <p class="r">We use the Qolsys IQ4 — one of the most advanced smart security panels available — and monitor through a fully ULC-listed Canadian monitoring centre. You get enterprise-grade technology with small-business care.</p>
+        <div class="cert-row r">
+          <div class="cert"><span class="cert-icon">🏅</span>ULC Listed Monitoring</div>
+          <div class="cert"><span class="cert-icon">🇨🇦</span>Canadian Owned</div>
+          <div class="cert"><span class="cert-icon">🔒</span>Licensed & Insured</div>
+          <div class="cert"><span class="cert-icon">⭐</span>5-Star Rated</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="sec sec--gray">
+  <div class="wrap">
+    <div class="sec-hdr sec-hdr--c r">
+      <div class="eyebrow">What We Stand For</div>
+      <h2>Our values.</h2>
+      <p class="lead">These aren't just words on a wall — they're why our customers refer their neighbours to us.</p>
+    </div>
+    <div class="value-grid">
+      <div class="value-card r">
+        <div class="value-icon">🤝</div>
+        <div class="value-title">Honesty, always</div>
+        <p class="value-desc">We tell you exactly what you need, what it costs, and what to expect. No upselling, no fine-print surprises, no pressure. If our system isn't the right fit for you, we'll tell you that too.</p>
+      </div>
+      <div class="value-card r d1">
+        <div class="value-icon">🎯</div>
+        <div class="value-title">Quality over quantity</div>
+        <p class="value-desc">We'd rather do 10 installs a week that are perfect than 30 that are rushed. Every system gets our full attention, proper configuration, and a thorough walk-through before we leave.</p>
+      </div>
+      <div class="value-card r d2">
+        <div class="value-icon">📞</div>
+        <div class="value-title">Real support, real people</div>
+        <p class="value-desc">When something isn't right, you call us and a person answers. We don't outsource support. We stand behind every installation and follow up to make sure you're happy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar" style="background:var(--ink);padding:3.5rem 0">
+  <div class="stats-grid" style="max-width:var(--max);margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center">
+    <div class="r"><div class="sb-val" style="font-size:2.4rem;font-weight:800;color:var(--white);margin-bottom:.3rem">Durham</div><div class="sb-lbl" style="font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4)">Region Based</div></div>
+    <div class="r d1"><div class="sb-val" style="font-size:2.4rem;font-weight:800;color:var(--red);margin-bottom:.3rem">8+</div><div class="sb-lbl" style="font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4)">Communities Served</div></div>
+    <div class="r d2"><div class="sb-val" style="font-size:2.4rem;font-weight:800;color:var(--white);margin-bottom:.3rem">24/7</div><div class="sb-lbl" style="font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4)">Monitoring Coverage</div></div>
+    <div class="r d3"><div class="sb-val" style="font-size:2.4rem;font-weight:800;color:var(--red);margin-bottom:.3rem">5★</div><div class="sb-lbl" style="font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4)">Customer Rating</div></div>
+  </div>
+</div>
+
+<!-- WHY LOCAL MATTERS -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-hdr sec-hdr--c r">
+      <div class="eyebrow">Why Local Matters</div>
+      <h2>The difference you'll actually feel.</h2>
+      <p class="lead">Here's what you get with AlertPRO that you won't get from a national chain.</p>
+    </div>
+    <div class="grid-3">
+      <article class="card r">
+        <div class="card-icon">🏠</div>
+        <div class="card-title">We know these houses</div>
+        <p class="card-desc">Durham Region homes have specific layouts, basement configurations and entry points our technicians know by heart. Better installs, fewer surprises.</p>
+      </article>
+      <article class="card r d1">
+        <div class="card-icon">⚡</div>
+        <div class="card-title">Faster response to your calls</div>
+        <p class="card-desc">No call queues. No tier-1 support reading from a script. When you call AlertPRO, someone local who knows your system picks up.</p>
+      </article>
+      <article class="card r d2">
+        <div class="card-icon">💬</div>
+        <div class="card-title">Your feedback shapes us</div>
+        <p class="card-desc">As a local business, every customer matters to us. Your review, your referral, your satisfaction — these are what keep us going. We earn it every time.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-band">
+  <div class="wrap">
+    <h2 class="r">Ready to meet your local security team?</h2>
+    <p class="r">Get a no-pressure free quote from AlertPRO. Same-day callback, honest advice, and a system that actually fits your home.</p>
+    <div class="cta-band-actions r">
+      <a href="contact.html" class="btn btn-white">Get a Free Quote</a>
+      <a href="tel:2892773306" class="btn btn-ghost-white">📞 289-277-3306</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div><div class="footer-brand-name">Alert<span>PRO</span></div><p class="footer-brand-desc">Professional home security and alarm monitoring serving Whitby, Durham Region and the GTA.</p><a href="tel:2892773306" class="footer-brand-phone">📞 289-277-3306</a></div>
+      <div class="footer-col"><div class="footer-col-title">Company</div><a href="index.html">Home</a><a href="about.html">About Us</a><a href="contact.html">Contact</a></div>
+      <div class="footer-col"><div class="footer-col-title">Services</div><a href="packages.html">Packages & Pricing</a><a href="service-areas.html">Service Areas</a></div>
+      <div class="footer-col"><div class="footer-col-title">Service Areas</div><a href="service-areas.html#whitby">Whitby</a><a href="service-areas.html#oshawa">Oshawa</a><a href="service-areas.html#ajax">Ajax</a><a href="service-areas.html#pickering">Pickering</a></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 AlertPRO · 209 Dundas St E, Whitby ON · <a href="mailto:sales@alertpro.ca" style="color:inherit">sales@alertpro.ca</a></div>
+      <div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target);}}),{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+  const t=document.getElementById('navToggle'),m=document.getElementById('mobileMenu');
+  t.addEventListener('click',()=>{const o=m.classList.toggle('open');t.classList.toggle('open',o);});
+  m.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{m.classList.remove('open');t.classList.remove('open');}));
+</script>
+</body>
+</html>

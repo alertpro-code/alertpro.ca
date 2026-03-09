@@ -297,10 +297,13 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--ink); margin-bottom: 1r
       .review-grid{grid-template-columns:1fr}
       .why-grid{grid-template-columns:1fr;gap:2.5rem}
       .why-photo{aspect-ratio:16/9}
+      .grid-3{grid-template-columns:1fr}
+      .how-it-works-grid{grid-template-columns:1fr !important}
     }
     @media(max-width:640px){
       .hero h1{font-size:2.2rem}
       .stats-grid{grid-template-columns:1fr}
+      html,body{overflow-x:hidden;max-width:100vw}
     }
   </style>
 </head>
@@ -412,7 +415,7 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--ink); margin-bottom: 1r
     </div>
 
     <!-- HOW IT WORKS callout -->
-    <div class="r" style="background:var(--gray-1);border:1.5px solid var(--border);border-radius:12px;padding:2rem 2.5rem;margin-bottom:3rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;text-align:center;">
+    <div class="r how-it-works-grid" style="background:var(--gray-1);border:1.5px solid var(--border);border-radius:12px;padding:2rem 2.5rem;margin-bottom:3rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;text-align:center;">
       <div>
         <div style="font-size:1.8rem;margin-bottom:.5rem">📦</div>
         <div style="font-size:.82rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);margin-bottom:.3rem">The foundation</div>

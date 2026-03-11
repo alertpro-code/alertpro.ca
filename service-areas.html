@@ -204,6 +204,24 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--ink); margin-bottom: 1r
   .nav-inner { padding: 0 1.2rem; }
 }
 
+
+    .city-badge {
+      position:absolute;
+      bottom:1rem;
+      left:50%;
+      transform:translateX(-50%);
+      white-space:nowrap;
+      background:rgba(204,31,26,.15);
+      border:1px solid rgba(204,31,26,.3);
+      border-radius:100px;
+      padding:.3rem .8rem;
+      font-size:.7rem;
+      font-weight:700;
+      color:#e57373;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
+    @media(max-width:960px){ .city-badge { display: none; } }
 </style>
   <style>
     .area-nav { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 4rem; }
@@ -303,7 +321,8 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--ink); margin-bottom: 1r
       <a href="#whitby" class="area-card"><div class="area-card-icon">📍</div><div class="area-card-name">Whitby</div><div class="area-card-desc">Our home base</div></a>
       <a href="#oshawa" class="area-card"><div class="area-card-icon">🏙️</div><div class="area-card-name">Oshawa</div><div class="area-card-desc">Durham's largest city</div></a>
       <a href="#ajax" class="area-card"><div class="area-card-icon">🏘️</div><div class="area-card-name">Ajax</div><div class="area-card-desc">Growing community</div></a>
-      <a href="#pickering" class="area-card"><div class="area-card-icon">🌊</div><div class="area-card-name">Pickering</div><div class="area-card-desc">Gateway to Durham</div></a>
+      <a href="#pickering" class="area-card"><div class="area-card-icon">🌊</div><div class="area-card-name">Pickering</div><div class="area-card-desc">Gateway to Durham</div>
+      <div class="city-badge">24/7 Monitored</div></a>
       <a href="#clarington" class="area-card"><div class="area-card-icon">🌾</div><div class="area-card-name">Clarington</div><div class="area-card-desc">Bowmanville & beyond</div></a>
       <a href="#bowmanville" class="area-card"><div class="area-card-icon">🏡</div><div class="area-card-name">Bowmanville</div><div class="area-card-desc">Clarington's heart</div></a>
       <a href="#scarborough" class="area-card"><div class="area-card-icon">🌆</div><div class="area-card-name">Scarborough</div><div class="area-card-desc">East Toronto</div></a>
@@ -356,8 +375,9 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--ink); margin-bottom: 1r
       <div style="width:40px;height:2px;background:#cc1f1a;margin:1.2rem auto;position:relative;"></div>
       <!-- subtitle -->
       <div style="font-size:.82rem;color:rgba(255,255,255,.55);position:relative;">AlertPRO Headquarters</div>
+      <div class="city-badge">24/7 Monitored</div>
       <!-- monitored badge -->
-      <div style="position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);white-space:nowrap;background:rgba(204,31,26,.15);border:1px solid rgba(204,31,26,.3);border-radius:100px;padding:.3rem .8rem;font-size:.7rem;font-weight:700;color:#e57373;letter-spacing:.06em;text-transform:uppercase;">24/7 Monitored</div>
+      
     </div>
       </div>
     </div>
@@ -408,8 +428,9 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--ink); margin-bottom: 1r
       <div style="width:40px;height:2px;background:#cc1f1a;margin:1.2rem auto;position:relative;"></div>
       <!-- subtitle -->
       <div style="font-size:.82rem;color:rgba(255,255,255,.55);position:relative;">Durham Region's Largest City</div>
+      <div class="city-badge">24/7 Monitored</div>
       <!-- monitored badge -->
-      <div style="position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);white-space:nowrap;background:rgba(204,31,26,.15);border:1px solid rgba(204,31,26,.3);border-radius:100px;padding:.3rem .8rem;font-size:.7rem;font-weight:700;color:#e57373;letter-spacing:.06em;text-transform:uppercase;">24/7 Monitored</div>
+      
     </div>
       </div>
     </div>
@@ -460,8 +481,9 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--ink); margin-bottom: 1r
       <div style="width:40px;height:2px;background:#cc1f1a;margin:1.2rem auto;position:relative;"></div>
       <!-- subtitle -->
       <div style="font-size:.82rem;color:rgba(255,255,255,.55);position:relative;">Durham Region</div>
+      <div class="city-badge">24/7 Monitored</div>
       <!-- monitored badge -->
-      <div style="position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);white-space:nowrap;background:rgba(204,31,26,.15);border:1px solid rgba(204,31,26,.3);border-radius:100px;padding:.3rem .8rem;font-size:.7rem;font-weight:700;color:#e57373;letter-spacing:.06em;text-transform:uppercase;">24/7 Monitored</div>
+      
     </div>
       </div>
     </div>
@@ -513,7 +535,7 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--ink); margin-bottom: 1r
       <!-- subtitle -->
       <div style="font-size:.82rem;color:rgba(255,255,255,.55);position:relative;">Gateway to Durham</div>
       <!-- monitored badge -->
-      <div style="position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);white-space:nowrap;background:rgba(204,31,26,.15);border:1px solid rgba(204,31,26,.3);border-radius:100px;padding:.3rem .8rem;font-size:.7rem;font-weight:700;color:#e57373;letter-spacing:.06em;text-transform:uppercase;">24/7 Monitored</div>
+      
     </div>
       </div>
     </div>
@@ -564,8 +586,9 @@ h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--ink); margin-bottom: 1r
       <div style="width:40px;height:2px;background:#cc1f1a;margin:1.2rem auto;position:relative;"></div>
       <!-- subtitle -->
       <div style="font-size:.82rem;color:rgba(255,255,255,.55);position:relative;">Eastern Durham Region</div>
+      <div class="city-badge">24/7 Monitored</div>
       <!-- monitored badge -->
-      <div style="position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);white-space:nowrap;background:rgba(204,31,26,.15);border:1px solid rgba(204,31,26,.3);border-radius:100px;padding:.3rem .8rem;font-size:.7rem;font-weight:700;color:#e57373;letter-spacing:.06em;text-transform:uppercase;">24/7 Monitored</div>
+      
     </div>
       </div>
     </div>

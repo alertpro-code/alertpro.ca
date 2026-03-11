@@ -134,7 +134,20 @@
 
     .submit-btn { width: 100%; padding: .95rem 1rem; background: var(--al-blue); color: var(--white); border: none; border-radius: 8px; font-family: var(--f); font-size: 1rem; font-weight: 700; cursor: pointer; transition: background .15s, transform .1s, box-shadow .15s; margin-top: .2rem; }
     .submit-btn:hover { background: var(--al-mid); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,48,135,.25); }
+    .submit-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
     .form-note { text-align: center; margin-top: .7rem; font-size: .74rem; color: var(--muted); line-height: 1.5; }
+
+    /* THANK YOU STATE */
+    .ty-icon { font-size: 2.5rem; text-align: center; margin-bottom: 1rem; animation: pop .4s cubic-bezier(.34,1.56,.64,1) both; }
+    @keyframes pop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .ty-title { font-family: var(--f-serif); font-size: 1.9rem; color: var(--ap-ink); text-align: center; margin-bottom: .5rem; }
+    .ty-body { font-size: .88rem; color: var(--muted); text-align: center; line-height: 1.6; margin-bottom: 1.3rem; }
+    .ty-body strong { color: var(--ap-ink); font-weight: 700; }
+    .ty-steps { display: flex; flex-direction: column; gap: .65rem; margin-bottom: 1.2rem; }
+    .ty-step { display: flex; align-items: flex-start; gap: .75rem; padding: .75rem .9rem; background: var(--gray); border-radius: 8px; }
+    .ty-num { width: 24px; height: 24px; border-radius: 50%; background: var(--al-blue); color: var(--white); font-size: .7rem; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: .1rem; }
+    .ty-text { font-size: .82rem; color: var(--text); line-height: 1.5; }
+    .ty-partner { display: flex; align-items: center; justify-content: center; gap: .5rem; background: var(--al-light); border-radius: 8px; padding: .65rem 1rem; font-size: .78rem; font-weight: 600; color: var(--al-blue); text-align: center; }
 
     @media(max-width:860px) {
       .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
@@ -288,7 +301,6 @@
         <input type="hidden" name="_subject" value="New Lead — Allstate Whitby Partner" />
         <input type="hidden" name="referred_by" value="Allstate Whitby" />
         <input type="hidden" name="welcome_gift" id="giftInput" value="" />
-        <input type="hidden" name="_next" value="https://www.alertpro.ca/allstate-whitby-thankyou.html" />
 
         <!-- GIFT SELECTOR -->
         <label class="gift-label">Choose your welcome gift</label>
@@ -364,9 +376,23 @@
           <input type="text" name="address" placeholder="123 Main St, Whitby" />
         </div>
 
-        <button type="submit" class="submit-btn">Claim My System + Gift →</button>
+        <button type="submit" class="submit-btn" id="submitBtn">Claim My System + Gift →</button>
       </form>
-      <p class="form-note">Your info is shared only with AlertPRO for scheduling your installation.</p>
+
+      <!-- THANK YOU STATE (hidden until form submitted) -->
+      <div id="thankYouState" style="display:none;">
+        <div class="ty-icon">✅</div>
+        <div class="ty-title">You're all set.</div>
+        <p class="ty-body">Someone from AlertPRO will call you <strong>today</strong> to confirm your welcome gift and book your installation.</p>
+        <div class="ty-steps">
+          <div class="ty-step"><div class="ty-num">1</div><div class="ty-text">AlertPRO calls you today to confirm your details and gift choice.</div></div>
+          <div class="ty-step"><div class="ty-num">2</div><div class="ty-text">You pick an install time — priority booking as an Allstate client, usually same week.</div></div>
+          <div class="ty-step"><div class="ty-num">3</div><div class="ty-text">Once your system is live, let Sarah Mitchell know to ask about your insurance discount.</div></div>
+        </div>
+        <div class="ty-partner">🤝 Offer arranged exclusively by Allstate Whitby for their clients.</div>
+      </div>
+
+      <p class="form-note" id="formNote">Your info is shared only with AlertPRO for scheduling your installation.</p>
     </div>
   </div>
 </section>
@@ -482,6 +508,43 @@
       opt.querySelector('input[type="radio"]').checked = true;
       document.getElementById('giftInput').value = opt.dataset.value;
     });
+  });
+
+  // AJAX form submission
+  document.getElementById('partnerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+
+    try {
+      const data = new FormData(this);
+      const response = await fetch('https://formspree.io/f/mojkjnpa', {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        // Swap form for thank you state
+        document.getElementById('partnerForm').style.display = 'none';
+        document.querySelector('.form-title').style.display = 'none';
+        document.querySelector('.form-sub').style.display = 'none';
+        document.querySelector('.form-partner-strip').style.display = 'none';
+        document.getElementById('formNote').style.display = 'none';
+        document.getElementById('thankYouState').style.display = 'block';
+        // Scroll form card into view
+        document.getElementById('thankYouState').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Claim My System + Gift →';
+        alert('Something went wrong. Please call us at 289-277-3306 or try again.');
+      }
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'Claim My System + Gift →';
+      alert('Something went wrong. Please call us at 289-277-3306 or try again.');
+    }
   });
 
   // Fade in on scroll

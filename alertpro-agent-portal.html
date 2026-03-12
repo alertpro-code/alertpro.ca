@@ -947,7 +947,6 @@ function downloadExcel() {
 
   const gross = pkg.monthly * pkg.multiple;
   const net   = gross + hwProfit + installCharged - baseTotalWithTax;
-  const hwProfit = hwMarkup * 0.75;
 
   const miscUsed = miscRows.filter(r => !r.removed && r.amount > 0);
   let miscTotal = 0;

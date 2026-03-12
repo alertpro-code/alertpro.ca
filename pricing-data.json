@@ -9,14 +9,15 @@
       "monthly": 45,
       "multiple": 23,
       "installCollected": 199,
-      "baseSubtotal": 957.7,
-      "baseHST": 124.5,
-      "baseTotalWithTax": 1082.2,
-      "netFunding": 151.8,
+      "baseSubtotal": 908.7,
+      "baseHST": 118.13,
+      "baseTotalWithTax": 1026.83,
+      "netFunding": 8.17,
       "highlight": false,
       "badge": null,
       "includesCamera": false,
-      "includesSmartPlug": false
+      "includesSmartPlug": false,
+      "installCost": 150
     },
     {
       "id": "resi-3yr",
@@ -25,14 +26,15 @@
       "monthly": 50,
       "multiple": 17,
       "installCollected": 199,
-      "baseSubtotal": 957.7,
-      "baseHST": 124.5,
-      "baseTotalWithTax": 1082.2,
-      "netFunding": -33.2,
+      "baseSubtotal": 908.7,
+      "baseHST": 118.13,
+      "baseTotalWithTax": 1026.83,
+      "netFunding": -176.83,
       "highlight": false,
       "badge": null,
       "includesCamera": false,
-      "includesSmartPlug": false
+      "includesSmartPlug": false,
+      "installCost": 150
     },
     {
       "id": "vid-5yr",
@@ -41,14 +43,15 @@
       "monthly": 55,
       "multiple": 26,
       "installCollected": 249,
-      "baseSubtotal": 1219.65,
-      "baseHST": 158.55,
-      "baseTotalWithTax": 1378.2,
-      "netFunding": 300.8,
+      "baseSubtotal": 1170.65,
+      "baseHST": 152.18,
+      "baseTotalWithTax": 1322.83,
+      "netFunding": 107.17,
       "highlight": true,
       "badge": "Recommended",
       "includesCamera": true,
-      "includesSmartPlug": false
+      "includesSmartPlug": false,
+      "installCost": 200
     },
     {
       "id": "vid-3yr",
@@ -57,14 +60,15 @@
       "monthly": 60,
       "multiple": 20,
       "installCollected": 249,
-      "baseSubtotal": 1219.65,
-      "baseHST": 158.55,
-      "baseTotalWithTax": 1378.2,
-      "netFunding": 70.8,
+      "baseSubtotal": 1170.65,
+      "baseHST": 152.18,
+      "baseTotalWithTax": 1322.83,
+      "netFunding": -122.83,
       "highlight": false,
       "badge": null,
       "includesCamera": true,
-      "includesSmartPlug": false
+      "includesSmartPlug": false,
+      "installCost": 200
     },
     {
       "id": "auto-5yr",
@@ -73,14 +77,15 @@
       "monthly": 62,
       "multiple": 26,
       "installCollected": 299,
-      "baseSubtotal": 1329.04,
-      "baseHST": 172.78,
-      "baseTotalWithTax": 1501.82,
-      "netFunding": 409.18,
+      "baseSubtotal": 1280.04,
+      "baseHST": 166.41,
+      "baseTotalWithTax": 1446.45,
+      "netFunding": 165.55,
       "highlight": true,
-      "badge": "Top Earner ★",
+      "badge": "Top Earner â",
       "includesCamera": true,
-      "includesSmartPlug": true
+      "includesSmartPlug": true,
+      "installCost": 250
     },
     {
       "id": "auto-3yr",
@@ -89,14 +94,15 @@
       "monthly": 67,
       "multiple": 20,
       "installCollected": 299,
-      "baseSubtotal": 1329.04,
-      "baseHST": 172.78,
-      "baseTotalWithTax": 1501.82,
-      "netFunding": 137.18,
+      "baseSubtotal": 1280.04,
+      "baseHST": 166.41,
+      "baseTotalWithTax": 1446.45,
+      "netFunding": -106.45,
       "highlight": false,
       "badge": null,
       "includesCamera": true,
-      "includesSmartPlug": true
+      "includesSmartPlug": true,
+      "installCost": 250
     },
     {
       "id": "comm-3yr",
@@ -105,14 +111,15 @@
       "monthly": 45,
       "multiple": 19,
       "installCollected": 399,
-      "baseSubtotal": 1369.65,
-      "baseHST": 178.05,
-      "baseTotalWithTax": 1547.7,
-      "netFunding": -293.7,
+      "baseSubtotal": 1270.65,
+      "baseHST": 165.18,
+      "baseTotalWithTax": 1435.83,
+      "netFunding": -580.83,
       "highlight": false,
       "badge": null,
       "includesCamera": true,
-      "includesSmartPlug": false
+      "includesSmartPlug": false,
+      "installCost": 300
     }
   ],
   "baseSystemItems": [
@@ -123,13 +130,13 @@
       "allPackages": true
     },
     {
-      "name": "Door Contact — Long Range (×2)",
+      "name": "Door Contact â Long Range (Ã2)",
       "msrp": 130,
       "agentCost": 105.3,
       "allPackages": true
     },
     {
-      "name": "Motion Sensor — Long Range",
+      "name": "Motion Sensor â Long Range",
       "msrp": 190,
       "agentCost": 120.15,
       "allPackages": true
@@ -197,7 +204,7 @@
     },
     {
       "name": "Wireless Motion Sensor",
-      "note": "Ceiling Mount 360°",
+      "note": "Ceiling Mount 360Â°",
       "msrp": 275,
       "agentCost": 199.8
     },

@@ -147,6 +147,14 @@ header {
   overflow: hidden;
 }
 .pkg-card:hover { border-color: #aaa; box-shadow: var(--shadow-md); transform: translateY(-1px); }
+.cam-btn {
+  padding: 10px 18px; border: 2px solid var(--border); border-radius: 10px;
+  background: var(--white); cursor: pointer; font-family: 'Inter', sans-serif;
+  font-size: 13px; font-weight: 600; color: var(--muted); text-align: center;
+  transition: all .15s; min-width: 150px;
+}
+.cam-btn.cam-active { border-color: var(--red); background: #FEF2F2; color: var(--red); }
+.cam-btn:hover:not(.cam-active) { border-color: #aaa; color: var(--text); }
 
 .pkg-card.is-5yr { border-top: 3px solid var(--gold); }
 .pkg-card.is-3yr { border-top: 3px solid #93C5FD; }
@@ -387,6 +395,21 @@ tbody td { padding: 10px 12px; vertical-align: middle; }
     </div>
     <div class="card mb32">
       <div class="card-body">
+        <!-- CAMERA TOGGLE — only shown for camera packages -->
+        <div id="camera-toggle-wrap" style="display:none;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--border);">
+          <div style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;">Camera Selection</div>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <button id="cam-indoor-btn" class="cam-btn cam-active" onclick="setCameraType('indoor')">
+              📷 Indoor Camera
+              <span id="cam-indoor-cost" style="display:block;font-size:12px;font-weight:800;margin-top:2px;"></span>
+            </button>
+            <button id="cam-outdoor-btn" class="cam-btn" onclick="setCameraType('outdoor')">
+              🎥 Outdoor Camera
+              <span id="cam-outdoor-cost" style="display:block;font-size:12px;font-weight:800;margin-top:2px;"></span>
+            </button>
+            <div style="font-size:11px;color:var(--muted);flex:1;min-width:160px;">Price includes installation. Selection affects net funding.</div>
+          </div>
+        </div>
         <div class="included-grid" id="included-grid"></div>
       </div>
     </div>
@@ -441,23 +464,45 @@ tbody td { padding: 10px 12px; vertical-align: middle; }
       </div>
     </div>
 
+    <!-- MISC CHARGES -->
+    <div class="sec-hdr mb16"><div class="sec-hdr-title">Misc Charges</div><div class="sec-hdr-sub">Any extra charges — you keep 75% of each</div></div>
+    <div class="card mb32">
+      <div class="card-body">
+        <div id="misc-rows"></div>
+        <button onclick="addMiscRow()" style="margin-top:10px;padding:7px 16px;background:transparent;border:1.5px dashed var(--border);border-radius:7px;font-family:'Inter',sans-serif;font-size:12px;color:var(--muted);cursor:pointer;">+ Add Line</button>
+      </div>
+    </div>
+
+    <!-- NOTES TO JASON -->
+    <div class="sec-hdr mb16"><div class="sec-hdr-title">Notes</div><div class="sec-hdr-sub">Anything you want to communicate — included in the downloaded quote</div></div>
+    <div class="card mb32">
+      <div class="card-body">
+        <textarea id="agent-notes" placeholder="e.g. Customer requested outdoor camera upgrade, hard install on side of house..." style="width:100%;min-height:90px;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Inter',sans-serif;font-size:13px;color:var(--text);outline:none;resize:vertical;line-height:1.5;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+      </div>
+    </div>
+
     <!-- SUMMARY -->
     <div class="sec-hdr mb16"><div class="sec-hdr-title">Deal Summary</div></div>
-    <div class="summary-grid mb24" style="grid-template-columns:repeat(3,1fr);">
+    <div class="summary-grid mb24" style="grid-template-columns:repeat(4,1fr);">
       <div class="scard green">
         <div class="scard-label">Your Net Funding</div>
         <div class="scard-value" id="s-net">—</div>
-        <div class="scard-sub">Funding + install share, after base system cost</div>
+        <div class="scard-sub">From monitoring contract</div>
       </div>
-      <div class="scard gold">
+      <div class="scard">
         <div class="scard-label">Hardware Profit (75%)</div>
         <div class="scard-value" id="s-hw-profit">$0.00</div>
         <div class="scard-sub">Your share of hardware markup</div>
       </div>
       <div class="scard">
+        <div class="scard-label">Misc Profit (75%)</div>
+        <div class="scard-value" id="s-misc-profit">$0.00</div>
+        <div class="scard-sub">Your share of misc charges</div>
+      </div>
+      <div class="scard gold">
         <div class="scard-label">Total Estimated Earnings</div>
-        <div class="scard-value" id="s-total" style="color:var(--text);">—</div>
-        <div class="scard-sub">Net funding + hardware profit</div>
+        <div class="scard-value" id="s-total">—</div>
+        <div class="scard-sub">Net funding + all profit</div>
       </div>
     </div>
 
@@ -493,6 +538,8 @@ const HST = 0.13;
 let DATA = null;
 let selectedPkg = null;
 let hwRows = [];
+let miscRows = [];
+let cameraType = 'indoor'; // 'indoor' or 'outdoor'
 
 function $f(n) {
   if (n === null || n === undefined || isNaN(n)) return '—';
@@ -559,8 +606,19 @@ function handleExcelUpload(file) {
 }
 
 function parseExcelRows(rows) {
-  // The template has three sections separated by dark header rows
-  // We identify rows by scanning for known section headers and item names
+  // ROW MAP from AlertPro-Pricing-Template-v2.xlsx (0-indexed after XLSX parse):
+  // SECTION 1 header at row with 'SECTION 1'
+  // Base items: IQ4(7), Door(8), Motion(9), SmartPlug(10), [cam note row(11)], Indoor cam(12), Outdoor cam(13), Install cost(14)
+  // Calculated rows: BaseSub-Indoor(15), BaseSub-Outdoor(16), HST-in(17), HST-out(18), Total-Indoor(19), Total-Outdoor(20)
+  // SECTION 2: Monthly(24), Multiple(25), InstallCollected(26), NetFund-Indoor(27), NetFund-Outdoor(28)
+  // SECTION 3: hardware starts ~row 31
+  // Columns D-J = packages 0-6 (resi5, resi3, vid5, vid3, auto5, auto3, comm3)
+  // Column indices: A=0, B=1, C=2, D=3, E=4, F=5, G=6, H=7, I=8, J=9
+
+  const PKG_IDS   = ['resi-5yr','resi-3yr','vid-5yr','vid-3yr','auto-5yr','auto-3yr','comm-3yr'];
+  const PKG_HAS_CAM = [false, false, true, true, true, true, true];
+  const PKG_COLS  = [3,4,5,6,7,8,9]; // D=3,E=4,...J=9
+
   const newData = {
     _updated: new Date().toISOString().slice(0, 10),
     packages: JSON.parse(JSON.stringify(FALLBACK.packages)),
@@ -568,58 +626,113 @@ function parseExcelRows(rows) {
     hardware: JSON.parse(JSON.stringify(FALLBACK.hardware))
   };
 
-  let section = null; // 'base', 'packages', 'hardware'
-  let pkgIdx  = 0;
-  let hwIdx   = 0;
-  let baseIdx = 0;
-
+  // Find section start rows
+  let sec1Row = -1, sec2Row = -1, sec3Row = -1;
   for (let i = 0; i < rows.length; i++) {
-    const row = rows[i];
-    const a   = String(row[0] || '').trim();
+    const a = String(rows[i][0] || '').trim();
+    if (a.includes('SECTION 1')) sec1Row = i;
+    if (a.includes('SECTION 2')) sec2Row = i;
+    if (a.includes('SECTION 3')) sec3Row = i;
+  }
+  if (sec1Row < 0 || sec2Row < 0 || sec3Row < 0) return null;
 
-    // Detect section headers
-    if (a.includes('SECTION 1')) { section = 'base'; continue; }
-    if (a.includes('SECTION 2')) { section = 'packages'; pkgIdx = 0; continue; }
-    if (a.includes('SECTION 3')) { section = 'hardware'; hwIdx = 0; continue; }
+  const r1 = sec1Row; // base items start here + offsets
 
-    // Skip header rows and spacers
-    if (!a || a === 'Item' || a === 'Package' || a.startsWith('Yellow')) continue;
+  // Helper: get numeric value from row offset and column
+  const val = (rowOffset, col) => parseFloat(rows[r1 + rowOffset]?.[col]) || 0;
 
-    const b = parseFloat(row[1]) || 0;
-    const c = parseFloat(row[2]) || 0;
-    const d = parseFloat(row[3]) || 0;
-    const e = parseFloat(row[4]) || 0;
+  // ── BASE SYSTEM ITEMS ──────────────────────────────────
+  // IQ4=+3, Door=+4, Motion=+5, SmartPlug=+6, [note=+7], IndoorCam=+8, OutdoorCam=+9, InstallCost=+10
+  const BASE_OFFSETS = [3,4,5,6]; // IQ4, Door, Motion, SmartPlug
+  BASE_OFFSETS.forEach((off, idx) => {
+    newData.baseSystemItems[idx].msrp      = val(off, 1); // col B
+    newData.baseSystemItems[idx].agentCost = val(off, 2); // col C
+  });
+  // Indoor camera = offset 8, Outdoor = 9 (col C = default cost)
+  const indoorCamCostDefault  = val(8, 2);
+  const outdoorCamCostDefault = val(9, 2);
+  // Also save in baseSystemItems[4] (Indoor Camera) as default
+  newData.baseSystemItems[4].agentCost = indoorCamCostDefault;
+  newData.baseSystemItems[4].msrp      = val(8, 1);
 
-    if (section === 'base' && c > 0 && baseIdx < newData.baseSystemItems.length) {
-      newData.baseSystemItems[baseIdx].msrp      = b;
-      newData.baseSystemItems[baseIdx].agentCost = c;
-      baseIdx++;
+  // ── PACKAGES ──────────────────────────────────────────
+  // Section 2 rows relative to sec2Row:
+  // +2=monthly, +3=multiple, +4=installCollected, +5=NetFunding-Indoor, +6=NetFunding-Outdoor
+  const s2 = sec2Row;
+  const rowV = (rowAbs, col) => parseFloat(rows[rowAbs]?.[col]) || 0;
+
+  // Find the actual data rows by scanning for numeric values after sec2Row
+  let monthlyRowAbs = -1, multRowAbs = -1, instCollRowAbs = -1;
+  let netInRowAbs = -1, netOutRowAbs = -1;
+  for (let i = s2+1; i < s2+15 && i < rows.length; i++) {
+    const a = String(rows[i][0] || '').trim();
+    if (a.includes('Monthly Rate'))    monthlyRowAbs  = i;
+    if (a.includes('Funding Multiple'))multRowAbs     = i;
+    if (a.includes('Suggested Install'))instCollRowAbs= i;
+    if (a.includes('Net Funding') && a.includes('Indoor'))  netInRowAbs  = i;
+    if (a.includes('Net Funding') && a.includes('Outdoor')) netOutRowAbs = i;
+  }
+
+  // Find base total rows in section 1
+  let totInRowAbs = -1, totOutRowAbs = -1;
+  for (let i = r1+1; i < r1+25 && i < rows.length; i++) {
+    const a = String(rows[i][0] || '').trim();
+    if (a.includes('BASE TOTAL') && a.includes('Indoor'))  totInRowAbs  = i;
+    if (a.includes('BASE TOTAL') && a.includes('Outdoor')) totOutRowAbs = i;
+  }
+  // Also find install cost row
+  let installCostRowAbs = -1;
+  for (let i = r1+1; i < r1+20 && i < rows.length; i++) {
+    const a = String(rows[i][0] || '').trim();
+    if (a.includes('Installation Fee') && a.includes('baked')) installCostRowAbs = i;
+  }
+
+  // Get per-package indoor/outdoor camera costs (each pkg column may differ)
+  const getColCamCosts = (colIdx) => {
+    const r8  = parseFloat(rows[r1+8]?.[colIdx])  || indoorCamCostDefault;
+    const r9  = parseFloat(rows[r1+9]?.[colIdx])  || outdoorCamCostDefault;
+    return { indoor: r8, outdoor: r9 };
+  };
+
+  PKG_IDS.forEach((id, pi) => {
+    const pkg    = newData.packages[pi];
+    const colIdx = PKG_COLS[pi];
+
+    if (monthlyRowAbs   >= 0) pkg.monthly          = rowV(monthlyRowAbs,   colIdx);
+    if (multRowAbs      >= 0) pkg.multiple          = rowV(multRowAbs,      colIdx);
+    if (instCollRowAbs  >= 0) pkg.installCollected  = rowV(instCollRowAbs,  colIdx);
+    if (installCostRowAbs >= 0) pkg.installCostBakedIn = rowV(installCostRowAbs, colIdx);
+
+    const camCosts = getColCamCosts(colIdx);
+    pkg.indoorCameraAgentCost  = camCosts.indoor;
+    pkg.outdoorCameraAgentCost = camCosts.outdoor;
+
+    // Base totals
+    if (totInRowAbs >= 0) {
+      const totIn  = rowV(totInRowAbs,  colIdx);
+      const totOut = PKG_HAS_CAM[pi] && totOutRowAbs >= 0 ? rowV(totOutRowAbs, colIdx) : totIn;
+      pkg.baseTotalWithTax        = totIn;
+      pkg.baseTotalWithTaxOutdoor = totOut;
+      pkg.baseSubtotal        = Math.round((totIn  / 1.13) * 100) / 100;
+      pkg.baseSubtotalOutdoor = Math.round((totOut / 1.13) * 100) / 100;
+      pkg.baseHST             = Math.round((totIn  - pkg.baseSubtotal)        * 100) / 100;
+      pkg.baseHSTOutdoor      = Math.round((totOut - pkg.baseSubtotalOutdoor) * 100) / 100;
     }
 
-    if (section === 'packages' && c > 0 && pkgIdx < newData.packages.length) {
-      const pkg = newData.packages[pkgIdx];
-      pkg.monthly          = c;
-      pkg.multiple         = d;
-      pkg.installCollected = e;
-      // Recalculate base cost from base items
-      let itemsCost = 0;
-      newData.baseSystemItems.forEach(item => {
-        const inPkg = item.allPackages || (item.packages && item.packages.includes(pkg.id));
-        if (inPkg) itemsCost += item.agentCost;
-      });
-      const sub = Math.round((itemsCost + e) * 100) / 100;
-      const hst = Math.round(sub * 0.13 * 100) / 100;
-      const tot = Math.round((sub + hst) * 100) / 100;
-      pkg.baseSubtotal     = sub;
-      pkg.baseHST          = hst;
-      pkg.baseTotalWithTax = tot;
-      pkg.netFunding       = Math.round((c * d + e - tot) * 100) / 100;
-      pkgIdx++;
-    }
+    pkg.netFunding = Math.round((pkg.monthly * pkg.multiple + pkg.installCollected - pkg.baseTotalWithTax) * 100) / 100;
+  });
 
-    if (section === 'hardware' && c > 0 && hwIdx < newData.hardware.length) {
-      newData.hardware[hwIdx].msrp      = c;
-      newData.hardware[hwIdx].agentCost = d;
+  // ── HARDWARE ──────────────────────────────────────────
+  // Each hardware row: col A=name, B=note, C=msrp, D=agentCost
+  let hwIdx = 0;
+  for (let i = sec3Row + 2; i < rows.length && hwIdx < newData.hardware.length; i++) {
+    const a = String(rows[i][0] || '').trim();
+    if (!a || a.startsWith('🟡') || a.startsWith('Item')) continue;
+    const msrp = parseFloat(rows[i][2]) || 0;
+    const cost = parseFloat(rows[i][3]) || 0;
+    if (msrp > 0 && cost > 0) {
+      newData.hardware[hwIdx].msrp      = msrp;
+      newData.hardware[hwIdx].agentCost = cost;
       hwIdx++;
     }
   }
@@ -673,6 +786,16 @@ function selectPkg(id) {
   const el = document.getElementById('pkg-' + id);
   if (el) el.classList.add('selected');
   selectedPkg = DATA.packages.find(p => p.id === id) || null;
+  cameraType = 'indoor'; // reset to indoor on package change
+  buildIncluded();
+  updateCalc();
+}
+
+// ── CAMERA SELECTION ──────────────────────────────────
+function setCameraType(type) {
+  cameraType = type;
+  document.getElementById('cam-indoor-btn').classList.toggle('cam-active', type === 'indoor');
+  document.getElementById('cam-outdoor-btn').classList.toggle('cam-active', type === 'outdoor');
   buildIncluded();
   updateCalc();
 }
@@ -683,8 +806,24 @@ function buildIncluded() {
   grid.innerHTML = '';
   if (!selectedPkg) return;
 
+  const hasCam = selectedPkg.includesCamera;
+  const camWrap = document.getElementById('camera-toggle-wrap');
+
+  if (hasCam) {
+    camWrap.style.display = 'block';
+    const indoorCost  = selectedPkg.indoorCameraAgentCost  || selectedPkg.baseCameraAgentCost || 211.95;
+    const outdoorCost = selectedPkg.outdoorCameraAgentCost || 395.55;
+    document.getElementById('cam-indoor-cost').textContent  = $f(indoorCost)  + ' agent cost';
+    document.getElementById('cam-outdoor-cost').textContent = $f(outdoorCost) + ' agent cost';
+  } else {
+    camWrap.style.display = 'none';
+  }
+
   DATA.baseSystemItems.forEach(item => {
-    const active = !item.packages || item.packages.includes(selectedPkg.id);
+    // Skip camera items — we show a combined camera tile below
+    if (item.name && item.name.toLowerCase().includes('camera') && !item.allPackages) return;
+
+    const active = item.allPackages || (item.packages && item.packages.includes(selectedPkg.id));
     const div = document.createElement('div');
     div.className = 'inc-item' + (active ? '' : ' inactive');
     div.innerHTML = `
@@ -695,17 +834,74 @@ function buildIncluded() {
     grid.appendChild(div);
   });
 
+  // Camera tile (only for camera packages)
+  if (hasCam) {
+    const isOutdoor = cameraType === 'outdoor';
+    const camDiv = document.createElement('div');
+    camDiv.className = 'inc-item';
+    camDiv.style.background = isOutdoor ? '#FFFBEB' : '#EFF6FF';
+    camDiv.style.borderColor = isOutdoor ? '#FDE68A' : '#BFDBFE';
+    camDiv.innerHTML = `
+      <div class="inc-item-name" style="color:${isOutdoor ? '#B45309' : '#1D4ED8'}">
+        ${isOutdoor ? '🎥 Outdoor Camera' : '📷 Indoor Camera'}
+      </div>
+      <div class="inc-item-msrp">Price incl. installation</div>
+      <span class="inc-free-badge" style="background:${isOutdoor ? '#B45309' : '#1D4ED8'}">INCLUDED</span>
+    `;
+    grid.appendChild(camDiv);
+  }
+
   // Install fee tile
   const inst = document.createElement('div');
   inst.className = 'inc-item';
-  inst.style.background = '#EFF6FF';
-  inst.style.borderColor = '#BFDBFE';
+  inst.style.background = '#F0FDF4';
+  inst.style.borderColor = '#A7F3D0';
   inst.innerHTML = `
-    <div class="inc-item-name" style="color:#1D4ED8">Installation Fee</div>
-    <div class="inc-item-msrp">Collected: ${$f(selectedPkg.installCollected)}</div>
-    <span class="inc-free-badge" style="background:#1D4ED8">YOU COLLECT THIS</span>
+    <div class="inc-item-name" style="color:#0D7A4E">Installation Fee</div>
+    <div class="inc-item-msrp">Suggested: ${$f(selectedPkg.installCollected)}</div>
+    <span class="inc-free-badge" style="background:#0D7A4E">YOU COLLECT</span>
   `;
   grid.appendChild(inst);
+}
+
+// ── MISC CHARGES ──────────────────────────────────────
+function addMiscRow() {
+  const i = miscRows.length;
+  miscRows.push({ desc: '', amount: 0 });
+  const wrap = document.getElementById('misc-rows');
+  const div = document.createElement('div');
+  div.id = 'misc-row-' + i;
+  div.style.cssText = 'display:flex;gap:10px;align-items:center;margin-bottom:8px;flex-wrap:wrap;';
+  div.innerHTML = `
+    <input type="text" placeholder="Description (e.g. Hard install on brick wall)" id="misc-desc-${i}"
+      style="flex:1;min-width:200px;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'Inter',sans-serif;font-size:13px;outline:none;"
+      oninput="miscChange(${i})" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'">
+    <div style="display:flex;align-items:center;gap:6px;">
+      <span style="color:var(--muted);font-weight:700;">$</span>
+      <input type="number" min="0" step="1" placeholder="0" id="misc-amt-${i}"
+        style="width:100px;padding:8px 10px;border:1.5px solid var(--border);border-radius:7px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;outline:none;text-align:right;"
+        oninput="miscChange(${i})" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'">
+    </div>
+    <span id="misc-profit-${i}" style="font-size:12px;color:var(--green);font-weight:600;min-width:80px;"></span>
+    <button onclick="removeMiscRow(${i})" style="padding:6px 10px;background:transparent;border:1px solid #FECACA;border-radius:6px;color:#EF4444;cursor:pointer;font-size:12px;">✕</button>
+  `;
+  wrap.appendChild(div);
+}
+
+function miscChange(i) {
+  miscRows[i].desc   = document.getElementById('misc-desc-' + i).value;
+  miscRows[i].amount = parseFloat(document.getElementById('misc-amt-' + i).value) || 0;
+  const profit = miscRows[i].amount * 0.75;
+  const el = document.getElementById('misc-profit-' + i);
+  if (el) el.textContent = profit > 0 ? 'Your share: ' + $f(profit) : '';
+  updateCalc();
+}
+
+function removeMiscRow(i) {
+  miscRows[i] = { desc: '', amount: 0, removed: true };
+  const el = document.getElementById('misc-row-' + i);
+  if (el) el.remove();
+  updateCalc();
 }
 
 // ── HARDWARE TABLE ────────────────────────────────────
@@ -770,9 +966,6 @@ function rowChange(i) {
 }
 
 // ── CALCULATIONS ──────────────────────────────────────
-// Net Funding  = pkg.netFunding (base, with $0 install) + installKept (50% of what agent charges)
-// installKept  = installCharged * 0.50
-// Hardware profit = 75% of (sellPrice - agentCost) per item
 function updateCalc() {
   if (!selectedPkg) return;
   const pkg = selectedPkg;
@@ -780,35 +973,36 @@ function updateCalc() {
   const installCharged = parseFloat(document.getElementById('install-charged').value) || 0;
   const installKept    = installCharged * 0.50;
 
-  // Net funding = base net (which assumed full suggested install) adjusted for actual install
-  // Base netFunding in JSON = gross + pkg.installCollected - baseTotalWithTax
-  // We replace installCollected with actual installKept
-  const gross  = pkg.monthly * pkg.multiple;
-  const net    = gross + installKept - pkg.baseTotalWithTax;
+  const useOutdoor = cameraType === 'outdoor' && pkg.includesCamera;
+  const baseTotalWithTax = (useOutdoor && pkg.baseTotalWithTaxOutdoor) ? pkg.baseTotalWithTaxOutdoor : pkg.baseTotalWithTax;
+  const baseSubtotal     = (useOutdoor && pkg.baseSubtotalOutdoor)     ? pkg.baseSubtotalOutdoor     : pkg.baseSubtotal;
+  const baseHST          = (useOutdoor && pkg.baseHSTOutdoor)          ? pkg.baseHSTOutdoor          : pkg.baseHST;
 
-  // Hardware: agent gets 75% of markup
+  const gross = pkg.monthly * pkg.multiple;
+  const net   = gross + installKept - baseTotalWithTax;
+
   let hwMarkup = 0;
-  hwRows.forEach(r => {
-    const markup = (r.qty * r.sellPrice) - (r.qty * r.item.agentCost);
-    hwMarkup += markup;
-  });
+  hwRows.forEach(r => { hwMarkup += (r.qty * r.sellPrice) - (r.qty * r.item.agentCost); });
   const hwProfit = hwMarkup * 0.75;
-  const totalEarnings = net + hwProfit;
 
-  // Install display
+  let miscTotal = 0;
+  miscRows.forEach(r => { if (!r.removed) miscTotal += r.amount; });
+  const miscProfit = miscTotal * 0.75;
+
+  const totalEarnings = net + hwProfit + miscProfit;
+
   document.getElementById('install-kept-display').textContent = $f(installKept);
   document.getElementById('install-suggested').textContent    = $f(pkg.installCollected);
 
-  // Summary cards
-  document.getElementById('s-net').textContent       = $f(net);
-  document.getElementById('s-hw-profit').textContent = $f(hwProfit);
-  document.getElementById('s-total').textContent     = $f(totalEarnings);
+  document.getElementById('s-net').textContent         = $f(net);
+  document.getElementById('s-hw-profit').textContent   = $f(hwProfit);
+  document.getElementById('s-misc-profit').textContent = $f(miscProfit);
+  document.getElementById('s-total').textContent       = $f(totalEarnings);
 
-  // Breakdown
-  document.getElementById('fb-install').textContent    = installCharged > 0 ? `+${$f(installKept)} (50% of ${$f(installCharged)})` : '$0.00';
-  document.getElementById('fb-base-sub').textContent   = `−${$f(pkg.baseSubtotal)}`;
-  document.getElementById('fb-base-hst').textContent   = `−${$f(pkg.baseHST)}`;
-  document.getElementById('fb-net').textContent        = $f(net);
+  document.getElementById('fb-install').textContent  = installCharged > 0 ? '+' + $f(installKept) + ' (50% of ' + $f(installCharged) + ')' : '$0.00';
+  document.getElementById('fb-base-sub').textContent = '−' + $f(baseSubtotal);
+  document.getElementById('fb-base-hst').textContent = '−' + $f(baseHST);
+  document.getElementById('fb-net').textContent      = $f(net);
 }
 
 // ── DOWNLOAD EXCEL ────────────────────────────────────
@@ -818,15 +1012,27 @@ function downloadExcel() {
   const name = document.getElementById('cust-name').value  || 'Customer';
   const ph   = document.getElementById('cust-phone').value || '';
   const addr = document.getElementById('cust-addr').value  || '';
+  const notes = document.getElementById('agent-notes').value || '';
 
   const installCharged = parseFloat(document.getElementById('install-charged').value) || 0;
   const installKept    = installCharged * 0.50;
-  const gross  = pkg.monthly * pkg.multiple;
-  const net    = gross + installKept - pkg.baseTotalWithTax;
+
+  const useOutdoor = cameraType === 'outdoor' && pkg.includesCamera;
+  const baseTotalWithTax = (useOutdoor && pkg.baseTotalWithTaxOutdoor) ? pkg.baseTotalWithTaxOutdoor : pkg.baseTotalWithTax;
+  const baseSubtotal     = (useOutdoor && pkg.baseSubtotalOutdoor)     ? pkg.baseSubtotalOutdoor     : pkg.baseSubtotal;
+  const baseHST          = (useOutdoor && pkg.baseHSTOutdoor)          ? pkg.baseHSTOutdoor          : pkg.baseHST;
+
+  const gross = pkg.monthly * pkg.multiple;
+  const net   = gross + installKept - baseTotalWithTax;
 
   let hwMarkup = 0;
   hwRows.forEach(r => { hwMarkup += (r.qty * r.sellPrice) - (r.qty * r.item.agentCost); });
   const hwProfit = hwMarkup * 0.75;
+
+  const miscUsed = miscRows.filter(r => !r.removed && r.amount > 0);
+  let miscTotal = 0;
+  miscUsed.forEach(r => { miscTotal += r.amount; });
+  const miscProfit = miscTotal * 0.75;
 
   const rows = [
     ['ALERT PRO — AGENT QUOTE'],
@@ -835,56 +1041,81 @@ function downloadExcel() {
     ['Phone:',    ph,    '', 'Term:',     pkg.term],
     ['Address:',  addr,  '', 'Monthly:',  '$' + pkg.monthly + '/mo'],
     ['',          '',    '', 'Multiple:', '×' + pkg.multiple],
+    ['',          '',    '', 'Camera:',   pkg.includesCamera ? (useOutdoor ? 'Outdoor' : 'Indoor') : 'N/A'],
     [],
     ['BASE SYSTEM  (Equipment cost is funded — $0 upfront to customer)'],
-    ['Item', 'MSRP', 'Agent Cost', 'Status'],
+    ['Item', 'Agent Cost', 'Status'],
   ];
 
   DATA.baseSystemItems.forEach(item => {
-    const active = !item.packages || item.packages.includes(pkg.id);
-    if (active) rows.push([item.name, '$' + item.msrp, '$' + item.agentCost, 'Included in package']);
+    const active = item.allPackages || (item.packages && item.packages.includes(pkg.id));
+    const isCam = item.name && item.name.toLowerCase().includes('camera') && !item.allPackages;
+    if (isCam) return; // handled separately
+    if (active) rows.push([item.name, '$' + item.agentCost.toFixed(2), 'Included']);
   });
-  rows.push(['Installation Fee', '', '$' + pkg.installCollected + ' collected from customer', '']);
-  rows.push(['Base System Subtotal (before tax)', '', '$' + pkg.baseSubtotal.toFixed(2), '']);
-  rows.push(['HST (13%)', '', '$' + pkg.baseHST.toFixed(2), '']);
-  rows.push(['Base System Total incl. HST', '', '$' + pkg.baseTotalWithTax.toFixed(2), '(deducted from funding)']);
+
+  if (pkg.includesCamera) {
+    const camLabel = useOutdoor ? 'Camera — Outdoor (Pro Install, incl.)' : 'Camera — Indoor (Easy Install, incl.)';
+    const camCost  = useOutdoor
+      ? (pkg.outdoorCameraAgentCost || 395.55)
+      : (pkg.indoorCameraAgentCost  || 211.95);
+    rows.push([camLabel, '$' + camCost.toFixed(2), 'Included']);
+  }
+
+  rows.push(['Installation Fee (baked in)', '$' + (pkg.installCostBakedIn || '—'), 'Included']);
+  rows.push(['Base System Subtotal (before tax)', '$' + baseSubtotal.toFixed(2), '']);
+  rows.push(['HST (13%)', '$' + baseHST.toFixed(2), '']);
+  rows.push(['Base System Total incl. HST', '$' + baseTotalWithTax.toFixed(2), '(deducted from funding)']);
   rows.push([]);
 
   const hwUsed = hwRows.filter(r => r.qty > 0);
   if (hwUsed.length) {
-    rows.push(['ADD-ON HARDWARE']);
-    rows.push(['Item', 'MSRP', 'Your Cost', 'Qty', 'Your Price', 'Line Total', 'Profit']);
+    rows.push(['ADD-ON HARDWARE  (agent keeps 75% of markup)']);
+    rows.push(['Item', 'Your Cost', 'Qty', 'Your Price', 'Line Total', 'Your Profit (75%)']);
     hwUsed.forEach(r => {
       const lt = r.qty * r.sellPrice;
-      const markup = lt - r.qty * r.item.agentCost;
-      const agentShare = markup * 0.75;
-      const displayName = r.item.name.startsWith('Wireless ') ? r.item.name.slice(9) + ' (Wireless)' : r.item.name;
+      const agentShare = (lt - r.qty * r.item.agentCost) * 0.75;
       rows.push([
-        displayName + (r.item.note ? ' — ' + r.item.note : ''),
-        '$' + r.item.msrp,
+        r.item.name + (r.item.note ? ' — ' + r.item.note : ''),
         '$' + r.item.agentCost.toFixed(2),
         r.qty,
         '$' + r.sellPrice.toFixed(2),
         '$' + lt.toFixed(2),
-        '$' + agentShare.toFixed(2) + ' (75%)'
+        '$' + agentShare.toFixed(2)
       ]);
     });
-    rows.push(['', '', '', '', 'Total Hardware Profit (75%):', '$' + hwProfit.toFixed(2)]);
+    rows.push(['', '', '', '', 'Total Hardware Profit:', '$' + hwProfit.toFixed(2)]);
+    rows.push([]);
+  }
+
+  if (miscUsed.length) {
+    rows.push(['MISC CHARGES  (agent keeps 75%)']);
+    rows.push(['Description', 'Amount', 'Your Share (75%)']);
+    miscUsed.forEach(r => {
+      rows.push([r.desc || '(no description)', '$' + r.amount.toFixed(2), '$' + (r.amount * 0.75).toFixed(2)]);
+    });
+    rows.push(['', 'Total Misc Profit:', '$' + miscProfit.toFixed(2)]);
     rows.push([]);
   }
 
   rows.push(['FUNDING SUMMARY']);
-  rows.push(['Gross Funding (internal)', pkg.monthly + ' × ' + pkg.multiple, '=', '$' + gross.toFixed(2)]);
-  rows.push(['+ Your Install Share (50%)', installCharged > 0 ? '$' + installCharged.toFixed(2) + ' charged' : '$0 charged', '', '+$' + installKept.toFixed(2)]);
-  rows.push(['− Base System Subtotal', '', '', '−$' + pkg.baseSubtotal.toFixed(2)]);
-  rows.push(['− HST on Base System', '', '', '−$' + pkg.baseHST.toFixed(2)]);
-  rows.push(['NET FUNDING', '', '', '$' + net.toFixed(2)]);
-  if (hwProfit > 0) rows.push(['+ Hardware Profit (75% of markup)', '', '', '+$' + hwProfit.toFixed(2)]);
-  rows.push(['TOTAL ESTIMATED EARNINGS', '', '', '$' + (net + hwProfit).toFixed(2)]);
+  rows.push(['Gross Funding', pkg.monthly + ' × ' + pkg.multiple, '$' + gross.toFixed(2)]);
+  rows.push(['+ Install Share (50%)', installCharged > 0 ? '$' + installCharged.toFixed(2) + ' charged' : '$0', '+$' + installKept.toFixed(2)]);
+  rows.push(['− Base System Total (incl. HST)', '', '−$' + baseTotalWithTax.toFixed(2)]);
+  rows.push(['NET FUNDING', '', '$' + net.toFixed(2)]);
+  if (hwProfit > 0)   rows.push(['+ Hardware Profit', '', '+$' + hwProfit.toFixed(2)]);
+  if (miscProfit > 0) rows.push(['+ Misc Profit',     '', '+$' + miscProfit.toFixed(2)]);
+  rows.push(['TOTAL ESTIMATED EARNINGS', '', '$' + (net + hwProfit + miscProfit).toFixed(2)]);
+
+  if (notes) {
+    rows.push([]);
+    rows.push(['AGENT NOTES']);
+    rows.push([notes]);
+  }
 
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.aoa_to_sheet(rows);
-  ws['!cols'] = [{wch:42},{wch:14},{wch:14},{wch:8},{wch:14},{wch:14},{wch:12}];
+  ws['!cols'] = [{wch:44},{wch:16},{wch:10},{wch:14},{wch:14},{wch:16}];
   XLSX.utils.book_append_sheet(wb, ws, 'Quote');
   XLSX.writeFile(wb, 'AlertPro-Quote-' + name.replace(/\s+/g,'-') + '.xlsx');
 }
@@ -892,6 +1123,14 @@ function downloadExcel() {
 function resetForm() {
   ['cust-name','cust-phone','cust-addr'].forEach(id => { document.getElementById(id).value = ''; });
   document.getElementById('install-charged').value = '';
+  document.getElementById('agent-notes').value = '';
+  document.getElementById('misc-rows').innerHTML = '';
+  miscRows = [];
+  cameraType = 'indoor';
+  selectedPkg = null;
+  document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('included-grid').innerHTML = '';
+  document.getElementById('camera-toggle-wrap').style.display = 'none';
   hwRows.forEach((r, i) => {
     r.qty = 0; r.sellPrice = r.item.agentCost;
     document.getElementById('qty-' + i).value = 0;

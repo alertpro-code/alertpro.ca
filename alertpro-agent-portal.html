@@ -880,14 +880,18 @@ function rowChange(i) {
 }
 
 // ── CALCULATIONS ──────────────────────────────────────
-function updateCalc() {
-  if (!selectedPkg) return;
-  const pkg = selectedPkg;
-
+// ── SINGLE SOURCE OF TRUTH FOR ALL CALCULATIONS ───────
+// Formula (verified against spreadsheet):
+//   gross        = monthly × multiple
+//   net funding  = gross + installCharged + hwProfit − baseTotalWithTax
+//   hw profit    = (sell price − agent cost) × 75%  [no tax]
+//   misc profit  = misc amount × 75%                [no tax]
+//   total        = net + hwProfit + miscProfit
+function calcEarnings() {
+  const pkg            = selectedPkg;
   const installCharged = parseFloat(document.getElementById('install-charged').value) || 0;
-  const installKept    = installCharged * 0.50;
+  const useOutdoor     = cameraType === 'outdoor' && pkg.includesCamera;
 
-  const useOutdoor = cameraType === 'outdoor' && pkg.includesCamera;
   const baseTotalWithTax = (useOutdoor && pkg.baseTotalWithTaxOutdoor) ? pkg.baseTotalWithTaxOutdoor : pkg.baseTotalWithTax;
   const baseSubtotal     = (useOutdoor && pkg.baseSubtotalOutdoor)     ? pkg.baseSubtotalOutdoor     : pkg.baseSubtotal;
   const baseHST          = (useOutdoor && pkg.baseHSTOutdoor)          ? pkg.baseHSTOutdoor          : pkg.baseHST;
@@ -896,20 +900,23 @@ function updateCalc() {
   hwRows.forEach(r => { hwMarkup += (r.qty * r.sellPrice) - (r.qty * r.item.agentCost); });
   const hwProfit = hwMarkup * 0.75;
 
-  const gross = pkg.monthly * pkg.multiple;
-  // Matches Hamid's formula: SUM(gross + equipment_profit + install_collected) - base_total
-  const net   = gross + hwProfit + installCharged - baseTotalWithTax;
-
   let miscTotal = 0;
   miscRows.forEach(r => { if (!r.removed) miscTotal += r.amount; });
   const miscProfit = miscTotal * 0.75;
 
+  const gross        = pkg.monthly * pkg.multiple;
+  const net          = gross + installCharged + hwProfit - baseTotalWithTax;
+  const totalEarnings = net + miscProfit;
 
+  return { pkg, installCharged, useOutdoor, baseTotalWithTax, baseSubtotal, baseHST, hwProfit, miscProfit, gross, net, totalEarnings };
+}
+
+function updateCalc() {
+  if (!selectedPkg) return;
+  const { pkg, installCharged, baseTotalWithTax, hwProfit, miscProfit, gross, net, totalEarnings } = calcEarnings();
 
   document.getElementById('install-kept-display').textContent = $f(installCharged);
   document.getElementById('install-suggested').textContent    = $f(pkg.installCollected);
-
-  const totalEarnings = net + miscProfit;
 
   document.getElementById('s-net').textContent       = $f(net);
   document.getElementById('s-hw-profit').textContent = $f(miscProfit > 0 ? miscProfit : hwProfit);
@@ -919,7 +926,7 @@ function updateCalc() {
   document.getElementById('fb-base-total').textContent = $f(baseTotalWithTax);
   document.getElementById('fb-net').textContent        = $f(net);
   document.getElementById('fb-hw').textContent         = hwProfit > 0 ? '+' + $f(hwProfit) : '$0.00';
-  document.getElementById('fb-install').textContent    = installCharged > 0 ? '+' + $f(installCharged) : '$0.00';
+  document.getElementById('fb-install').textContent    = installCharged > 0 ? '+' + $f(installCharged) + ' (you keep 50%)' : '$0.00';
   document.getElementById('fb-misc').textContent       = miscProfit > 0 ? '+' + $f(miscProfit) : '$0.00';
   document.getElementById('fb-total').textContent      = $f(totalEarnings);
 }
@@ -933,25 +940,8 @@ function downloadExcel() {
   const addr = document.getElementById('cust-addr').value  || '';
   const notes = document.getElementById('agent-notes').value || '';
 
-  const installCharged = parseFloat(document.getElementById('install-charged').value) || 0;
-  const installKept    = installCharged * 0.50;
-
-  const useOutdoor = cameraType === 'outdoor' && pkg.includesCamera;
-  const baseTotalWithTax = (useOutdoor && pkg.baseTotalWithTaxOutdoor) ? pkg.baseTotalWithTaxOutdoor : pkg.baseTotalWithTax;
-  const baseSubtotal     = (useOutdoor && pkg.baseSubtotalOutdoor)     ? pkg.baseSubtotalOutdoor     : pkg.baseSubtotal;
-  const baseHST          = (useOutdoor && pkg.baseHSTOutdoor)          ? pkg.baseHSTOutdoor          : pkg.baseHST;
-
-  let hwMarkup = 0;
-  hwRows.forEach(r => { hwMarkup += (r.qty * r.sellPrice) - (r.qty * r.item.agentCost); });
-  const hwProfit = hwMarkup * 0.75;
-
-  const gross = pkg.monthly * pkg.multiple;
-  const net   = gross + hwProfit + installCharged - baseTotalWithTax;
-
+  const { installCharged, useOutdoor, baseTotalWithTax, baseSubtotal, baseHST, hwProfit, miscProfit, gross, net, totalEarnings } = calcEarnings();
   const miscUsed = miscRows.filter(r => !r.removed && r.amount > 0);
-  let miscTotal = 0;
-  miscUsed.forEach(r => { miscTotal += r.amount; });
-  const miscProfit = miscTotal * 0.75;
 
   const rows = [
     ['ALERT PRO — AGENT QUOTE'],
@@ -1021,12 +1011,12 @@ function downloadExcel() {
 
   rows.push(['FUNDING SUMMARY']);
   rows.push(['Gross Funding', pkg.monthly + ' × ' + pkg.multiple, '$' + gross.toFixed(2)]);
-  rows.push(['+ Install Share (50%)', installCharged > 0 ? '$' + installCharged.toFixed(2) + ' charged' : '$0', '+$' + installKept.toFixed(2)]);
+  if (installCharged > 0) rows.push(['+ Install Fee Charged (you keep 50%)', '$' + installCharged.toFixed(2), '+$' + installCharged.toFixed(2)]);
+  if (hwProfit > 0)        rows.push(['+ Hardware Profit (75% of markup)', '', '+$' + hwProfit.toFixed(2)]);
   rows.push(['− Base System Total (incl. HST)', '', '−$' + baseTotalWithTax.toFixed(2)]);
   rows.push(['NET FUNDING', '', '$' + net.toFixed(2)]);
-  if (hwProfit > 0)   rows.push(['+ Hardware Profit', '', '+$' + hwProfit.toFixed(2)]);
-  if (miscProfit > 0) rows.push(['+ Misc Profit',     '', '+$' + miscProfit.toFixed(2)]);
-  rows.push(['TOTAL ESTIMATED EARNINGS', '', '$' + (net + hwProfit + miscProfit).toFixed(2)]);
+  if (miscProfit > 0) rows.push(['+ Misc Profit (75%)', '', '+$' + miscProfit.toFixed(2)]);
+  rows.push(['TOTAL ESTIMATED EARNINGS', '', '$' + totalEarnings.toFixed(2)]);
 
   if (notes) {
     rows.push([]);

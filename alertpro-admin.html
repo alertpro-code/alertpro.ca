@@ -465,22 +465,20 @@ function pkgChange(i, field, val) {
 
 function recalcPackage(i) {
   const pkg = DATA.packages[i];
-  // Recalculate base system cost from base items
+  // Base cost = hardware items only (no install fee)
   let itemsCost = 0;
   DATA.baseSystemItems.forEach(item => {
     const inPkg = item.allPackages || (item.packages && item.packages.includes(pkg.id));
     if (inPkg) itemsCost += item.agentCost;
   });
-  const sub  = round2(itemsCost + pkg.installCollected);
+  const sub  = round2(itemsCost);
   const hst  = round2(sub * 0.13);
   const tot  = round2(sub + hst);
-  const net  = round2(pkg.monthly * pkg.multiple + pkg.installCollected - tot);
 
-  // Wait - net funding uses installCollected as the full amount collected (not 50%)
-  // because from Jason's perspective the full install comes in and the base cost goes out
-  // Agent's 50% share is a separate calculation on the agent portal side
-  // For admin purposes we show net funding = gross + installCollected - baseTotalWithTax
-  const netFull = round2((pkg.monthly * pkg.multiple) + pkg.installCollected - tot);
+  // Net Funding = Gross − Base hardware cost (with HST) − Mandatory install fee
+  // Agent's optional extra install is separate and agent keeps 50%
+  const gross   = round2(pkg.monthly * pkg.multiple);
+  const netFull = round2(gross - tot - pkg.installCollected);
 
   pkg.baseSubtotal     = sub;
   pkg.baseHST          = hst;
@@ -499,7 +497,8 @@ function recalcPackage(i) {
 }
 
 function calcNet(pkg) {
-  return round2((pkg.monthly * pkg.multiple) + pkg.installCollected - pkg.baseTotalWithTax);
+  // Net = Gross − Base hardware cost (with HST) − Mandatory install
+  return round2((pkg.monthly * pkg.multiple) - pkg.baseTotalWithTax - pkg.installCollected);
 }
 
 // ── BASE ITEMS ─────────────────────────────────────────

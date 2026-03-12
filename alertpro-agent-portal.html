@@ -810,7 +810,7 @@ function updateCalc() {
   const baseHST          = (useOutdoor && pkg.baseHSTOutdoor)          ? pkg.baseHSTOutdoor          : pkg.baseHST;
 
   const gross = pkg.monthly * pkg.multiple;
-  const net   = gross + installKept - baseTotalWithTax;
+  const net   = gross - baseTotalWithTax - pkg.installCollected;
 
   let hwMarkup = 0;
   hwRows.forEach(r => { hwMarkup += (r.qty * r.sellPrice) - (r.qty * r.item.agentCost); });
@@ -824,6 +824,8 @@ function updateCalc() {
 
   document.getElementById('install-kept-display').textContent = $f(installKept);
   document.getElementById('install-suggested').textContent    = $f(pkg.installCollected);
+
+  const totalEarnings = net + hwProfit + miscProfit + installKept;
 
   document.getElementById('s-net').textContent         = $f(net);
   document.getElementById('s-hw-profit').textContent   = $f(hwProfit);
@@ -854,7 +856,7 @@ function downloadExcel() {
   const baseHST          = (useOutdoor && pkg.baseHSTOutdoor)          ? pkg.baseHSTOutdoor          : pkg.baseHST;
 
   const gross = pkg.monthly * pkg.multiple;
-  const net   = gross + installKept - baseTotalWithTax;
+  const net   = gross - baseTotalWithTax - pkg.installCollected;
 
   let hwMarkup = 0;
   hwRows.forEach(r => { hwMarkup += (r.qty * r.sellPrice) - (r.qty * r.item.agentCost); });

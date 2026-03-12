@@ -323,7 +323,6 @@ tbody td { padding: 10px 12px; vertical-align: middle; }
   .main { padding: 16px 12px 60px; }
 }
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -345,10 +344,6 @@ tbody td { padding: 10px 12px; vertical-align: middle; }
     <div class="brand">Alert<span>Pro</span></div>
     <div class="hdr-right">
       <div class="hdr-updated">Prices updated: <span id="last-updated">—</span></div>
-      <label style="cursor:pointer;" title="Upload updated pricing Excel template">
-        <input type="file" accept=".xlsx" style="display:none;" onchange="handleExcelUpload(this.files[0]); this.value='';">
-        <span class="hdr-badge" style="background:var(--blue-bg,#EFF6FF);color:#1D4ED8;border-color:#BFDBFE;cursor:pointer;">⬆ Update Pricing</span>
-      </label>
       <div class="hdr-badge">🔒 Agent Portal</div>
     </div>
   </header>
@@ -528,7 +523,8 @@ tbody td { padding: 10px 12px; vertical-align: middle; }
 // ═══════════════════════════════════════════════════════
 // CONFIGURATION
 // ═══════════════════════════════════════════════════════
-const PASSWORD = "alertpro2025";
+const PASSWORD    = "alertpro2025";
+const PRICING_URL = "https://alertpro-code.github.io/alertpro.ca/pricing-data.json";
 // ═══════════════════════════════════════════════════════
 
 // Embedded fallback — exact numbers from REP_WorkSheet_Feb_24_2026.xlsx
@@ -558,187 +554,19 @@ function doLogin() {
 }
 
 // ── LOAD PRICING DATA ─────────────────────────────────
-// Tries localStorage first (last uploaded Excel), then falls back to embedded data
-function loadData() {
-  const saved = localStorage.getItem('ap_pricing');
-  if (saved) {
-    try {
-      DATA = JSON.parse(saved);
-      document.getElementById('last-updated').textContent = (DATA._updated || 'uploaded') + ' (from Excel)';
-    } catch(e) {
-      DATA = FALLBACK;
-      document.getElementById('last-updated').textContent = DATA._updated + ' (default)';
-    }
-  } else {
+async function loadData() {
+  try {
+    const res = await fetch(PRICING_URL + '?v=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    DATA = await res.json();
+    document.getElementById('last-updated').textContent = (DATA._updated || '—') + ' (live)';
+  } catch(e) {
     DATA = FALLBACK;
-    document.getElementById('last-updated').textContent = DATA._updated + ' (default)';
+    document.getElementById('last-updated').textContent = (DATA._updated || '—') + ' (cached)';
   }
   initApp();
 }
 
-// ── PARSE UPLOADED EXCEL ──────────────────────────────
-function handleExcelUpload(file) {
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    try {
-      const data = new Uint8Array(e.target.result);
-      const wb   = XLSX.read(data, { type: 'array' });
-      const ws   = wb.Sheets[wb.SheetNames[0]];
-      const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
-
-      const newData = parseExcelRows(rows);
-      if (!newData) { alert('Could not read pricing file. Make sure you\'re uploading the Alert Pro Pricing Template.'); return; }
-
-      DATA = newData;
-      localStorage.setItem('ap_pricing', JSON.stringify(DATA));
-      document.getElementById('last-updated').textContent = (DATA._updated || 'just now') + ' (from Excel)';
-
-      // Rebuild UI with new data
-      selectedPkg = null;
-      hwRows = [];
-      initApp();
-      alert('✓ Pricing updated successfully!');
-    } catch(err) {
-      alert('Error reading file: ' + err.message);
-    }
-  };
-  reader.readAsArrayBuffer(file);
-}
-
-function parseExcelRows(rows) {
-  // ROW MAP from AlertPro-Pricing-Template-v2.xlsx (0-indexed after XLSX parse):
-  // SECTION 1 header at row with 'SECTION 1'
-  // Base items: IQ4(7), Door(8), Motion(9), SmartPlug(10), [cam note row(11)], Indoor cam(12), Outdoor cam(13), Install cost(14)
-  // Calculated rows: BaseSub-Indoor(15), BaseSub-Outdoor(16), HST-in(17), HST-out(18), Total-Indoor(19), Total-Outdoor(20)
-  // SECTION 2: Monthly(24), Multiple(25), InstallCollected(26), NetFund-Indoor(27), NetFund-Outdoor(28)
-  // SECTION 3: hardware starts ~row 31
-  // Columns D-J = packages 0-6 (resi5, resi3, vid5, vid3, auto5, auto3, comm3)
-  // Column indices: A=0, B=1, C=2, D=3, E=4, F=5, G=6, H=7, I=8, J=9
-
-  const PKG_IDS   = ['resi-5yr','resi-3yr','vid-5yr','vid-3yr','auto-5yr','auto-3yr','comm-3yr'];
-  const PKG_HAS_CAM = [false, false, true, true, true, true, true];
-  const PKG_COLS  = [3,4,5,6,7,8,9]; // D=3,E=4,...J=9
-
-  const newData = {
-    _updated: new Date().toISOString().slice(0, 10),
-    packages: JSON.parse(JSON.stringify(FALLBACK.packages)),
-    baseSystemItems: JSON.parse(JSON.stringify(FALLBACK.baseSystemItems)),
-    hardware: JSON.parse(JSON.stringify(FALLBACK.hardware))
-  };
-
-  // Find section start rows
-  let sec1Row = -1, sec2Row = -1, sec3Row = -1;
-  for (let i = 0; i < rows.length; i++) {
-    const a = String(rows[i][0] || '').trim();
-    if (a.includes('SECTION 1')) sec1Row = i;
-    if (a.includes('SECTION 2')) sec2Row = i;
-    if (a.includes('SECTION 3')) sec3Row = i;
-  }
-  if (sec1Row < 0 || sec2Row < 0 || sec3Row < 0) return null;
-
-  const r1 = sec1Row; // base items start here + offsets
-
-  // Helper: get numeric value from row offset and column
-  const val = (rowOffset, col) => parseFloat(rows[r1 + rowOffset]?.[col]) || 0;
-
-  // ── BASE SYSTEM ITEMS ──────────────────────────────────
-  // IQ4=+3, Door=+4, Motion=+5, SmartPlug=+6, [note=+7], IndoorCam=+8, OutdoorCam=+9, InstallCost=+10
-  const BASE_OFFSETS = [3,4,5,6]; // IQ4, Door, Motion, SmartPlug
-  BASE_OFFSETS.forEach((off, idx) => {
-    newData.baseSystemItems[idx].msrp      = val(off, 1); // col B
-    newData.baseSystemItems[idx].agentCost = val(off, 2); // col C
-  });
-  // Indoor camera = offset 8, Outdoor = 9 (col C = default cost)
-  const indoorCamCostDefault  = val(8, 2);
-  const outdoorCamCostDefault = val(9, 2);
-  // Also save in baseSystemItems[4] (Indoor Camera) as default
-  newData.baseSystemItems[4].agentCost = indoorCamCostDefault;
-  newData.baseSystemItems[4].msrp      = val(8, 1);
-
-  // ── PACKAGES ──────────────────────────────────────────
-  // Section 2 rows relative to sec2Row:
-  // +2=monthly, +3=multiple, +4=installCollected, +5=NetFunding-Indoor, +6=NetFunding-Outdoor
-  const s2 = sec2Row;
-  const rowV = (rowAbs, col) => parseFloat(rows[rowAbs]?.[col]) || 0;
-
-  // Find the actual data rows by scanning for numeric values after sec2Row
-  let monthlyRowAbs = -1, multRowAbs = -1, instCollRowAbs = -1;
-  let netInRowAbs = -1, netOutRowAbs = -1;
-  for (let i = s2+1; i < s2+15 && i < rows.length; i++) {
-    const a = String(rows[i][0] || '').trim();
-    if (a.includes('Monthly Rate'))    monthlyRowAbs  = i;
-    if (a.includes('Funding Multiple'))multRowAbs     = i;
-    if (a.includes('Suggested Install'))instCollRowAbs= i;
-    if (a.includes('Net Funding') && a.includes('Indoor'))  netInRowAbs  = i;
-    if (a.includes('Net Funding') && a.includes('Outdoor')) netOutRowAbs = i;
-  }
-
-  // Find base total rows in section 1
-  let totInRowAbs = -1, totOutRowAbs = -1;
-  for (let i = r1+1; i < r1+25 && i < rows.length; i++) {
-    const a = String(rows[i][0] || '').trim();
-    if (a.includes('BASE TOTAL') && a.includes('Indoor'))  totInRowAbs  = i;
-    if (a.includes('BASE TOTAL') && a.includes('Outdoor')) totOutRowAbs = i;
-  }
-  // Also find install cost row
-  let installCostRowAbs = -1;
-  for (let i = r1+1; i < r1+20 && i < rows.length; i++) {
-    const a = String(rows[i][0] || '').trim();
-    if (a.includes('Installation Fee') && a.includes('baked')) installCostRowAbs = i;
-  }
-
-  // Get per-package indoor/outdoor camera costs (each pkg column may differ)
-  const getColCamCosts = (colIdx) => {
-    const r8  = parseFloat(rows[r1+8]?.[colIdx])  || indoorCamCostDefault;
-    const r9  = parseFloat(rows[r1+9]?.[colIdx])  || outdoorCamCostDefault;
-    return { indoor: r8, outdoor: r9 };
-  };
-
-  PKG_IDS.forEach((id, pi) => {
-    const pkg    = newData.packages[pi];
-    const colIdx = PKG_COLS[pi];
-
-    if (monthlyRowAbs   >= 0) pkg.monthly          = rowV(monthlyRowAbs,   colIdx);
-    if (multRowAbs      >= 0) pkg.multiple          = rowV(multRowAbs,      colIdx);
-    if (instCollRowAbs  >= 0) pkg.installCollected  = rowV(instCollRowAbs,  colIdx);
-    if (installCostRowAbs >= 0) pkg.installCostBakedIn = rowV(installCostRowAbs, colIdx);
-
-    const camCosts = getColCamCosts(colIdx);
-    pkg.indoorCameraAgentCost  = camCosts.indoor;
-    pkg.outdoorCameraAgentCost = camCosts.outdoor;
-
-    // Base totals
-    if (totInRowAbs >= 0) {
-      const totIn  = rowV(totInRowAbs,  colIdx);
-      const totOut = PKG_HAS_CAM[pi] && totOutRowAbs >= 0 ? rowV(totOutRowAbs, colIdx) : totIn;
-      pkg.baseTotalWithTax        = totIn;
-      pkg.baseTotalWithTaxOutdoor = totOut;
-      pkg.baseSubtotal        = Math.round((totIn  / 1.13) * 100) / 100;
-      pkg.baseSubtotalOutdoor = Math.round((totOut / 1.13) * 100) / 100;
-      pkg.baseHST             = Math.round((totIn  - pkg.baseSubtotal)        * 100) / 100;
-      pkg.baseHSTOutdoor      = Math.round((totOut - pkg.baseSubtotalOutdoor) * 100) / 100;
-    }
-
-    pkg.netFunding = Math.round((pkg.monthly * pkg.multiple + pkg.installCollected - pkg.baseTotalWithTax) * 100) / 100;
-  });
-
-  // ── HARDWARE ──────────────────────────────────────────
-  // Each hardware row: col A=name, B=note, C=msrp, D=agentCost
-  let hwIdx = 0;
-  for (let i = sec3Row + 2; i < rows.length && hwIdx < newData.hardware.length; i++) {
-    const a = String(rows[i][0] || '').trim();
-    if (!a || a.startsWith('🟡') || a.startsWith('Item')) continue;
-    const msrp = parseFloat(rows[i][2]) || 0;
-    const cost = parseFloat(rows[i][3]) || 0;
-    if (msrp > 0 && cost > 0) {
-      newData.hardware[hwIdx].msrp      = msrp;
-      newData.hardware[hwIdx].agentCost = cost;
-      hwIdx++;
-    }
-  }
-
-  return newData;
-}
 
 // ── BUILD UI ──────────────────────────────────────────
 function initApp() {

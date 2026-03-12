@@ -336,6 +336,10 @@ header {
   <div class="save-bar">
     <div class="save-status" id="save-status">All changes saved</div>
     <div class="save-actions">
+      <label style="cursor:pointer;" title="Import prices from Excel template">
+        <input type="file" accept=".xlsx" style="display:none;" onchange="importFromExcel(this.files[0]); this.value='';">
+        <span class="btn btn-ghost" style="display:inline-flex;align-items:center;gap:6px;">📥 Import from Excel</span>
+      </label>
       <button class="btn btn-ghost" onclick="revertChanges()">↺ Revert</button>
       <button class="btn btn-save" id="btn-save" onclick="saveAll()">⬆ Save &amp; Publish</button>
     </div>
@@ -619,6 +623,123 @@ function setStatus(msg, type) {
 }
 
 function round2(n) { return Math.round(n * 100) / 100; }
+
+// ── IMPORT FROM EXCEL ─────────────────────────────────
+function importFromExcel(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const wb   = XLSX.read(new Uint8Array(e.target.result), { type: 'array' });
+      const ws   = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+
+      const parsed = parseExcelIntoData(rows);
+      if (!parsed) { alert('Could not read pricing file. Make sure you\'re using the AlertPro Pricing Template.'); return; }
+
+      DATA = parsed;
+      buildUI();
+      markDirty();
+      setStatus('● Imported from Excel — review then Save & Publish', 'dirty');
+    } catch(err) {
+      alert('Error reading file: ' + err.message);
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function parseExcelIntoData(rows) {
+  // Identify section start rows
+  let sec1Row = -1, sec2Row = -1, sec3Row = -1;
+  for (let i = 0; i < rows.length; i++) {
+    const a = String(rows[i][0] || '').trim();
+    if (a.includes('SECTION 1')) sec1Row = i;
+    if (a.includes('SECTION 2')) sec2Row = i;
+    if (a.includes('SECTION 3')) sec3Row = i;
+  }
+  if (sec1Row < 0 || sec2Row < 0 || sec3Row < 0) return null;
+
+  const PKG_IDS     = ['resi-5yr','resi-3yr','vid-5yr','vid-3yr','auto-5yr','auto-3yr','comm-3yr'];
+  const PKG_HAS_CAM = [false,false,true,true,true,true,true];
+  const PKG_COLS    = [3,4,5,6,7,8,9]; // D–J
+
+  const newData = JSON.parse(JSON.stringify(DATA)); // clone current data as base
+  newData._updated = new Date().toISOString().slice(0,10);
+
+  const r1  = sec1Row;
+  const rowV = (absRow, col) => parseFloat(rows[absRow]?.[col]) || 0;
+
+  // Base items (col B = MSRP, col C = default agent cost)
+  const BASE_OFFSETS = [3,4,5,6]; // IQ4, Door, Motion, SmartPlug
+  BASE_OFFSETS.forEach((off, idx) => {
+    if (newData.baseSystemItems[idx]) {
+      newData.baseSystemItems[idx].msrp      = rowV(r1+off, 1);
+      newData.baseSystemItems[idx].agentCost = rowV(r1+off, 2);
+    }
+  });
+  const indoorCamDefault  = rowV(r1+8, 2);
+  const outdoorCamDefault = rowV(r1+9, 2);
+  if (newData.baseSystemItems[4]) {
+    newData.baseSystemItems[4].agentCost = indoorCamDefault;
+    newData.baseSystemItems[4].msrp      = rowV(r1+8, 1);
+  }
+
+  // Find key rows by label scan
+  let monthlyRow=-1, multRow=-1, instCollRow=-1;
+  let totInRow=-1, totOutRow=-1, installCostRow=-1;
+  for (let i = 0; i < rows.length; i++) {
+    const a = String(rows[i][0]||'').trim();
+    if (a.includes('Monthly Rate'))         monthlyRow    = i;
+    if (a.includes('Funding Multiple'))     multRow       = i;
+    if (a.includes('Suggested Install'))    instCollRow   = i;
+    if (a.includes('BASE TOTAL') && a.includes('Indoor'))  totInRow  = i;
+    if (a.includes('BASE TOTAL') && a.includes('Outdoor')) totOutRow = i;
+    if (a.includes('Installation Fee') && a.includes('baked')) installCostRow = i;
+  }
+
+  PKG_IDS.forEach((id, pi) => {
+    const pkg    = newData.packages.find(p => p.id === id);
+    if (!pkg) return;
+    const col    = PKG_COLS[pi];
+
+    if (monthlyRow  >= 0) pkg.monthly         = rowV(monthlyRow,  col);
+    if (multRow     >= 0) pkg.multiple        = rowV(multRow,     col);
+    if (instCollRow >= 0) pkg.installCollected= rowV(instCollRow, col);
+    if (installCostRow >= 0) pkg.installCostBakedIn = rowV(installCostRow, col);
+
+    pkg.indoorCameraAgentCost  = rowV(r1+8, col) || indoorCamDefault;
+    pkg.outdoorCameraAgentCost = rowV(r1+9, col) || outdoorCamDefault;
+
+    if (totInRow >= 0) {
+      const totIn  = rowV(totInRow,  col);
+      const totOut = PKG_HAS_CAM[pi] && totOutRow >= 0 ? rowV(totOutRow, col) : totIn;
+      pkg.baseTotalWithTax        = round2(totIn);
+      pkg.baseTotalWithTaxOutdoor = round2(totOut);
+      pkg.baseSubtotal            = round2(totIn  / 1.13);
+      pkg.baseSubtotalOutdoor     = round2(totOut / 1.13);
+      pkg.baseHST                 = round2(totIn  - pkg.baseSubtotal);
+      pkg.baseHSTOutdoor          = round2(totOut - pkg.baseSubtotalOutdoor);
+      pkg.netFunding              = round2(pkg.monthly * pkg.multiple + pkg.installCollected - totIn);
+    }
+  });
+
+  // Hardware (col C = MSRP, col D = agent cost)
+  let hwIdx = 0;
+  for (let i = sec3Row+2; i < rows.length && hwIdx < newData.hardware.length; i++) {
+    const a    = String(rows[i][0]||'').trim();
+    if (!a || a.startsWith('🟡') || a === 'Item') continue;
+    const msrp = parseFloat(rows[i][2])||0;
+    const cost = parseFloat(rows[i][3])||0;
+    if (msrp > 0 && cost > 0) {
+      newData.hardware[hwIdx].msrp      = msrp;
+      newData.hardware[hwIdx].agentCost = cost;
+      hwIdx++;
+    }
+  }
+
+  return newData;
+}
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </body>
 </html>

@@ -820,7 +820,7 @@ function updateCalc() {
   miscRows.forEach(r => { if (!r.removed) miscTotal += r.amount; });
   const miscProfit = miscTotal * 0.75;
 
-  const totalEarnings = net + hwProfit + miscProfit;
+
 
   document.getElementById('install-kept-display').textContent = $f(installKept);
   document.getElementById('install-suggested').textContent    = $f(pkg.installCollected);

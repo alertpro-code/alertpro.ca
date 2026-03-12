@@ -524,18 +524,18 @@ tbody td { padding: 10px 12px; vertical-align: middle; }
 // CONFIGURATION
 // ═══════════════════════════════════════════════════════
 const PASSWORD    = "alertpro2025";
-const PRICING_URL = "https://api.github.com/repos/alertpro-code/alertpro.ca/contents/pricing-data.json";
+const EXCEL_URL = "https://api.github.com/repos/alertpro-code/alertpro.ca/contents/AlertPro-Pricing-Template-v2.xlsx";
 // ═══════════════════════════════════════════════════════
 
 // Embedded fallback — exact numbers from REP_WorkSheet_Feb_24_2026.xlsx
-const FALLBACK = {"_note":"Alert Pro agent pricing. Update hamid wholesale prices and re-run at 1.35x to refresh.","_updated":"2026-03-11","packages":[{"id":"resi-5yr","name":"Resi Secure","term":"5 Year","monthly":45,"multiple":23,"installCost":150,"installCollected":199,"baseSubtotal":876.3,"baseHST":113.92,"baseTotalWithTax":990.22,"netFunding":44.78,"highlight":false,"badge":null,"includesCamera":false,"includesSmartPlug":false},{"id":"resi-3yr","name":"Resi Secure","term":"3 Year","monthly":50,"multiple":17,"installCost":150,"installCollected":199,"baseSubtotal":876.3,"baseHST":113.92,"baseTotalWithTax":990.22,"netFunding":-140.22,"highlight":false,"badge":null,"includesCamera":false,"includesSmartPlug":false},{"id":"vid-5yr","name":"Resi Secure + Video","term":"5 Year","monthly":55,"multiple":26,"installCost":175,"installCollected":249,"baseSubtotal":1088.3,"baseHST":141.48,"baseTotalWithTax":1229.78,"netFunding":200.22,"highlight":true,"badge":"Recommended","includesCamera":true,"includesSmartPlug":false},{"id":"vid-3yr","name":"Resi Secure + Video","term":"3 Year","monthly":60,"multiple":20,"installCost":175,"installCollected":249,"baseSubtotal":1088.3,"baseHST":141.48,"baseTotalWithTax":1229.78,"netFunding":-29.78,"highlight":false,"badge":null,"includesCamera":true,"includesSmartPlug":false},{"id":"auto-5yr","name":"Video + Automation","term":"5 Year","monthly":62,"multiple":26,"installCost":200,"installCollected":299,"baseSubtotal":1172.69,"baseHST":152.45,"baseTotalWithTax":1325.14,"netFunding":286.86,"highlight":true,"badge":"Top Earner ★","includesCamera":true,"includesSmartPlug":true},{"id":"auto-3yr","name":"Video + Automation","term":"3 Year","monthly":67,"multiple":20,"installCost":200,"installCollected":299,"baseSubtotal":1172.69,"baseHST":152.45,"baseTotalWithTax":1325.14,"netFunding":14.86,"highlight":false,"badge":null,"includesCamera":true,"includesSmartPlug":false},{"id":"comm-3yr","name":"Commercial","term":"3 Year","monthly":45,"multiple":19,"installCost":150,"installCollected":399,"baseSubtotal":1063.3,"baseHST":138.23,"baseTotalWithTax":1201.53,"netFunding":-346.53,"highlight":false,"badge":null,"includesCamera":true,"includesSmartPlug":false}],"baseSystemItems":[{"name":"IQ 4 Panel w/ 4K Keypad Camera, Siren, GSM","msrp":855,"agentCost":533.25,"allPackages":true},{"name":"Door Contact — Long Range (×2)","msrp":130,"agentCost":105.3,"allPackages":true},{"name":"Motion Sensor — Long Range","msrp":190,"agentCost":87.75,"allPackages":true},{"name":"Smart Plug","msrp":60,"agentCost":59.39,"allPackages":false,"packages":["auto-5yr","auto-3yr"]},{"name":"Indoor Camera (Easy Installation)","msrp":350,"agentCost":187.0,"allPackages":false,"packages":["vid-5yr","vid-3yr","auto-5yr","auto-3yr","comm-3yr"]}],"hardware":[{"name":"Wireless Door/Window Contact","note":"Regular Range","msrp":65,"agentCost":31.05},{"name":"Wireless Door/Window Contact","note":"Long Range","msrp":95,"agentCost":52.65},{"name":"Wireless Outdoor Contact","note":"Long Range","msrp":225,"agentCost":175.5},{"name":"Wireless Tilt Sensor","note":"Garage Rollup Doors","msrp":155,"agentCost":79.65},{"name":"Wireless Motion Sensor","note":"Pet Immune 40lbs / Reg","msrp":145,"agentCost":60.75},{"name":"Wireless Motion Sensor","note":"Pet Immune 80lbs / Long","msrp":190,"agentCost":120.15},{"name":"Wireless Motion Sensor","note":"Ceiling Mount 360\u00b0","msrp":275,"agentCost":199.8},{"name":"Wireless Shock Sensor","note":"Long Range","msrp":155,"agentCost":97.2},{"name":"Wireless Glassbreak Detector","note":"Long Range","msrp":185,"agentCost":120.15},{"name":"Wireless Smoke Detector","note":"Long Range","msrp":195,"agentCost":122.85},{"name":"Wireless Rate of Rise Heat Detector","note":"Long Range","msrp":198,"agentCost":132.3},{"name":"Wireless Temperature Detector","note":"Long Range","msrp":175,"agentCost":97.2},{"name":"Wireless Flood Detector","note":"","msrp":155,"agentCost":116.1},{"name":"Wireless Carbon Monoxide Detector","note":"Long Range","msrp":215,"agentCost":155.25},{"name":"Wireless Panic Button","note":"Long Range","msrp":158,"agentCost":91.8},{"name":"Wireless PG Keyfob 4-Button","note":"Arm / Disarm / Stay / Panic","msrp":140,"agentCost":66.15},{"name":"Indoor Siren with Strobe Light","note":"","msrp":190,"agentCost":141.75},{"name":"Outdoor Siren with Strobe Light","note":"Commercial Grade 110dB","msrp":345,"agentCost":302.4},{"name":"Repeater Module","note":"","msrp":235,"agentCost":195.75},{"name":"IQ Remote Touch Screen Keypad","note":"7 inch","msrp":475,"agentCost":391.5},{"name":"IQ4 Table Stand","note":"","msrp":30,"agentCost":20.25},{"name":"Indoor Portable Camera","note":"Residential / Commercial","msrp":275,"agentCost":211.95},{"name":"Residential Video Doorbell","note":"","msrp":425,"agentCost":384.75},{"name":"Residential Outdoor Camera","note":"Easy Installation","msrp":550,"agentCost":463.05},{"name":"Residential/Commercial Outdoor Camera","note":"Pro Installation","msrp":620,"agentCost":598.05}]};
+const FALLBACK = {"_note":"Alert Pro agent pricing.","_updated":"2026-03-12","packages":[{"id":"resi-5yr","name":"Resi Secure","term":"5 Year","monthly":45,"multiple":23,"installCost":150,"installCollected":199,"baseSubtotal":876.3,"baseHST":113.92,"baseTotalWithTax":990.22,"baseTotalWithTaxOutdoor":1174.88,"netFunding":44.78,"netFundingOutdoor":-139.88,"highlight":false,"badge":null,"includesCamera":false,"includesSmartPlug":false},{"id":"resi-3yr","name":"Resi Secure","term":"3 Year","monthly":50,"multiple":17,"installCost":150,"installCollected":199,"baseSubtotal":876.3,"baseHST":113.92,"baseTotalWithTax":990.22,"baseTotalWithTaxOutdoor":1174.88,"netFunding":-140.22,"netFundingOutdoor":-324.88,"highlight":false,"badge":null,"includesCamera":false,"includesSmartPlug":false},{"id":"vid-5yr","name":"Resi Secure + Video","term":"5 Year","monthly":55,"multiple":26,"installCost":175,"installCollected":249,"baseSubtotal":1088.3,"baseHST":141.48,"baseTotalWithTax":1229.78,"baseTotalWithTaxOutdoor":1414.44,"netFunding":200.22,"netFundingOutdoor":15.56,"highlight":true,"badge":"Recommended","includesCamera":true,"includesSmartPlug":false},{"id":"vid-3yr","name":"Resi Secure + Video","term":"3 Year","monthly":60,"multiple":20,"installCost":175,"installCollected":249,"baseSubtotal":1088.3,"baseHST":141.48,"baseTotalWithTax":1229.78,"baseTotalWithTaxOutdoor":1414.44,"netFunding":-29.78,"netFundingOutdoor":-214.44,"highlight":false,"badge":null,"includesCamera":true,"includesSmartPlug":false},{"id":"auto-5yr","name":"Video + Automation","term":"5 Year","monthly":62,"multiple":26,"installCost":200,"installCollected":299,"baseSubtotal":1172.69,"baseHST":152.45,"baseTotalWithTax":1325.14,"baseTotalWithTaxOutdoor":1533.29,"netFunding":286.86,"netFundingOutdoor":78.71,"highlight":true,"badge":"Top Earner ★","includesCamera":true,"includesSmartPlug":true},{"id":"auto-3yr","name":"Video + Automation","term":"3 Year","monthly":67,"multiple":20,"installCost":200,"installCollected":299,"baseSubtotal":1172.69,"baseHST":152.45,"baseTotalWithTax":1325.14,"baseTotalWithTaxOutdoor":1533.29,"netFunding":14.86,"netFundingOutdoor":-193.29,"highlight":false,"badge":null,"includesCamera":true,"includesSmartPlug":false},{"id":"comm-3yr","name":"Commercial","term":"3 Year","monthly":45,"multiple":19,"installCost":150,"installCollected":399,"baseSubtotal":1063.3,"baseHST":138.23,"baseTotalWithTax":1201.53,"baseTotalWithTaxOutdoor":1386.19,"netFunding":-346.53,"netFundingOutdoor":-531.19,"highlight":false,"badge":null,"includesCamera":true,"includesSmartPlug":false}],"baseSystemItems":[{"name":"IQ 4 Panel w/ 4K Keypad Camera, Siren, GSM","msrp":855,"agentCost":533.25,"allPackages":true},{"name":"Door Contact — Long Range (×2)","msrp":130,"agentCost":105.3,"allPackages":true},{"name":"Motion Sensor — Long Range","msrp":190,"agentCost":87.75,"allPackages":true},{"name":"Smart Plug","msrp":60,"agentCost":59.39,"allPackages":false,"packages":["auto-5yr","auto-3yr"]},{"name":"Indoor Camera (Easy Installation)","msrp":350,"agentCost":187.0,"allPackages":false,"packages":["vid-5yr","vid-3yr","auto-5yr","auto-3yr","comm-3yr"]}],"hardware":[{"name":"Wireless Door/Window Contact","note":"Regular Range","msrp":65,"agentCost":31.05},{"name":"Wireless Door/Window Contact","note":"Long Range","msrp":95,"agentCost":52.65},{"name":"Wireless Outdoor Contact","note":"Long Range","msrp":225,"agentCost":175.5},{"name":"Wireless Tilt Sensor","note":"Garage Rollup Doors","msrp":155,"agentCost":79.65},{"name":"Wireless Motion Sensor","note":"Pet Immune 40lbs / Reg","msrp":145,"agentCost":60.75},{"name":"Wireless Motion Sensor","note":"Pet Immune 80lbs / Long","msrp":190,"agentCost":120.15},{"name":"Wireless Motion Sensor","note":"Ceiling Mount 360°","msrp":275,"agentCost":199.8},{"name":"Wireless Shock Sensor","note":"Long Range","msrp":155,"agentCost":97.2},{"name":"Wireless Glassbreak Detector","note":"Long Range","msrp":185,"agentCost":120.15},{"name":"Wireless Smoke Detector","note":"Long Range","msrp":195,"agentCost":122.85},{"name":"Wireless Rate of Rise Heat Detector","note":"Long Range","msrp":198,"agentCost":132.3},{"name":"Wireless Temperature Detector","note":"Long Range","msrp":175,"agentCost":97.2},{"name":"Wireless Flood Detector","note":"","msrp":155,"agentCost":116.1},{"name":"Wireless Carbon Monoxide Detector","note":"Long Range","msrp":215,"agentCost":155.25},{"name":"Wireless Panic Button","note":"Long Range","msrp":158,"agentCost":91.8},{"name":"Wireless PG Keyfob 4-Button","note":"Arm / Disarm / Stay / Panic","msrp":140,"agentCost":66.15},{"name":"Indoor Siren with Strobe Light","note":"","msrp":190,"agentCost":141.75},{"name":"Outdoor Siren with Strobe Light","note":"Commercial Grade 110dB","msrp":345,"agentCost":302.4},{"name":"Repeater Module","note":"","msrp":235,"agentCost":195.75},{"name":"IQ Remote Touch Screen Keypad","note":"7 inch","msrp":475,"agentCost":391.5},{"name":"IQ4 Table Stand","note":"","msrp":30,"agentCost":20.25},{"name":"Indoor Portable Camera","note":"Residential / Commercial","msrp":275,"agentCost":211.95},{"name":"Residential Video Doorbell","note":"","msrp":425,"agentCost":384.75},{"name":"Residential Outdoor Camera","note":"Easy Installation","msrp":550,"agentCost":463.05},{"name":"Residential/Commercial Outdoor Camera","note":"Pro Installation","msrp":620,"agentCost":598.05}]};
 
 const HST = 0.13;
 let DATA = null;
 let selectedPkg = null;
 let hwRows = [];
 let miscRows = [];
-let cameraType = 'indoor'; // 'indoor' or 'outdoor'
+let cameraType = 'indoor';
 
 function $f(n) {
   if (n === null || n === undefined || isNaN(n)) return '—';
@@ -553,19 +553,96 @@ function doLogin() {
   }
 }
 
+// ── PARSE EXCEL INTO DATA OBJECT ──────────────────────
+function parseExcel(workbook) {
+  const ws = workbook.Sheets[workbook.SheetNames[0]];
+  const rows = XLSX.utils.sheet_to_json(ws, {header:1, defval:null});
+  const r = (row, col) => { const v = rows[row-1] ? rows[row-1][col] : null; return (typeof v === 'number') ? v : null; };
+
+  // Package columns: D=3, E=4, F=5, G=6, H=7, I=8, J=9
+  const PKG_COLS = [3,4,5,6,7,8,9];
+  const PKG_META = [
+    {id:'resi-5yr', name:'Resi Secure',        term:'5 Year', highlight:false, badge:null,           includesCamera:false, includesSmartPlug:false},
+    {id:'resi-3yr', name:'Resi Secure',         term:'3 Year', highlight:false, badge:null,           includesCamera:false, includesSmartPlug:false},
+    {id:'vid-5yr',  name:'Resi Secure + Video', term:'5 Year', highlight:true,  badge:'Recommended',  includesCamera:true,  includesSmartPlug:false},
+    {id:'vid-3yr',  name:'Resi Secure + Video', term:'3 Year', highlight:false, badge:null,           includesCamera:true,  includesSmartPlug:false},
+    {id:'auto-5yr', name:'Video + Automation',  term:'5 Year', highlight:true,  badge:'Top Earner ★', includesCamera:true,  includesSmartPlug:true},
+    {id:'auto-3yr', name:'Video + Automation',  term:'3 Year', highlight:false, badge:null,           includesCamera:true,  includesSmartPlug:false},
+    {id:'comm-3yr', name:'Commercial',           term:'3 Year', highlight:false, badge:null,           includesCamera:true,  includesSmartPlug:false},
+  ];
+
+  const packages = PKG_META.map((meta, i) => {
+    const col = PKG_COLS[i];
+    const monthly       = r(24, col);
+    const multiple      = r(25, col);
+    const installCollected = r(26, col);
+    const installCost   = r(14, col);
+    const totIn         = r(19, col);
+    const totOut        = r(20, col);
+    const round2 = v => Math.round(v * 100) / 100;
+    return {
+      ...meta,
+      monthly,
+      multiple,
+      installCost,
+      installCollected,
+      baseSubtotal:            totIn  ? round2(totIn  / 1.13) : null,
+      baseHST:                 totIn  ? round2(totIn  - totIn/1.13) : null,
+      baseTotalWithTax:        totIn  ? round2(totIn)  : null,
+      baseTotalWithTaxOutdoor: totOut ? round2(totOut) : null,
+      netFunding:              (totIn  && monthly && multiple) ? round2(monthly * multiple - totIn)  : null,
+      netFundingOutdoor:       (totOut && monthly && multiple) ? round2(monthly * multiple - totOut) : null,
+    };
+  });
+
+  // Base system items: rows 7-13, col B=MSRP, C=agentCost
+  const baseSystemItems = [
+    {name: String(rows[6][0]),  msrp: r(7,1),  agentCost: r(7,2),  allPackages: true},
+    {name: String(rows[7][0]),  msrp: r(8,1),  agentCost: r(8,2),  allPackages: true},
+    {name: String(rows[8][0]),  msrp: r(9,1),  agentCost: r(9,2),  allPackages: true},
+    {name: String(rows[9][0]),  msrp: r(10,1), agentCost: r(10,2), allPackages: false, packages:['auto-5yr','auto-3yr']},
+    {name: String(rows[11][0]), msrp: r(12,1), agentCost: r(12,2), allPackages: false, packages:['vid-5yr','vid-3yr','auto-5yr','auto-3yr','comm-3yr']},
+  ];
+
+  // Hardware: rows 32-57, col A=name, B=note, C=msrp, D=agentCost
+  const hardware = [];
+  for (let ri = 31; ri <= 57; ri++) {
+    const row = rows[ri];
+    if (!row || !row[0] || typeof row[0] !== 'string') continue;
+    if (row[0].trim().startsWith('  ') || row[0].trim().startsWith('Item')) continue;
+    if (typeof row[2] === 'number' && typeof row[3] === 'number') {
+      hardware.push({name: row[0], note: row[1] || '', msrp: row[2], agentCost: row[3]});
+    }
+  }
+
+  return { _updated: new Date().toISOString().slice(0,10), packages, baseSystemItems, hardware };
+}
+
 // ── LOAD PRICING DATA ─────────────────────────────────
 async function loadData() {
   try {
-    const res = await fetch(PRICING_URL, {
-      cache: 'no-store',
-      headers: { 'Accept': 'application/vnd.github.v3.raw' }
+    // Load SheetJS
+    await new Promise((resolve, reject) => {
+      if (window.XLSX) { resolve(); return; }
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+      s.onload = resolve; s.onerror = reject;
+      document.head.appendChild(s);
     });
+
+    const res = await fetch(EXCEL_URL, { cache: 'no-store', headers: { Accept: 'application/vnd.github.v3+json' } });
     if (!res.ok) throw new Error('HTTP ' + res.status);
-    DATA = await res.json();
+    const meta = await res.json();
+    const fileRes = await fetch(meta.download_url, { cache: 'no-store' });
+    if (!fileRes.ok) throw new Error('Download failed');
+    const ab = await fileRes.arrayBuffer();
+    const wb = XLSX.read(ab, { type: 'array' });
+    DATA = parseExcel(wb);
     document.getElementById('last-updated').textContent = (DATA._updated || '—') + ' (live)';
   } catch(e) {
+    console.warn('Excel load failed, using fallback:', e.message);
     DATA = FALLBACK;
-    document.getElementById('last-updated').textContent = (DATA._updated || '—') + ' (cached)';
+    document.getElementById('last-updated').textContent = (FALLBACK._updated || '—') + ' (cached)';
   }
   initApp();
 }

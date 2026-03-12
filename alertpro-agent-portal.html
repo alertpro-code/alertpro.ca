@@ -556,7 +556,10 @@ function doLogin() {
 // ── LOAD PRICING DATA ─────────────────────────────────
 async function loadData() {
   try {
-    const res = await fetch(PRICING_URL + '?v=' + Date.now());
+    const res = await fetch(PRICING_URL + '?v=' + Date.now(), {
+      cache: 'no-store',
+      headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache' }
+    });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     DATA = await res.json();
     document.getElementById('last-updated').textContent = (DATA._updated || '—') + ' (live)';

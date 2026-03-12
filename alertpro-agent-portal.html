@@ -3,648 +3,564 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alert Pro — Agent Pricing Portal</title>
+<title>Alert Pro — Agent Portal</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
 
-  :root {
-    --red: #C8202A;
-    --red-dark: #9e191f;
-    --bg: #0d0d0d;
-    --surface: #161616;
-    --surface2: #1e1e1e;
-    --border: #2a2a2a;
-    --text: #efefef;
-    --muted: #777;
-    --gold: #d4a843;
-    --gold-bg: #1e1a0f;
-    --green: #3ecf8e;
-    --green-bg: #0d1f17;
-  }
+/* ─── TOKENS ─────────────────────────────────────────── */
+:root {
+  --red:       #D42B35;
+  --red-dk:    #a8202a;
+  --bg:        #F4F5F7;
+  --white:     #FFFFFF;
+  --surface:   #FFFFFF;
+  --border:    #E0E3E8;
+  --text:      #1A1D23;
+  --muted:     #6B7280;
+  --gold:      #C47F17;
+  --gold-bg:   #FEF9EE;
+  --gold-bdr:  #F5D78A;
+  --green:     #0D7A4E;
+  --green-bg:  #ECFDF5;
+  --green-bdr: #A7F3D0;
+  --blue:      #1D4ED8;
+  --blue-bg:   #EFF6FF;
+  --blue-bdr:  #BFDBFE;
+  --red-bg:    #FEF2F2;
+  --red-bdr:   #FECACA;
+  --shadow:    0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md: 0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.06);
+}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+/* ─── RESET ──────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; }
 
-  body {
-    font-family: 'IBM Plex Mono', monospace;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    font-size: 13px;
-  }
+/* ─── LOGIN ──────────────────────────────────────────── */
+#login-screen {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #1a0508 0%, #2d0a10 40%, #1A1D23 100%);
+}
+.login-card {
+  width: 400px;
+  background: var(--white);
+  border-radius: 16px;
+  padding: 48px 44px 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.4);
+}
+.login-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px; font-weight: 800;
+  color: var(--red); letter-spacing: -1px;
+  margin-bottom: 4px;
+}
+.login-logo span { color: var(--text); }
+.login-tagline { font-size: 13px; color: var(--muted); margin-bottom: 36px; }
+.login-label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+.login-input {
+  width: 100%; padding: 12px 16px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text);
+  outline: none; margin-bottom: 16px; transition: border-color .15s;
+}
+.login-input:focus { border-color: var(--red); }
+.btn-login {
+  width: 100%; padding: 13px;
+  background: var(--red); color: #fff; border: none; border-radius: 8px;
+  font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
+  cursor: pointer; transition: background .15s;
+}
+.btn-login:hover { background: var(--red-dk); }
+#login-err { color: var(--red); font-size: 12px; margin-top: 10px; display: none; }
 
-  /* ===== LOGIN ===== */
-  #login-screen {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: radial-gradient(ellipse at 55% 40%, #1f0508 0%, #0d0d0d 65%);
-  }
+/* ─── APP SHELL ──────────────────────────────────────── */
+#app { display: none; }
+header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  height: 60px; display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 200;
+  box-shadow: var(--shadow);
+}
+.brand { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: var(--red); letter-spacing: -.5px; }
+.brand span { color: var(--text); }
+.hdr-right { display: flex; align-items: center; gap: 16px; }
+.hdr-badge {
+  background: var(--red-bg); color: var(--red);
+  border: 1px solid var(--red-bdr); border-radius: 20px;
+  font-size: 11px; font-weight: 600; padding: 3px 10px;
+}
+.hdr-updated { font-size: 11px; color: var(--muted); }
+.hdr-updated span { color: var(--green); font-weight: 600; }
 
-  .login-card {
-    width: 380px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-top: 4px solid var(--red);
-    padding: 44px 40px 38px;
-  }
+.main { max-width: 1200px; margin: 0 auto; padding: 28px 24px 80px; }
 
-  .login-logo {
-    font-family: 'Syne', sans-serif;
-    font-size: 26px;
-    font-weight: 800;
-    color: var(--red);
-    letter-spacing: -1px;
-    margin-bottom: 4px;
-  }
+/* ─── SECTION HEADERS ────────────────────────────────── */
+.sec-hdr {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px; padding-bottom: 10px;
+  border-bottom: 2px solid var(--border);
+}
+.sec-hdr-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); }
+.sec-hdr-sub { font-size: 12px; color: var(--muted); margin-left: auto; }
 
-  .login-logo span { color: var(--text); }
-  .login-sub { font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 36px; }
-  .login-label { display: block; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+/* ─── CARD ───────────────────────────────────────────── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border); border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+.card-body { padding: 20px 24px; }
 
-  #pw {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 15px;
-    padding: 11px 14px;
-    outline: none;
-    margin-bottom: 18px;
-  }
+/* ─── CUSTOMER FORM ──────────────────────────────────── */
+.cust-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.fg label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+.fg input {
+  width: 100%; padding: 10px 14px;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text);
+  outline: none; transition: border-color .15s;
+}
+.fg input:focus { border-color: var(--red); }
 
-  #pw:focus { border-color: var(--red); }
+/* ─── PACKAGES ───────────────────────────────────────── */
+.pkg-section { margin-bottom: 28px; }
+.pkg-section-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+  margin-bottom: 10px; padding: 4px 10px; border-radius: 4px;
+  display: inline-block;
+}
+.label-5yr { background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-bdr); }
+.label-3yr { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-bdr); }
 
-  .btn-login {
-    width: 100%;
-    background: var(--red);
-    color: #fff;
-    border: none;
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 13px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
+.pkg-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.pkg-grid-3col { display: grid; grid-template-columns: repeat(3, 1fr) 1fr; gap: 12px; }
 
-  .btn-login:hover { background: var(--red-dark); }
-  #login-error { color: #ff6b6b; font-size: 11px; margin-top: 12px; display: none; }
+.pkg-card {
+  background: var(--white); border: 2px solid var(--border); border-radius: 12px;
+  padding: 16px; cursor: pointer; position: relative;
+  transition: border-color .15s, box-shadow .15s, transform .1s;
+  overflow: hidden;
+}
+.pkg-card:hover { border-color: #aaa; box-shadow: var(--shadow-md); transform: translateY(-1px); }
 
-  /* ===== APP ===== */
-  #app { display: none; }
+.pkg-card.is-5yr { border-top: 3px solid var(--gold); }
+.pkg-card.is-3yr { border-top: 3px solid #93C5FD; }
+.pkg-card.is-comm { border-top: 3px solid #9CA3AF; }
 
-  header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 14px 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
+.pkg-card.selected { border-color: var(--red) !important; box-shadow: 0 0 0 3px rgba(212,43,53,.15); }
+.pkg-card.selected::after {
+  content: '✓'; position: absolute; top: 10px; right: 12px;
+  color: var(--red); font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px;
+}
 
-  .brand { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 17px; color: var(--red); }
-  .brand span { color: var(--text); }
-  .header-meta { font-size: 10px; color: var(--muted); letter-spacing: 0.08em; }
-  #last-updated { color: var(--gold); }
+.pkg-badge {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--gold); background: var(--gold-bg); border: 1px solid var(--gold-bdr);
+  padding: 2px 7px; border-radius: 20px;
+  display: inline-block; margin-bottom: 8px;
+}
+.pkg-name { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.pkg-term { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+.pkg-monthly { font-size: 26px; font-weight: 700; color: var(--text); line-height: 1; }
+.pkg-monthly sub { font-size: 12px; font-weight: 500; color: var(--muted); }
+.pkg-details { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+.pkg-detail-row { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-bottom: 3px; }
+.pkg-detail-row span:last-child { font-weight: 600; color: var(--text); }
+.pkg-funding { margin-top: 8px; padding: 6px 8px; background: var(--green-bg); border-radius: 6px; font-size: 11px; font-weight: 600; color: var(--green); text-align: center; }
 
-  .main { max-width: 1160px; margin: 0 auto; padding: 28px 24px 80px; }
+/* ─── PACKAGE DIVIDER ────────────────────────────────── */
+.pkg-divider { display: flex; align-items: center; gap: 12px; margin: 14px 0 12px; }
+.pkg-divider-line { flex: 1; height: 1px; background: var(--border); }
+.pkg-divider-label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; white-space: nowrap; }
 
-  /* ===== SECTION ===== */
-  .sec-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 14px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+/* ─── BASE SYSTEM INCLUDED ───────────────────────────── */
+.included-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.inc-item {
+  background: var(--green-bg); border: 1px solid var(--green-bdr); border-radius: 8px;
+  padding: 10px 12px; text-align: center;
+}
+.inc-item-name { font-size: 11px; font-weight: 600; color: var(--green); line-height: 1.3; }
+.inc-item-msrp { font-size: 10px; color: var(--muted); margin-top: 3px; }
+.inc-free-badge { font-size: 9px; font-weight: 700; background: var(--green); color: #fff; padding: 1px 6px; border-radius: 20px; display: inline-block; margin-top: 4px; }
 
-  /* ===== CUSTOMER ===== */
-  .cust-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 14px;
-    margin-bottom: 32px;
-  }
+.inc-item.inactive { background: #F3F4F6; border-color: #D1D5DB; opacity: 0.5; }
+.inc-item.inactive .inc-item-name { color: var(--muted); }
+.inc-item.inactive .inc-free-badge { background: #9CA3AF; }
 
-  .fg label { display: block; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+/* ─── HARDWARE TABLE ─────────────────────────────────── */
+.tbl-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+thead tr { background: #F9FAFB; border-bottom: 2px solid var(--border); }
+thead th {
+  padding: 10px 12px; text-align: left;
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted);
+  white-space: nowrap;
+}
+tbody tr { border-bottom: 1px solid #F3F4F6; transition: background .1s; }
+tbody tr:hover { background: #FAFAFA; }
+tbody td { padding: 10px 12px; vertical-align: middle; }
 
-  .fg input {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    padding: 9px 12px;
-    outline: none;
-    transition: border-color 0.15s;
-  }
+.item-name { font-size: 13px; font-weight: 500; color: var(--text); }
+.item-note { font-size: 11px; color: var(--muted); display: block; margin-top: 1px; }
 
-  .fg input:focus { border-color: var(--red); }
+.tag-msrp {
+  display: inline-block; font-size: 11px; font-weight: 600;
+  color: var(--muted); background: #F3F4F6; padding: 2px 7px; border-radius: 4px;
+}
+.tag-cost {
+  display: inline-block; font-size: 12px; font-weight: 600; color: var(--text);
+}
 
-  /* ===== PACKAGES ===== */
-  .pkgs-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-bottom: 8px;
-  }
+.qty-inp {
+  width: 60px; padding: 7px 10px; text-align: center;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+  outline: none; transition: border-color .15s;
+}
+.qty-inp:focus { border-color: var(--red); }
 
-  .pkgs-grid-row2 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr) 1.33fr;
-    gap: 10px;
-    margin-bottom: 28px;
-  }
+.price-inp {
+  width: 96px; padding: 7px 10px; text-align: right;
+  border: 1.5px solid var(--border); border-radius: 8px;
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text);
+  outline: none; transition: border-color .15s;
+}
+.price-inp:focus { border-color: var(--gold); border-width: 2px; }
 
-  .pkg-row-label {
-    font-size: 10px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 6px;
-    padding-left: 2px;
-  }
+.line-total { text-align: right; font-size: 13px; font-weight: 600; color: var(--text); white-space: nowrap; }
 
-  .pkg-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 14px 14px 12px;
-    cursor: pointer;
-    transition: border-color 0.15s, background 0.15s;
-    position: relative;
-    overflow: hidden;
-  }
+.pill {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  padding: 3px 9px; border-radius: 20px; white-space: nowrap;
+}
+.pill-green { background: var(--green-bg); color: var(--green); }
+.pill-yellow { background: var(--gold-bg); color: var(--gold); }
+.pill-red { background: var(--red-bg); color: var(--red); }
 
-  .pkg-card:hover { border-color: #444; }
+/* ─── SUMMARY CARDS ──────────────────────────────────── */
+.summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
 
-  .pkg-card.highlight-card {
-    background: var(--gold-bg);
-    border-color: #3a2e10;
-  }
+.scard {
+  border-radius: 12px; padding: 18px 20px;
+  border: 1px solid var(--border);
+  background: var(--white); box-shadow: var(--shadow);
+}
+.scard.green  { background: var(--green-bg); border-color: var(--green-bdr); }
+.scard.gold   { background: var(--gold-bg);  border-color: var(--gold-bdr);  }
+.scard.red    { background: var(--red-bg);   border-color: var(--red-bdr);   }
 
-  .pkg-card.highlight-card:hover { border-color: #6a5220; }
+.scard-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 8px; }
+.scard.green .scard-label { color: var(--green); }
+.scard.gold  .scard-label { color: var(--gold); }
+.scard.red   .scard-label { color: var(--red); }
 
-  .pkg-card.selected {
-    border-color: var(--red) !important;
-    background: #1a0d0e !important;
-  }
+.scard-value { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; line-height: 1; }
+.scard.green .scard-value { color: var(--green); }
+.scard.gold  .scard-value { color: var(--gold); }
+.scard.red   .scard-value { color: var(--red); }
 
-  .pkg-card.selected::after {
-    content: '✓';
-    position: absolute;
-    top: 8px;
-    right: 10px;
-    color: var(--red);
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 14px;
-  }
+.scard-sub { font-size: 11px; color: var(--muted); margin-top: 5px; }
 
-  .pkg-badge {
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 5px;
-    display: block;
-    height: 14px;
-  }
+/* ─── FUNDING BREAKDOWN ──────────────────────────────── */
+.breakdown {
+  background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+  padding: 20px 24px; max-width: 520px; box-shadow: var(--shadow);
+}
+.brow { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid #F3F4F6; font-size: 13px; }
+.brow:last-child { border-bottom: none; border-top: 2px solid var(--border); padding-top: 13px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; }
+.brow-label { color: var(--muted); }
+.brow-val { font-weight: 600; }
+.bval-green { color: var(--green); }
+.bval-gold  { color: var(--gold); }
 
-  .pkg-name { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; margin-bottom: 7px; line-height: 1.35; }
+/* ─── ACTIONS ────────────────────────────────────────── */
+.actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn {
+  padding: 11px 24px; border: none; border-radius: 8px; cursor: pointer;
+  font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .06em; transition: all .15s;
+}
+.btn-primary { background: var(--red); color: #fff; }
+.btn-primary:hover { background: var(--red-dk); }
+.btn-secondary { background: var(--white); color: var(--text); border: 1.5px solid var(--border); }
+.btn-secondary:hover { border-color: #888; }
 
-  .pkg-monthly {
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--gold);
-    margin-bottom: 1px;
-  }
+/* ─── SPACING UTILITIES ──────────────────────────────── */
+.mb8  { margin-bottom: 8px; }
+.mb16 { margin-bottom: 16px; }
+.mb24 { margin-bottom: 24px; }
+.mb32 { margin-bottom: 32px; }
 
-  .pkg-monthly sub { font-size: 10px; color: var(--muted); }
-  .pkg-detail { font-size: 10px; color: var(--muted); margin-top: 4px; }
-  .pkg-funding { font-size: 11px; color: var(--green); margin-top: 5px; font-weight: 500; }
+/* ─── LOADING ────────────────────────────────────────── */
+#loading {
+  position: fixed; inset: 0; background: rgba(244,245,247,.9);
+  display: flex; align-items: center; justify-content: center; z-index: 999;
+  font-family: 'Syne', sans-serif; font-size: 15px; color: var(--muted); letter-spacing: .08em;
+}
 
-  /* ===== PACKAGE SEPARATOR ===== */
-  .pkg-separator {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 6px 0 6px;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .pkg-separator-line { flex: 1; height: 1px; background: var(--border); }
-
-  /* ===== NOTICE ===== */
-  .notice {
-    background: var(--green-bg);
-    border: 1px solid #1a3d28;
-    color: #5ec890;
-    font-size: 11px;
-    padding: 10px 14px;
-    margin-bottom: 24px;
-    line-height: 1.6;
-  }
-
-  .notice strong { color: #8eddb8; }
-
-  /* ===== HARDWARE TABLE ===== */
-  table { width: 100%; border-collapse: collapse; }
-
-  thead th {
-    text-align: left;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    padding: 8px 10px;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-    white-space: nowrap;
-  }
-
-  tbody tr { border-bottom: 1px solid #1b1b1b; transition: background 0.1s; }
-  tbody tr:hover { background: #141414; }
-  tbody td { padding: 9px 10px; vertical-align: middle; }
-
-  .item-name { color: var(--text); line-height: 1.4; }
-  .item-note { color: var(--muted); font-size: 10px; display: block; margin-top: 1px; }
-
-  .msrp-cell { color: var(--muted); white-space: nowrap; }
-  .msrp-val { color: #5a5a5a; }
-
-  .cost-cell { color: #888; white-space: nowrap; }
-
-  .qty-input {
-    width: 52px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    padding: 5px 8px;
-    text-align: center;
-    outline: none;
-    transition: border-color 0.15s;
-  }
-
-  .qty-input:focus { border-color: var(--red); }
-
-  .price-input {
-    width: 88px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--gold);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    padding: 5px 8px;
-    text-align: right;
-    outline: none;
-    transition: border-color 0.15s;
-  }
-
-  .price-input:focus { border-color: var(--gold); }
-
-  .line-total { text-align: right; white-space: nowrap; }
-
-  .mpill {
-    display: inline-block;
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 20px;
-    white-space: nowrap;
-    background: var(--green-bg);
-    color: var(--green);
-  }
-
-  .mpill.warn { background: #201c10; color: #d4a843; }
-  .mpill.danger { background: #200e0e; color: #e05555; }
-
-  /* ===== FIXED TABLE ===== */
-  .fixed-row td { color: #5a5a5a; }
-  .free-badge {
-    display: inline-block;
-    background: var(--green-bg);
-    color: var(--green);
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 2px 8px;
-    border-radius: 20px;
-  }
-
-  /* ===== SUMMARY ===== */
-  .summary-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 28px;
-  }
-
-  .scard {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 18px 16px;
-  }
-
-  .scard.highlight { background: #1a0d0e; border-color: #3d1518; }
-  .scard.gold-card { background: var(--gold-bg); border-color: #3a2e10; }
-
-  .scard-label { font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-  .scard-value { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; }
-  .scard-sub { font-size: 10px; color: var(--muted); margin-top: 4px; }
-
-  .sv-green { color: var(--green); }
-  .sv-gold { color: var(--gold); }
-  .sv-red { color: var(--red); }
-
-  /* ===== FUNDING BREAKDOWN ===== */
-  .fbreak {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 20px;
-    margin-bottom: 28px;
-    max-width: 500px;
-  }
-
-  .frow { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #1a1a1a; font-size: 12px; }
-  .frow:last-child { border-bottom: none; padding-top: 12px; font-family: 'Syne', sans-serif; font-weight: 700; border-top: 1px solid var(--border); }
-  .frow-label { color: var(--muted); }
-  .frow-val { font-weight: 500; }
-
-  /* ===== ACTIONS ===== */
-  .actions { display: flex; gap: 12px; flex-wrap: wrap; }
-
-  .btn {
-    font-family: 'Syne', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 11px 22px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .btn-primary { background: var(--red); color: #fff; }
-  .btn-primary:hover { background: var(--red-dark); }
-  .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
-  .btn-ghost:hover { border-color: #555; }
-
-  /* ===== LOADING ===== */
-  .loading-overlay {
-    position: fixed; inset: 0;
-    background: rgba(10,10,10,0.85);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 999;
-    font-family: 'Syne', sans-serif;
-    font-size: 14px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-  }
-
-  @media (max-width: 800px) {
-    .pkgs-grid, .pkgs-grid-row2 { grid-template-columns: 1fr 1fr; }
-    .summary-row { grid-template-columns: 1fr 1fr; }
-    .cust-grid { grid-template-columns: 1fr; }
-    .main { padding: 16px 12px 60px; }
-  }
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 900px) {
+  .pkg-grid, .pkg-grid-3col { grid-template-columns: 1fr 1fr; }
+  .summary-grid { grid-template-columns: 1fr 1fr; }
+  .cust-grid { grid-template-columns: 1fr; }
+  .included-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+  .pkg-grid, .pkg-grid-3col { grid-template-columns: 1fr; }
+  .main { padding: 16px 12px 60px; }
+}
 </style>
 </head>
 <body>
 
-<!-- ===== LOGIN ===== -->
+<!-- ═══ LOGIN ═══ -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">Alert<span>Pro</span></div>
-    <div class="login-sub">Agent Pricing Portal</div>
+    <div class="login-tagline">Agent Pricing Portal — Authorized Access Only</div>
     <label class="login-label" for="pw">Agent Password</label>
-    <input type="password" id="pw" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="btn-login" onclick="doLogin()">Enter Portal</button>
-    <div id="login-error">Incorrect password. Contact your manager.</div>
+    <input class="login-input" type="password" id="pw" placeholder="Enter your password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="btn-login" onclick="doLogin()">Sign In</button>
+    <div id="login-err">Incorrect password. Contact your manager.</div>
   </div>
 </div>
 
-<!-- ===== APP ===== -->
+<!-- ═══ APP ═══ -->
 <div id="app">
-  <div class="loading-overlay" id="loading">Loading pricing data…</div>
+  <div id="loading">Loading pricing data…</div>
 
   <header>
-    <div class="brand">Alert<span>Pro</span> <span style="color:var(--muted);font-size:12px;font-weight:400;font-family:'IBM Plex Mono',monospace;">Agent Portal</span></div>
-    <div class="header-meta">Pricing updated: <span id="last-updated">—</span></div>
+    <div class="brand">Alert<span>Pro</span></div>
+    <div class="hdr-right">
+      <div class="hdr-updated">Prices updated: <span id="last-updated">—</span></div>
+      <div class="hdr-badge">🔒 Agent Portal</div>
+    </div>
   </header>
 
   <div class="main">
 
-    <!-- Customer -->
-    <div class="sec-title">Customer Information</div>
-    <div class="cust-grid" style="margin-bottom:32px;">
-      <div class="fg"><label>Customer Name</label><input type="text" id="cust-name" placeholder="Jane Smith"></div>
-      <div class="fg"><label>Phone</label><input type="text" id="cust-phone" placeholder="905-000-0000"></div>
-      <div class="fg"><label>Site Address</label><input type="text" id="cust-addr" placeholder="123 Main St, Whitby ON"></div>
-    </div>
-
-    <!-- Packages -->
-    <div class="sec-title">Select Monitoring Package</div>
-
-    <div class="pkg-row-label" style="color:var(--gold);">⭐ 5-Year Plans — Maximum Funding</div>
-    <div class="pkgs-grid" id="pkg-grid-5yr"></div>
-
-    <div class="pkg-separator"><div class="pkg-separator-line"></div>3-Year Plans<div class="pkg-separator-line"></div></div>
-
-    <div class="pkgs-grid" id="pkg-grid-3yr" style="margin-bottom:28px;"></div>
-
-    <!-- Notice -->
-    <div class="notice">
-      <strong>How pricing works:</strong> The base system is funded — <strong>$0 upfront cost to customer</strong> for equipment. 
-      You collect the installation fee. For extra hardware, you see <em>your cost</em> and the <em>MSRP</em> — set your selling price anywhere between them. 
-      Base system and monitoring are fixed.
-    </div>
-
-    <!-- Hardware -->
-    <div class="sec-title">Add-On Hardware <span style="font-weight:400;color:var(--muted);font-size:10px;">— Set your own sell price</span></div>
-    <div style="overflow-x:auto;margin-bottom:32px;">
-      <table id="hw-table">
-        <thead>
-          <tr>
-            <th style="width:35%">Item</th>
-            <th>MSRP</th>
-            <th>Your Cost</th>
-            <th>Qty</th>
-            <th>Your Price</th>
-            <th style="text-align:right">Total</th>
-            <th>Margin</th>
-          </tr>
-        </thead>
-        <tbody id="hw-body"></tbody>
-      </table>
-    </div>
-
-    <!-- Fixed items -->
-    <div class="sec-title">Base System <span style="font-weight:400;color:var(--muted);font-size:10px;">— Funded / Fixed</span></div>
-    <div style="overflow-x:auto;margin-bottom:32px;">
-      <table>
-        <thead>
-          <tr>
-            <th style="width:50%">Item</th>
-            <th>MSRP</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="fixed-body"></tbody>
-      </table>
-    </div>
-
-    <!-- Summary -->
-    <div class="sec-title">Deal Summary</div>
-    <div class="summary-row">
-      <div class="scard">
-        <div class="scard-label">Customer Pays (Hardware)</div>
-        <div class="scard-value sv-gold" id="s-hw-total">$0.00</div>
-        <div class="scard-sub">Extra hardware only, before HST</div>
+    <!-- CUSTOMER -->
+    <div class="sec-hdr mb16"><div class="sec-hdr-title">Customer Information</div></div>
+    <div class="card mb32">
+      <div class="card-body">
+        <div class="cust-grid">
+          <div class="fg"><label>Customer Name</label><input type="text" id="cust-name" placeholder="Jane Smith"></div>
+          <div class="fg"><label>Phone</label><input type="text" id="cust-phone" placeholder="905-000-0000"></div>
+          <div class="fg"><label>Site Address</label><input type="text" id="cust-addr" placeholder="123 Main St, Whitby ON"></div>
+        </div>
       </div>
-      <div class="scard">
-        <div class="scard-label">Monthly Monitoring</div>
-        <div class="scard-value" id="s-monthly">—</div>
-        <div class="scard-sub" id="s-term">Select a package</div>
+    </div>
+
+    <!-- PACKAGES -->
+    <div class="sec-hdr mb16">
+      <div class="sec-hdr-title">Select Monitoring Package</div>
+      <div class="sec-hdr-sub">5-Year plans generate more funding — push these first</div>
+    </div>
+
+    <div class="pkg-section">
+      <div class="pkg-section-label label-5yr">⭐ 5-Year Plans — Higher Funding</div>
+      <div class="pkg-grid" id="grid-5yr"></div>
+    </div>
+
+    <div class="pkg-divider">
+      <div class="pkg-divider-line"></div>
+      <div class="pkg-divider-label">3-Year Plans</div>
+      <div class="pkg-divider-line"></div>
+    </div>
+
+    <div class="pkg-section mb32">
+      <div class="pkg-grid-3col" id="grid-3yr"></div>
+    </div>
+
+    <!-- BASE SYSTEM INCLUDED -->
+    <div class="sec-hdr mb16">
+      <div class="sec-hdr-title">Base System Included</div>
+      <div class="sec-hdr-sub">Equipment cost is funded — $0 upfront to customer</div>
+    </div>
+    <div class="card mb32">
+      <div class="card-body">
+        <div class="included-grid" id="included-grid"></div>
       </div>
-      <div class="scard gold-card">
-        <div class="scard-label">Gross Funding</div>
-        <div class="scard-value sv-gold" id="s-gross">—</div>
-        <div class="scard-sub" id="s-gross-sub">MRR × Multiple</div>
+    </div>
+
+    <!-- HARDWARE ADD-ONS -->
+    <div class="sec-hdr mb16">
+      <div class="sec-hdr-title">Add-On Hardware</div>
+      <div class="sec-hdr-sub">Set your own selling price — your profit = sell price minus your cost</div>
+    </div>
+    <div class="card mb32">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:36%">Item</th>
+              <th>MSRP</th>
+              <th>Your Cost</th>
+              <th>Qty</th>
+              <th>Your Sell Price</th>
+              <th style="text-align:right">Line Total</th>
+              <th>Your Profit (75%)</th>
+            </tr>
+          </thead>
+          <tbody id="hw-body"></tbody>
+        </table>
       </div>
-      <div class="scard highlight">
+    </div>
+
+    <!-- INSTALL FEE ENTRY -->
+    <div class="sec-hdr mb16"><div class="sec-hdr-title">Installation Fee</div><div class="sec-hdr-sub">Encouraged — you keep 50% of whatever you charge</div></div>
+    <div class="card mb32">
+      <div class="card-body" style="display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+        <div class="fg" style="flex:0 0 auto;">
+          <label>Installation Fee Charged to Customer</label>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span style="font-size:20px;font-weight:700;color:var(--muted);">$</span>
+            <input type="number" id="install-charged" min="0" step="1" placeholder="0"
+              style="width:130px;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Inter',sans-serif;font-size:18px;font-weight:700;color:var(--text);outline:none;"
+              oninput="updateCalc()" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'">
+          </div>
+        </div>
+        <div style="flex:1;min-width:220px;background:var(--green-bg);border:1px solid var(--green-bdr);border-radius:8px;padding:12px 16px;">
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--green);margin-bottom:4px;">Your Share (50%)</div>
+          <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--green);" id="install-kept-display">$0.00</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:3px;">Included in your net funding calculation</div>
+        </div>
+        <div style="flex:1;min-width:220px;background:var(--blue-bg);border:1px solid var(--blue-bdr);border-radius:8px;padding:12px 16px;">
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:4px;">Suggested Amount</div>
+          <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--blue);" id="install-suggested">—</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:3px;">Standard rate for this package</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="sec-hdr mb16"><div class="sec-hdr-title">Deal Summary</div></div>
+    <div class="summary-grid mb24" style="grid-template-columns:repeat(3,1fr);">
+      <div class="scard green">
         <div class="scard-label">Your Net Funding</div>
-        <div class="scard-value sv-green" id="s-net">—</div>
-        <div class="scard-sub">After base system cost</div>
+        <div class="scard-value" id="s-net">—</div>
+        <div class="scard-sub">Funding + install share, after base system cost</div>
+      </div>
+      <div class="scard gold">
+        <div class="scard-label">Hardware Profit (75%)</div>
+        <div class="scard-value" id="s-hw-profit">$0.00</div>
+        <div class="scard-sub">Your share of hardware markup</div>
+      </div>
+      <div class="scard">
+        <div class="scard-label">Total Estimated Earnings</div>
+        <div class="scard-value" id="s-total" style="color:var(--text);">—</div>
+        <div class="scard-sub">Net funding + hardware profit</div>
       </div>
     </div>
 
-    <!-- Funding breakdown -->
-    <div class="sec-title">Funding Breakdown</div>
-    <div class="fbreak">
-      <div class="frow"><span class="frow-label">Gross Funding (MRR × Multiple)</span><span class="frow-val" id="fb-gross">—</span></div>
-      <div class="frow"><span class="frow-label">+ Installation Fee Collected</span><span class="frow-val" id="fb-install">—</span></div>
-      <div class="frow"><span class="frow-label">+ Hardware Profit</span><span class="frow-val sv-gold" id="fb-hwprofit">—</span></div>
-      <div class="frow"><span class="frow-label">− Base System Cost (incl. HST)</span><span class="frow-val" id="fb-cost">—</span></div>
-      <div class="frow"><span class="frow-label">Net Funding</span><span class="frow-val sv-green" id="fb-net">—</span></div>
+    <!-- BREAKDOWN -->
+    <div class="sec-hdr mb16"><div class="sec-hdr-title">Funding Breakdown</div></div>
+    <div class="breakdown mb32">
+      <div class="brow"><span class="brow-label">+ Your Install Share (50% of charged amount)</span><span class="brow-val bval-gold" id="fb-install">$0.00</span></div>
+      <div class="brow"><span class="brow-label">− Base System Subtotal</span><span class="brow-val" id="fb-base-sub">—</span></div>
+      <div class="brow"><span class="brow-label">− HST on Base System (13%)</span><span class="brow-val" id="fb-base-hst">—</span></div>
+      <div class="brow"><span class="brow-label">Net Funding</span><span class="brow-val bval-green" id="fb-net">—</span></div>
     </div>
 
-    <!-- Actions -->
+    <!-- ACTIONS -->
     <div class="actions">
-      <button class="btn btn-primary" onclick="downloadExcel()">⬇ Download Quote as Excel</button>
-      <button class="btn btn-ghost" onclick="resetForm()">↺ New Quote</button>
+      <button class="btn btn-primary" onclick="downloadExcel()">⬇ Download Quote (Excel)</button>
+      <button class="btn btn-secondary" onclick="resetForm()">↺ New Quote</button>
     </div>
 
   </div>
 </div>
 
 <script>
-// =============================================
-// CONFIGURATION
-// =============================================
-const PASSWORD = "alertpro2025";
+// ═══════════════════════════════════════════════════════
+// CONFIGURATION — change password and GitHub URL here
+// ═══════════════════════════════════════════════════════
+const PASSWORD    = "alertpro2025";
+const PRICING_URL = "https://YOUR-GITHUB-USERNAME.github.io/YOUR-REPO/pricing-data.json";
+// ═══════════════════════════════════════════════════════
 
-// URL to your pricing JSON on GitHub Pages
-// Update this to point to your GitHub Pages repo
-const PRICING_URL = "https://jasonalertpro.github.io/alertpro/pricing-data.json";
-
-// Fallback inline data (used if GitHub fetch fails)
-const FALLBACK_DATA = {"_updated":"2026-02-24","_agentMarkup":0.35,"packages":[{"id":"resi-5yr","name":"Resi Secure","monthly":45,"term":"5 Years","multiple":26,"install":199,"highlight":true,"badge":"Best Value"},{"id":"resi-3yr","name":"Resi Secure","monthly":50,"term":"3 Years","multiple":20,"install":199,"highlight":false},{"id":"vid-5yr","name":"Resi Secure + Video","monthly":55,"term":"5 Years","multiple":26,"install":249,"highlight":true,"badge":"Recommended ★"},{"id":"vid-3yr","name":"Resi Secure + Video","monthly":60,"term":"3 Years","multiple":20,"install":249,"highlight":false},{"id":"auto-5yr","name":"Video + Automation","monthly":62,"term":"5 Years","multiple":26,"install":299,"highlight":true,"badge":"Top Earner ★★"},{"id":"auto-3yr","name":"Video + Automation","monthly":67,"term":"3 Years","multiple":20,"install":299,"highlight":false},{"id":"comm-3yr","name":"Commercial","monthly":45,"term":"3 Years","multiple":19,"install":399,"highlight":false}],"baseItems":[{"id":"iq4","name":"IQ 4 Panel w/ 4K Keypad Camera, Siren, GSM","hamidCost":395,"msrp":850},{"id":"door","name":"Door Contact — Long Range ×2","hamidCost":78,"msrp":130,"note":"Includes 2 contacts"},{"id":"motion","name":"Motion Sensor — Long Range","hamidCost":65,"msrp":190},{"id":"icam","name":"Indoor Camera (Easy Install)","hamidCost":157,"msrp":350,"packages":["vid-5yr","vid-3yr","auto-5yr","auto-3yr","comm-3yr"]}],"hardware":[{"name":"Wireless Door/Window Contact","note":"Regular Range","hamidCost":23,"msrp":65},{"name":"Wireless Door/Window Contact","note":"Long Range","hamidCost":39,"msrp":95},{"name":"Wireless Outdoor Contact","note":"Long Range","hamidCost":130,"msrp":225},{"name":"Wireless Tilt Sensor","note":"Garage Rollup Doors","hamidCost":59,"msrp":155},{"name":"Wireless Motion Sensor","note":"Pet Immune 40lb / Reg","hamidCost":45,"msrp":145},{"name":"Wireless Motion Sensor","note":"Pet Immune 80lb / Long","hamidCost":65,"msrp":190},{"name":"Wireless Motion Sensor","note":"Ceiling 360°","hamidCost":148,"msrp":275},{"name":"Wireless Shock Sensor","note":"Long Range","hamidCost":72,"msrp":155},{"name":"Wireless Glassbreak Detector","note":"Long Range","hamidCost":89,"msrp":185},{"name":"Wireless Smoke Detector","note":"Long Range","hamidCost":91,"msrp":195},{"name":"Wireless Heat Detector","note":"Rate of Rise / Long Range","hamidCost":98,"msrp":198},{"name":"Wireless Temperature Detector","note":"Long Range","hamidCost":72,"msrp":175},{"name":"Wireless Flood Detector","note":"","hamidCost":86,"msrp":155},{"name":"Wireless Carbon Monoxide Detector","note":"Long Range","hamidCost":115,"msrp":215},{"name":"Wireless Panic Button","note":"Long Range","hamidCost":68,"msrp":158},{"name":"Wireless Keyfob — 4 Button","note":"Arm/Disarm/Stay/Panic","hamidCost":49,"msrp":140},{"name":"Indoor Siren with Strobe","note":"","hamidCost":105,"msrp":190},{"name":"Outdoor Siren with Strobe","note":"Commercial Grade 110dB","hamidCost":224,"msrp":345},{"name":"Smart Plug","note":"","hamidCost":43.99,"msrp":60},{"name":"Repeater Module","note":"","hamidCost":145,"msrp":235},{"name":"IQ Remote Keypad","note":"7\" Touch Screen","hamidCost":290,"msrp":475},{"name":"IQ4 Table Stand","note":"","hamidCost":15,"msrp":30},{"name":"Indoor Portable Camera","note":"Residential / Commercial","hamidCost":157,"msrp":275},{"name":"Video Doorbell","note":"Residential","hamidCost":285,"msrp":425},{"name":"Outdoor Camera","note":"Easy Installation","hamidCost":343,"msrp":550},{"name":"Outdoor Camera","note":"Pro Installation","hamidCost":443,"msrp":620},{"name":"Outdoor Camera Fixed WiFi","note":"Driveway / 2.4G+5G","hamidCost":293,"msrp":620}]};
+// Embedded fallback — exact numbers from REP_WorkSheet_Feb_24_2026.xlsx
+const FALLBACK = {"_updated":"2026-02-24","packages":[{"id":"resi-5yr","name":"Resi Secure","term":"5 Year","monthly":45,"multiple":23,"installCollected":199,"baseSubtotal":680.00,"baseHST":88.40,"baseTotalWithTax":768.40,"netFunding":465.60,"highlight":false,"badge":null,"includesCamera":false,"includesSmartPlug":false},{"id":"resi-3yr","name":"Resi Secure","term":"3 Year","monthly":50,"multiple":17,"installCollected":199,"baseSubtotal":680.00,"baseHST":88.40,"baseTotalWithTax":768.40,"netFunding":280.60,"highlight":false,"badge":null,"includesCamera":false,"includesSmartPlug":false},{"id":"vid-5yr","name":"Resi Secure + Video","term":"5 Year","monthly":55,"multiple":26,"installCollected":249,"baseSubtotal":862.00,"baseHST":112.06,"baseTotalWithTax":974.06,"netFunding":704.94,"highlight":true,"badge":"Recommended","includesCamera":true,"includesSmartPlug":false},{"id":"vid-3yr","name":"Resi Secure + Video","term":"3 Year","monthly":60,"multiple":20,"installCollected":249,"baseSubtotal":862.00,"baseHST":112.06,"baseTotalWithTax":974.06,"netFunding":474.94,"highlight":false,"badge":null,"includesCamera":true,"includesSmartPlug":false},{"id":"auto-5yr","name":"Video + Automation","term":"5 Year","monthly":62,"multiple":26,"installCollected":299,"baseSubtotal":930.99,"baseHST":121.03,"baseTotalWithTax":1052.02,"netFunding":858.98,"highlight":true,"badge":"Top Earner ★","includesCamera":true,"includesSmartPlug":true},{"id":"auto-3yr","name":"Video + Automation","term":"3 Year","monthly":67,"multiple":20,"installCollected":299,"baseSubtotal":930.99,"baseHST":121.03,"baseTotalWithTax":1052.02,"netFunding":586.98,"highlight":false,"badge":null,"includesCamera":true,"includesSmartPlug":true},{"id":"comm-3yr","name":"Commercial","term":"3 Year","monthly":45,"multiple":19,"installCollected":399,"baseSubtotal":837.00,"baseHST":108.81,"baseTotalWithTax":945.81,"netFunding":308.19,"highlight":false,"badge":null,"includesCamera":true,"includesSmartPlug":false}],"baseSystemItems":[{"name":"IQ 4 Panel w/ 4K Keypad Camera, Siren, GSM","msrp":850,"agentCost":533.25,"allPackages":true},{"name":"Door Contact — Long Range (×2)","msrp":130,"agentCost":105.30,"allPackages":true},{"name":"Motion Sensor — Long Range","msrp":190,"agentCost":87.75,"allPackages":true},{"name":"Smart Plug","msrp":60,"agentCost":59.39,"allPackages":false,"packages":["auto-5yr","auto-3yr"]},{"name":"Indoor Camera (Easy Installation)","msrp":350,"agentCost":187.00,"allPackages":false,"packages":["vid-5yr","vid-3yr","auto-5yr","auto-3yr","comm-3yr"]}],"hardware":[{"name":"Wireless Door/Window Contact","note":"Regular Range","msrp":65,"agentCost":31.05},{"name":"Wireless Door/Window Contact","note":"Long Range","msrp":95,"agentCost":52.65},{"name":"Wireless Outdoor Contact","note":"Long Range","msrp":225,"agentCost":175.50},{"name":"Wireless Tilt Sensor","note":"Garage Rollup Doors","msrp":155,"agentCost":79.65},{"name":"Wireless Motion Sensor","note":"Pet Immune 40lbs / Reg","msrp":145,"agentCost":60.75},{"name":"Wireless Motion Sensor","note":"Pet Immune 80lbs / Long","msrp":190,"agentCost":120.15},{"name":"Wireless Motion Sensor","note":"Ceiling Mount 360°","msrp":275,"agentCost":199.80},{"name":"Wireless Shock Sensor","note":"Long Range","msrp":155,"agentCost":97.20},{"name":"Wireless Glassbreak Detector","note":"Long Range","msrp":185,"agentCost":120.15},{"name":"Wireless Smoke Detector","note":"Long Range","msrp":195,"agentCost":122.85},{"name":"Wireless Rate of Rise Heat Detector","note":"Long Range","msrp":198,"agentCost":132.30},{"name":"Wireless Temperature Detector","note":"Long Range","msrp":175,"agentCost":97.20},{"name":"Wireless Flood Detector","note":"","msrp":155,"agentCost":116.10},{"name":"Wireless Carbon Monoxide Detector","note":"Long Range","msrp":215,"agentCost":155.25},{"name":"Wireless Panic Button","note":"Long Range","msrp":158,"agentCost":91.80},{"name":"Wireless PG Keyfob 4-Button","note":"Arm / Disarm / Stay / Panic","msrp":140,"agentCost":66.15},{"name":"Indoor Siren with Strobe Light","note":"","msrp":190,"agentCost":141.75},{"name":"Outdoor Siren with Strobe Light","note":"Commercial Grade 110dB","msrp":345,"agentCost":302.40},{"name":"Repeater Module","note":"","msrp":235,"agentCost":195.75},{"name":"IQ Remote Touch Screen Keypad","note":"7 inch","msrp":475,"agentCost":391.50},{"name":"IQ4 Table Stand","note":"","msrp":30,"agentCost":20.25},{"name":"Indoor Portable Camera","note":"Residential / Commercial","msrp":275,"agentCost":211.95},{"name":"Residential Video Doorbell","note":"","msrp":425,"agentCost":384.75},{"name":"Residential Outdoor Camera","note":"Easy Installation","msrp":550,"agentCost":463.05},{"name":"Residential/Commercial Outdoor Camera","note":"Pro Installation","msrp":620,"agentCost":598.05}]};
 
 const HST = 0.13;
 let DATA = null;
 let selectedPkg = null;
 let hwRows = [];
 
-// =============================================
-
-function fmt(n) {
+function $f(n) {
   if (n === null || n === undefined || isNaN(n)) return '—';
-  return '$' + parseFloat(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return '$' + Math.abs(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-function agentCost(hamidCost) {
-  return hamidCost * (1 + DATA._agentMarkup);
-}
-
-// ===== LOGIN =====
+// ── LOGIN ─────────────────────────────────────────────
 function doLogin() {
   if (document.getElementById('pw').value.trim() === PASSWORD) {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
-    loadPricingData();
+    loadData();
   } else {
-    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('login-err').style.display = 'block';
   }
 }
 
-// ===== LOAD DATA =====
-async function loadPricingData() {
+// ── LOAD PRICING DATA ─────────────────────────────────
+async function loadData() {
   try {
-    const res = await fetch(PRICING_URL + '?t=' + Date.now());
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    DATA = await res.json();
+    const r = await fetch(PRICING_URL + '?v=' + Date.now());
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    DATA = await r.json();
     document.getElementById('last-updated').textContent = DATA._updated + ' (live)';
-  } catch (e) {
-    DATA = FALLBACK_DATA;
+  } catch(e) {
+    DATA = FALLBACK;
     document.getElementById('last-updated').textContent = DATA._updated + ' (cached)';
-    console.warn('Using fallback pricing data:', e.message);
   }
   document.getElementById('loading').style.display = 'none';
-  initApp();
+  buildUI();
 }
 
-// ===== BUILD UI =====
-function initApp() {
+// ── BUILD UI ──────────────────────────────────────────
+function buildUI() {
   buildPackages();
-  buildHWTable();
-  buildFixedTable();
+  buildIncluded();
+  buildHardware();
 }
 
+// ── PACKAGES ──────────────────────────────────────────
 function buildPackages() {
-  const grid5 = document.getElementById('pkg-grid-5yr');
-  const grid3 = document.getElementById('pkg-grid-3yr');
+  const g5 = document.getElementById('grid-5yr');
+  const g3 = document.getElementById('grid-3yr');
 
   DATA.packages.forEach(pkg => {
     const gross = pkg.monthly * pkg.multiple;
+    const is5   = pkg.term.includes('5');
+    const isC   = pkg.id === 'comm-3yr';
+
     const div = document.createElement('div');
-    div.className = 'pkg-card' + (pkg.highlight ? ' highlight-card' : '');
+    div.className = 'pkg-card ' + (is5 ? 'is-5yr' : isC ? 'is-comm' : 'is-3yr');
     div.id = 'pkg-' + pkg.id;
     div.innerHTML = `
-      <span class="pkg-badge">${pkg.badge || ''}</span>
+      ${pkg.badge ? `<div class="pkg-badge">${pkg.badge}</div>` : `<div style="height:20px"></div>`}
       <div class="pkg-name">${pkg.name}</div>
-      <div class="pkg-monthly">${fmt(pkg.monthly)}<sub>/mo</sub></div>
-      <div class="pkg-detail">${pkg.term} · ×${pkg.multiple} Multiple</div>
-      <div class="pkg-funding">~${fmt(gross)} gross funding</div>
+      <div class="pkg-term">${pkg.term} Contract</div>
+      <div class="pkg-monthly">${$f(pkg.monthly)}<sub>/mo</sub></div>
+      <div class="pkg-details">
+        <div class="pkg-detail-row"><span>Funding Multiple</span><span>×${pkg.multiple}</span></div>
+        <div class="pkg-detail-row"><span>Suggested Install Fee</span><span>${$f(pkg.installCollected)}</span></div>
+      </div>
+      <div class="pkg-funding">Est. Net Funding: ${$f(pkg.netFunding)}</div>
     `;
     div.onclick = () => selectPkg(pkg.id);
 
-    if (pkg.term.includes('5')) grid5.appendChild(div);
-    else grid3.appendChild(div);
+    if (is5) g5.appendChild(div);
+    else      g3.appendChild(div);
   });
 
-  // Auto-select auto-5yr as default
+  // Default: auto-5yr
   selectPkg('auto-5yr');
 }
 
@@ -652,207 +568,232 @@ function selectPkg(id) {
   document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('selected'));
   const el = document.getElementById('pkg-' + id);
   if (el) el.classList.add('selected');
-  selectedPkg = DATA.packages.find(p => p.id === id);
+  selectedPkg = DATA.packages.find(p => p.id === id) || null;
+  buildIncluded();
   updateCalc();
 }
 
-function buildHWTable() {
+// ── BASE SYSTEM INCLUDED ──────────────────────────────
+function buildIncluded() {
+  const grid = document.getElementById('included-grid');
+  grid.innerHTML = '';
+  if (!selectedPkg) return;
+
+  DATA.baseSystemItems.forEach(item => {
+    const active = !item.packages || item.packages.includes(selectedPkg.id);
+    const div = document.createElement('div');
+    div.className = 'inc-item' + (active ? '' : ' inactive');
+    div.innerHTML = `
+      <div class="inc-item-name">${item.name}</div>
+      <div class="inc-item-msrp">MSRP ${$f(item.msrp)}</div>
+      <span class="inc-free-badge">${active ? 'INCLUDED' : 'NOT IN PKG'}</span>
+    `;
+    grid.appendChild(div);
+  });
+
+  // Install fee tile
+  const inst = document.createElement('div');
+  inst.className = 'inc-item';
+  inst.style.background = '#EFF6FF';
+  inst.style.borderColor = '#BFDBFE';
+  inst.innerHTML = `
+    <div class="inc-item-name" style="color:#1D4ED8">Installation Fee</div>
+    <div class="inc-item-msrp">Collected: ${$f(selectedPkg.installCollected)}</div>
+    <span class="inc-free-badge" style="background:#1D4ED8">YOU COLLECT THIS</span>
+  `;
+  grid.appendChild(inst);
+}
+
+// ── HARDWARE TABLE ────────────────────────────────────
+function buildHardware() {
   const tbody = document.getElementById('hw-body');
+  tbody.innerHTML = '';
   hwRows = [];
 
-  DATA.hardware.forEach((item, i) => {
-    const cost = agentCost(item.hamidCost);
-    hwRows.push({ item, qty: 0, sellPrice: parseFloat(cost.toFixed(2)) });
+  // Sort alphabetically; move "Wireless" to end in brackets
+  const formatName = (raw) => raw.startsWith('Wireless ') ? raw.slice(9) + ' (Wireless)' : raw;
+
+  const sorted = DATA.hardware
+    .map((item, origIdx) => ({ item, origIdx, sortKey: formatName(item.name).toLowerCase() }))
+    .sort((a, b) => a.sortKey.localeCompare(b.sortKey));
+
+  sorted.forEach(({ item }, i) => {
+    hwRows.push({ item, qty: 0, sellPrice: item.agentCost });
+    const displayName = formatName(item.name);
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td class="item-name">${item.name}${item.note ? `<span class="item-note">${item.note}</span>` : ''}</td>
-      <td class="msrp-cell"><span class="msrp-val">${fmt(item.msrp)}</span></td>
-      <td class="cost-cell">${fmt(cost)}</td>
-      <td><input class="qty-input" type="number" min="0" value="0" id="qty-${i}" oninput="updateRow(${i})"></td>
-      <td><input class="price-input" type="number" step="0.01" value="${cost.toFixed(2)}" id="price-${i}" oninput="updateRow(${i})"></td>
-      <td class="line-total" id="line-${i}">—</td>
-      <td id="margin-${i}">—</td>
+      <td>
+        <div class="item-name">${displayName}</div>
+        ${item.note ? `<span class="item-note">${item.note}</span>` : ''}
+      </td>
+      <td><span class="tag-msrp">${$f(item.msrp)}</span></td>
+      <td><span class="tag-cost">${$f(item.agentCost)}</span></td>
+      <td><input class="qty-inp" type="number" min="0" value="0" id="qty-${i}" oninput="rowChange(${i})"></td>
+      <td><input class="price-inp" type="number" step="0.01" value="${item.agentCost.toFixed(2)}" id="px-${i}" oninput="rowChange(${i})"></td>
+      <td class="line-total" id="lt-${i}">—</td>
+      <td id="mg-${i}">—</td>
     `;
     tbody.appendChild(tr);
   });
 }
 
-function buildFixedTable() {
-  const tbody = document.getElementById('fixed-body');
-  DATA.baseItems.forEach(item => {
-    const tr = document.createElement('tr');
-    tr.className = 'fixed-row';
-    tr.innerHTML = `
-      <td class="item-name" style="color:#686868">${item.name}${item.note ? `<span class="item-note">${item.note}</span>` : ''}</td>
-      <td class="msrp-cell"><span class="msrp-val">${fmt(item.msrp)}</span></td>
-      <td><span class="free-badge">Funded — $0 to customer</span></td>
-    `;
-    tbody.appendChild(tr);
-  });
-  // Install fee row
-  const tr = document.createElement('tr');
-  tr.className = 'fixed-row';
-  tr.innerHTML = `
-    <td class="item-name" style="color:#686868">Installation Fee</td>
-    <td>—</td>
-    <td id="install-fee-cell"><span class="free-badge">Varies by package</span></td>
-  `;
-  tbody.appendChild(tr);
-}
+function rowChange(i) {
+  const qty  = parseInt(document.getElementById('qty-' + i).value)   || 0;
+  const px   = parseFloat(document.getElementById('px-'  + i).value) || 0;
+  hwRows[i].qty       = qty;
+  hwRows[i].sellPrice = px;
 
-function updateRow(i) {
-  const qty = parseInt(document.getElementById('qty-' + i).value) || 0;
-  const price = parseFloat(document.getElementById('price-' + i).value) || 0;
-  hwRows[i].qty = qty;
-  hwRows[i].sellPrice = price;
+  const lineTotal = qty * px;
+  document.getElementById('lt-' + i).textContent = qty > 0 ? $f(lineTotal) : '—';
 
-  const cost = agentCost(hwRows[i].item.hamidCost);
-  const lineTotal = qty * price;
+  // Agent keeps 75% of markup over their cost
+  const lineCost   = qty * hwRows[i].item.agentCost;
+  const lineMarkup = lineTotal - lineCost;
+  const agentProfit = lineMarkup * 0.75;
 
-  document.getElementById('line-' + i).textContent = qty > 0 ? fmt(lineTotal) : '—';
-
-  const marginEl = document.getElementById('margin-' + i);
+  const mgEl = document.getElementById('mg-' + i);
   if (qty > 0 && lineTotal > 0) {
-    const pct = ((lineTotal - qty * cost) / lineTotal * 100);
-    let cls = 'mpill';
-    if (pct < 10) cls += ' danger';
-    else if (pct < 25) cls += ' warn';
-    marginEl.innerHTML = `<span class="${cls}">${pct.toFixed(0)}%</span>`;
+    const pct = lineTotal > 0 ? (lineMarkup / lineTotal * 100) : 0;
+    let cls = 'pill pill-green';
+    if (pct < 10) cls = 'pill pill-red';
+    else if (pct < 25) cls = 'pill pill-yellow';
+    mgEl.innerHTML = `<span class="${cls}">${pct.toFixed(0)}% &rarr; ${$f(agentProfit)}</span>`;
   } else {
-    marginEl.innerHTML = '—';
+    mgEl.innerHTML = '—';
   }
   updateCalc();
 }
 
+// ── CALCULATIONS ──────────────────────────────────────
+// Net Funding  = pkg.netFunding (base, with $0 install) + installKept (50% of what agent charges)
+// installKept  = installCharged * 0.50
+// Hardware profit = 75% of (sellPrice - agentCost) per item
 function updateCalc() {
-  if (!selectedPkg || !DATA) return;
+  if (!selectedPkg) return;
   const pkg = selectedPkg;
 
-  // Base cost (agent's cost, Hamid × 1.35) for items in this package
-  let baseCost = 0;
-  DATA.baseItems.forEach(item => {
-    if (!item.packages || item.packages.includes(pkg.id)) {
-      baseCost += agentCost(item.hamidCost);
-    }
-  });
+  const installCharged = parseFloat(document.getElementById('install-charged').value) || 0;
+  const installKept    = installCharged * 0.50;
 
-  const baseCostHST = baseCost * (1 + HST);
+  // Net funding = base net (which assumed full suggested install) adjusted for actual install
+  // Base netFunding in JSON = gross + pkg.installCollected - baseTotalWithTax
+  // We replace installCollected with actual installKept
+  const gross  = pkg.monthly * pkg.multiple;
+  const net    = gross + installKept - pkg.baseTotalWithTax;
 
-  // Hardware
-  let hwSell = 0, hwCost = 0;
+  // Hardware: agent gets 75% of markup
+  let hwMarkup = 0;
   hwRows.forEach(r => {
-    hwSell += r.qty * r.sellPrice;
-    hwCost += r.qty * agentCost(r.item.hamidCost);
+    const markup = (r.qty * r.sellPrice) - (r.qty * r.item.agentCost);
+    hwMarkup += markup;
   });
-  const hwProfit = hwSell - hwCost;
+  const hwProfit = hwMarkup * 0.75;
+  const totalEarnings = net + hwProfit;
 
-  // Funding
-  const gross = pkg.monthly * pkg.multiple;
-  const net = gross + pkg.install - baseCostHST;
+  // Install display
+  document.getElementById('install-kept-display').textContent = $f(installKept);
+  document.getElementById('install-suggested').textContent    = $f(pkg.installCollected);
 
-  // Update UI
-  document.getElementById('s-hw-total').textContent = fmt(hwSell || 0);
-  document.getElementById('s-monthly').textContent = fmt(pkg.monthly) + '/mo';
-  document.getElementById('s-term').textContent = pkg.term + ' · ×' + pkg.multiple;
-  document.getElementById('s-gross').textContent = fmt(gross);
-  document.getElementById('s-gross-sub').textContent = fmt(pkg.monthly) + ' × ' + pkg.multiple;
-  document.getElementById('s-net').textContent = fmt(net + hwProfit);
+  // Summary cards
+  document.getElementById('s-net').textContent       = $f(net);
+  document.getElementById('s-hw-profit').textContent = $f(hwProfit);
+  document.getElementById('s-total').textContent     = $f(totalEarnings);
 
-  document.getElementById('fb-gross').textContent = fmt(gross);
-  document.getElementById('fb-install').textContent = '+' + fmt(pkg.install);
-  document.getElementById('fb-hwprofit').textContent = hwProfit > 0 ? '+' + fmt(hwProfit) : fmt(0);
-  document.getElementById('fb-cost').textContent = '−' + fmt(baseCostHST);
-  document.getElementById('fb-net').textContent = fmt(net + hwProfit);
-
-  // Update install fee cell
-  const ifc = document.getElementById('install-fee-cell');
-  if (ifc) ifc.innerHTML = `<span style="color:var(--gold);font-size:12px;">${fmt(pkg.install)} collected from customer</span>`;
+  // Breakdown
+  document.getElementById('fb-install').textContent    = installCharged > 0 ? `+${$f(installKept)} (50% of ${$f(installCharged)})` : '$0.00';
+  document.getElementById('fb-base-sub').textContent   = `−${$f(pkg.baseSubtotal)}`;
+  document.getElementById('fb-base-hst').textContent   = `−${$f(pkg.baseHST)}`;
+  document.getElementById('fb-net').textContent        = $f(net);
 }
 
-// ===== DOWNLOAD EXCEL =====
+// ── DOWNLOAD EXCEL ────────────────────────────────────
 function downloadExcel() {
-  if (!DATA || !selectedPkg) { alert('Please select a package first.'); return; }
-  const pkg = selectedPkg;
-  const custName = document.getElementById('cust-name').value || 'Customer';
-  const phone = document.getElementById('cust-phone').value || '';
-  const addr = document.getElementById('cust-addr').value || '';
+  if (!selectedPkg) { alert('Please select a package first.'); return; }
+  const pkg  = selectedPkg;
+  const name = document.getElementById('cust-name').value  || 'Customer';
+  const ph   = document.getElementById('cust-phone').value || '';
+  const addr = document.getElementById('cust-addr').value  || '';
 
-  let baseCost = 0;
-  DATA.baseItems.forEach(item => {
-    if (!item.packages || item.packages.includes(pkg.id)) baseCost += agentCost(item.hamidCost);
-  });
-  const baseCostHST = baseCost * (1 + HST);
+  const installCharged = parseFloat(document.getElementById('install-charged').value) || 0;
+  const installKept    = installCharged * 0.50;
+  const gross  = pkg.monthly * pkg.multiple;
+  const net    = gross + installKept - pkg.baseTotalWithTax;
 
-  let hwSell = 0, hwCost = 0;
-  hwRows.forEach(r => { hwSell += r.qty * r.sellPrice; hwCost += r.qty * agentCost(r.item.hamidCost); });
-  const hwProfit = hwSell - hwCost;
-  const gross = pkg.monthly * pkg.multiple;
-  const net = gross + pkg.install - baseCostHST + hwProfit;
+  let hwMarkup = 0;
+  hwRows.forEach(r => { hwMarkup += (r.qty * r.sellPrice) - (r.qty * r.item.agentCost); });
+  const hwProfit = hwMarkup * 0.75;
 
   const rows = [
     ['ALERT PRO — AGENT QUOTE'],
     [],
-    ['Customer', custName, '', 'Package', pkg.name],
-    ['Phone', phone, '', 'Monthly Rate', '$' + pkg.monthly + '/mo'],
-    ['Address', addr, '', 'Term', pkg.term],
-    ['', '', '', 'Multiple', '×' + pkg.multiple],
+    ['Customer:', name,  '', 'Package:',  pkg.name],
+    ['Phone:',    ph,    '', 'Term:',     pkg.term],
+    ['Address:',  addr,  '', 'Monthly:',  '$' + pkg.monthly + '/mo'],
+    ['',          '',    '', 'Multiple:', '×' + pkg.multiple],
     [],
-    ['BASE SYSTEM (Funded — $0 to customer)'],
-    ['Item', 'MSRP', 'Status', '', ''],
+    ['BASE SYSTEM  (Equipment cost is funded — $0 upfront to customer)'],
+    ['Item', 'MSRP', 'Agent Cost', 'Status'],
   ];
 
-  DATA.baseItems.forEach(item => {
-    if (!item.packages || item.packages.includes(pkg.id)) {
-      rows.push([item.name, '$' + item.msrp, 'Funded', '', '']);
-    }
+  DATA.baseSystemItems.forEach(item => {
+    const active = !item.packages || item.packages.includes(pkg.id);
+    if (active) rows.push([item.name, '$' + item.msrp, '$' + item.agentCost, 'Included in package']);
   });
-  rows.push(['Installation Fee', '', '$' + pkg.install + ' collected from customer', '', '']);
+  rows.push(['Installation Fee', '', '$' + pkg.installCollected + ' collected from customer', '']);
+  rows.push(['Base System Subtotal (before tax)', '', '$' + pkg.baseSubtotal.toFixed(2), '']);
+  rows.push(['HST (13%)', '', '$' + pkg.baseHST.toFixed(2), '']);
+  rows.push(['Base System Total incl. HST', '', '$' + pkg.baseTotalWithTax.toFixed(2), '(deducted from funding)']);
   rows.push([]);
 
-  // Hardware
   const hwUsed = hwRows.filter(r => r.qty > 0);
-  if (hwUsed.length > 0) {
+  if (hwUsed.length) {
     rows.push(['ADD-ON HARDWARE']);
-    rows.push(['Item', 'MSRP', 'Your Cost', 'Qty', 'Your Price', 'Line Total']);
+    rows.push(['Item', 'MSRP', 'Your Cost', 'Qty', 'Your Price', 'Line Total', 'Profit']);
     hwUsed.forEach(r => {
+      const lt = r.qty * r.sellPrice;
+      const markup = lt - r.qty * r.item.agentCost;
+      const agentShare = markup * 0.75;
+      const displayName = r.item.name.startsWith('Wireless ') ? r.item.name.slice(9) + ' (Wireless)' : r.item.name;
       rows.push([
-        r.item.name + (r.item.note ? ' — ' + r.item.note : ''),
+        displayName + (r.item.note ? ' — ' + r.item.note : ''),
         '$' + r.item.msrp,
-        '$' + agentCost(r.item.hamidCost).toFixed(2),
+        '$' + r.item.agentCost.toFixed(2),
         r.qty,
         '$' + r.sellPrice.toFixed(2),
-        '$' + (r.qty * r.sellPrice).toFixed(2)
+        '$' + lt.toFixed(2),
+        '$' + agentShare.toFixed(2) + ' (75%)'
       ]);
     });
+    rows.push(['', '', '', '', 'Total Hardware Profit (75%):', '$' + hwProfit.toFixed(2)]);
     rows.push([]);
   }
 
   rows.push(['FUNDING SUMMARY']);
-  rows.push(['Gross Funding', '$' + gross.toFixed(2)]);
-  rows.push(['+ Installation Collected', '$' + pkg.install]);
-  if (hwProfit > 0) rows.push(['+ Hardware Profit', '$' + hwProfit.toFixed(2)]);
-  rows.push(['− Base System Cost (incl. HST)', '−$' + baseCostHST.toFixed(2)]);
-  rows.push(['NET FUNDING', '$' + net.toFixed(2)]);
+  rows.push(['Gross Funding (internal)', pkg.monthly + ' × ' + pkg.multiple, '=', '$' + gross.toFixed(2)]);
+  rows.push(['+ Your Install Share (50%)', installCharged > 0 ? '$' + installCharged.toFixed(2) + ' charged' : '$0 charged', '', '+$' + installKept.toFixed(2)]);
+  rows.push(['− Base System Subtotal', '', '', '−$' + pkg.baseSubtotal.toFixed(2)]);
+  rows.push(['− HST on Base System', '', '', '−$' + pkg.baseHST.toFixed(2)]);
+  rows.push(['NET FUNDING', '', '', '$' + net.toFixed(2)]);
+  if (hwProfit > 0) rows.push(['+ Hardware Profit (75% of markup)', '', '', '+$' + hwProfit.toFixed(2)]);
+  rows.push(['TOTAL ESTIMATED EARNINGS', '', '', '$' + (net + hwProfit).toFixed(2)]);
 
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.aoa_to_sheet(rows);
-  ws['!cols'] = [{wch:40},{wch:12},{wch:18},{wch:8},{wch:14},{wch:14}];
+  ws['!cols'] = [{wch:42},{wch:14},{wch:14},{wch:8},{wch:14},{wch:14},{wch:12}];
   XLSX.utils.book_append_sheet(wb, ws, 'Quote');
-  const safeName = custName.replace(/[^a-zA-Z0-9]/g, '-');
-  XLSX.writeFile(wb, `AlertPro-Quote-${safeName}.xlsx`);
+  XLSX.writeFile(wb, 'AlertPro-Quote-' + name.replace(/\s+/g,'-') + '.xlsx');
 }
 
 function resetForm() {
-  ['cust-name','cust-phone','cust-addr'].forEach(id => document.getElementById(id).value = '');
-  hwRows.forEach((row, i) => {
-    row.qty = 0;
-    const cost = agentCost(row.item.hamidCost);
-    row.sellPrice = parseFloat(cost.toFixed(2));
+  ['cust-name','cust-phone','cust-addr'].forEach(id => { document.getElementById(id).value = ''; });
+  document.getElementById('install-charged').value = '';
+  hwRows.forEach((r, i) => {
+    r.qty = 0; r.sellPrice = r.item.agentCost;
     document.getElementById('qty-' + i).value = 0;
-    document.getElementById('price-' + i).value = cost.toFixed(2);
-    document.getElementById('line-' + i).textContent = '—';
-    document.getElementById('margin-' + i).innerHTML = '—';
+    document.getElementById('px-'  + i).value = r.item.agentCost.toFixed(2);
+    document.getElementById('lt-'  + i).textContent = '—';
+    document.getElementById('mg-'  + i).innerHTML   = '—';
   });
   updateCalc();
 }

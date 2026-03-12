@@ -1,52 +1,313 @@
 {
-  "_note": "Alert Pro pricing data — update this file to push new costs to the agent portal",
-  "_updated": "2026-02-24",
-  "_agentMarkup": 0.35,
-
+  "_note": "Alert Pro agent pricing. Update hamid wholesale prices and re-run at 1.35x to refresh.",
+  "_updated": "2026-03-11",
   "packages": [
-    { "id":"resi-5yr",   "name":"Resi Secure",          "monthly":45, "term":"5 Years", "multiple":26, "install":199, "highlight":true,  "badge":"Best Value" },
-    { "id":"resi-3yr",   "name":"Resi Secure",          "monthly":50, "term":"3 Years", "multiple":20, "install":199, "highlight":false },
-    { "id":"vid-5yr",    "name":"Resi Secure + Video",  "monthly":55, "term":"5 Years", "multiple":26, "install":249, "highlight":true,  "badge":"Recommended ★" },
-    { "id":"vid-3yr",    "name":"Resi Secure + Video",  "monthly":60, "term":"3 Years", "multiple":20, "install":249, "highlight":false },
-    { "id":"auto-5yr",   "name":"Video + Automation",   "monthly":62, "term":"5 Years", "multiple":26, "install":299, "highlight":true,  "badge":"Top Earner ★★" },
-    { "id":"auto-3yr",   "name":"Video + Automation",   "monthly":67, "term":"3 Years", "multiple":20, "install":299, "highlight":false },
-    { "id":"comm-3yr",   "name":"Commercial",           "monthly":45, "term":"3 Years", "multiple":19, "install":399, "highlight":false }
+    {
+      "id": "resi-5yr",
+      "name": "Resi Secure",
+      "term": "5 Year",
+      "monthly": 45,
+      "multiple": 23,
+      "installCollected": 199,
+      "baseSubtotal": 908.7,
+      "baseHST": 118.13,
+      "baseTotalWithTax": 1026.83,
+      "netFunding": 207.17,
+      "highlight": false,
+      "badge": null,
+      "includesCamera": false,
+      "includesSmartPlug": false
+    },
+    {
+      "id": "resi-3yr",
+      "name": "Resi Secure",
+      "term": "3 Year",
+      "monthly": 50,
+      "multiple": 17,
+      "installCollected": 199,
+      "baseSubtotal": 908.7,
+      "baseHST": 118.13,
+      "baseTotalWithTax": 1026.83,
+      "netFunding": 22.17,
+      "highlight": false,
+      "badge": null,
+      "includesCamera": false,
+      "includesSmartPlug": false
+    },
+    {
+      "id": "vid-5yr",
+      "name": "Resi Secure + Video",
+      "term": "5 Year",
+      "monthly": 55,
+      "multiple": 26,
+      "installCollected": 249,
+      "baseSubtotal": 1145.65,
+      "baseHST": 148.93,
+      "baseTotalWithTax": 1294.58,
+      "netFunding": 384.42,
+      "highlight": true,
+      "badge": "Recommended",
+      "includesCamera": true,
+      "includesSmartPlug": false
+    },
+    {
+      "id": "vid-3yr",
+      "name": "Resi Secure + Video",
+      "term": "3 Year",
+      "monthly": 60,
+      "multiple": 20,
+      "installCollected": 249,
+      "baseSubtotal": 1145.65,
+      "baseHST": 148.93,
+      "baseTotalWithTax": 1294.58,
+      "netFunding": 154.42,
+      "highlight": false,
+      "badge": null,
+      "includesCamera": true,
+      "includesSmartPlug": false
+    },
+    {
+      "id": "auto-5yr",
+      "name": "Video + Automation",
+      "term": "5 Year",
+      "monthly": 62,
+      "multiple": 26,
+      "installCollected": 299,
+      "baseSubtotal": 1230.04,
+      "baseHST": 159.91,
+      "baseTotalWithTax": 1389.95,
+      "netFunding": 521.05,
+      "highlight": true,
+      "badge": "Top Earner \u2605",
+      "includesCamera": true,
+      "includesSmartPlug": true
+    },
+    {
+      "id": "auto-3yr",
+      "name": "Video + Automation",
+      "term": "3 Year",
+      "monthly": 67,
+      "multiple": 20,
+      "installCollected": 299,
+      "baseSubtotal": 1230.04,
+      "baseHST": 159.91,
+      "baseTotalWithTax": 1389.95,
+      "netFunding": 249.05,
+      "highlight": false,
+      "badge": null,
+      "includesCamera": true,
+      "includesSmartPlug": true
+    },
+    {
+      "id": "comm-3yr",
+      "name": "Commercial",
+      "term": "3 Year",
+      "monthly": 45,
+      "multiple": 19,
+      "installCollected": 399,
+      "baseSubtotal": 1120.65,
+      "baseHST": 145.68,
+      "baseTotalWithTax": 1266.33,
+      "netFunding": -12.33,
+      "highlight": false,
+      "badge": null,
+      "includesCamera": true,
+      "includesSmartPlug": false
+    }
   ],
-
-  "baseItems": [
-    { "id":"iq4",     "name":"IQ 4 Panel w/ 4K Keypad Camera, Siren, GSM", "hamidCost":395, "msrp":850 },
-    { "id":"door",    "name":"Door Contact — Long Range ×2",                "hamidCost":78,  "msrp":130, "note":"Includes 2 contacts" },
-    { "id":"motion",  "name":"Motion Sensor — Long Range",                  "hamidCost":65,  "msrp":190 },
-    { "id":"icam",    "name":"Indoor Camera (Easy Install)",                 "hamidCost":157, "msrp":350, "packages":["vid-5yr","vid-3yr","auto-5yr","auto-3yr","comm-3yr"] }
+  "baseSystemItems": [
+    {
+      "name": "IQ 4 Panel w/ 4K Keypad Camera, Siren, GSM",
+      "msrp": 850,
+      "agentCost": 533.25,
+      "allPackages": true
+    },
+    {
+      "name": "Door Contact \u2014 Long Range (\u00d72)",
+      "msrp": 130,
+      "agentCost": 105.3,
+      "allPackages": true
+    },
+    {
+      "name": "Motion Sensor \u2014 Long Range",
+      "msrp": 190,
+      "agentCost": 120.15,
+      "allPackages": true
+    },
+    {
+      "name": "Smart Plug",
+      "msrp": 60,
+      "agentCost": 59.39,
+      "allPackages": false,
+      "packages": [
+        "auto-5yr",
+        "auto-3yr"
+      ]
+    },
+    {
+      "name": "Indoor Camera (Easy Installation)",
+      "msrp": 350,
+      "agentCost": 211.95,
+      "allPackages": false,
+      "packages": [
+        "vid-5yr",
+        "vid-3yr",
+        "auto-5yr",
+        "auto-3yr",
+        "comm-3yr"
+      ]
+    }
   ],
-
   "hardware": [
-    { "name":"Wireless Door/Window Contact",        "note":"Regular Range",          "hamidCost":23,   "msrp":65  },
-    { "name":"Wireless Door/Window Contact",        "note":"Long Range",             "hamidCost":39,   "msrp":95  },
-    { "name":"Wireless Outdoor Contact",            "note":"Long Range",             "hamidCost":130,  "msrp":225 },
-    { "name":"Wireless Tilt Sensor",                "note":"Garage Rollup Doors",    "hamidCost":59,   "msrp":155 },
-    { "name":"Wireless Motion Sensor",              "note":"Pet Immune 40lb / Reg",  "hamidCost":45,   "msrp":145 },
-    { "name":"Wireless Motion Sensor",              "note":"Pet Immune 80lb / Long", "hamidCost":65,   "msrp":190 },
-    { "name":"Wireless Motion Sensor",              "note":"Ceiling 360°",           "hamidCost":148,  "msrp":275 },
-    { "name":"Wireless Shock Sensor",               "note":"Long Range",             "hamidCost":72,   "msrp":155 },
-    { "name":"Wireless Glassbreak Detector",        "note":"Long Range",             "hamidCost":89,   "msrp":185 },
-    { "name":"Wireless Smoke Detector",             "note":"Long Range",             "hamidCost":91,   "msrp":195 },
-    { "name":"Wireless Heat Detector",              "note":"Rate of Rise / Long Range","hamidCost":98, "msrp":198 },
-    { "name":"Wireless Temperature Detector",       "note":"Long Range",             "hamidCost":72,   "msrp":175 },
-    { "name":"Wireless Flood Detector",             "note":"",                       "hamidCost":86,   "msrp":155 },
-    { "name":"Wireless Carbon Monoxide Detector",   "note":"Long Range",             "hamidCost":115,  "msrp":215 },
-    { "name":"Wireless Panic Button",               "note":"Long Range",             "hamidCost":68,   "msrp":158 },
-    { "name":"Wireless Keyfob — 4 Button",          "note":"Arm/Disarm/Stay/Panic",  "hamidCost":49,   "msrp":140 },
-    { "name":"Indoor Siren with Strobe",            "note":"",                       "hamidCost":105,  "msrp":190 },
-    { "name":"Outdoor Siren with Strobe",           "note":"Commercial Grade 110dB", "hamidCost":224,  "msrp":345 },
-    { "name":"Smart Plug",                          "note":"",                       "hamidCost":43.99,"msrp":60  },
-    { "name":"Repeater Module",                     "note":"",                       "hamidCost":145,  "msrp":235 },
-    { "name":"IQ Remote Keypad",                    "note":"7\" Touch Screen",        "hamidCost":290,  "msrp":475 },
-    { "name":"IQ4 Table Stand",                     "note":"",                       "hamidCost":15,   "msrp":30  },
-    { "name":"Indoor Portable Camera",              "note":"Residential / Commercial","hamidCost":157, "msrp":275 },
-    { "name":"Video Doorbell",                      "note":"Residential",            "hamidCost":285,  "msrp":425 },
-    { "name":"Outdoor Camera",                      "note":"Easy Installation",      "hamidCost":343,  "msrp":550 },
-    { "name":"Outdoor Camera",                      "note":"Pro Installation",       "hamidCost":443,  "msrp":620 },
-    { "name":"Outdoor Camera Fixed WiFi",           "note":"Driveway / 2.4G+5G",    "hamidCost":293,  "msrp":620 }
+    {
+      "name": "Wireless Door/Window Contact",
+      "note": "Regular Range",
+      "msrp": 65,
+      "agentCost": 31.05
+    },
+    {
+      "name": "Wireless Door/Window Contact",
+      "note": "Long Range",
+      "msrp": 95,
+      "agentCost": 52.65
+    },
+    {
+      "name": "Wireless Outdoor Contact",
+      "note": "Long Range",
+      "msrp": 225,
+      "agentCost": 175.5
+    },
+    {
+      "name": "Wireless Tilt Sensor",
+      "note": "Garage Rollup Doors",
+      "msrp": 155,
+      "agentCost": 79.65
+    },
+    {
+      "name": "Wireless Motion Sensor",
+      "note": "Pet Immune 40lbs / Reg",
+      "msrp": 145,
+      "agentCost": 60.75
+    },
+    {
+      "name": "Wireless Motion Sensor",
+      "note": "Pet Immune 80lbs / Long",
+      "msrp": 190,
+      "agentCost": 120.15
+    },
+    {
+      "name": "Wireless Motion Sensor",
+      "note": "Ceiling Mount 360\u00b0",
+      "msrp": 275,
+      "agentCost": 199.8
+    },
+    {
+      "name": "Wireless Shock Sensor",
+      "note": "Long Range",
+      "msrp": 155,
+      "agentCost": 97.2
+    },
+    {
+      "name": "Wireless Glassbreak Detector",
+      "note": "Long Range",
+      "msrp": 185,
+      "agentCost": 120.15
+    },
+    {
+      "name": "Wireless Smoke Detector",
+      "note": "Long Range",
+      "msrp": 195,
+      "agentCost": 122.85
+    },
+    {
+      "name": "Wireless Rate of Rise Heat Detector",
+      "note": "Long Range",
+      "msrp": 198,
+      "agentCost": 132.3
+    },
+    {
+      "name": "Wireless Temperature Detector",
+      "note": "Long Range",
+      "msrp": 175,
+      "agentCost": 97.2
+    },
+    {
+      "name": "Wireless Flood Detector",
+      "note": "",
+      "msrp": 155,
+      "agentCost": 116.1
+    },
+    {
+      "name": "Wireless Carbon Monoxide Detector",
+      "note": "Long Range",
+      "msrp": 215,
+      "agentCost": 155.25
+    },
+    {
+      "name": "Wireless Panic Button",
+      "note": "Long Range",
+      "msrp": 158,
+      "agentCost": 91.8
+    },
+    {
+      "name": "Wireless PG Keyfob 4-Button",
+      "note": "Arm / Disarm / Stay / Panic",
+      "msrp": 140,
+      "agentCost": 66.15
+    },
+    {
+      "name": "Indoor Siren with Strobe Light",
+      "note": "",
+      "msrp": 190,
+      "agentCost": 141.75
+    },
+    {
+      "name": "Outdoor Siren with Strobe Light",
+      "note": "Commercial Grade 110dB",
+      "msrp": 345,
+      "agentCost": 302.4
+    },
+    {
+      "name": "Repeater Module",
+      "note": "",
+      "msrp": 235,
+      "agentCost": 195.75
+    },
+    {
+      "name": "IQ Remote Touch Screen Keypad",
+      "note": "7 inch",
+      "msrp": 475,
+      "agentCost": 391.5
+    },
+    {
+      "name": "IQ4 Table Stand",
+      "note": "",
+      "msrp": 30,
+      "agentCost": 20.25
+    },
+    {
+      "name": "Indoor Portable Camera",
+      "note": "Residential / Commercial",
+      "msrp": 275,
+      "agentCost": 211.95
+    },
+    {
+      "name": "Residential Video Doorbell",
+      "note": "",
+      "msrp": 425,
+      "agentCost": 384.75
+    },
+    {
+      "name": "Residential Outdoor Camera",
+      "note": "Easy Installation",
+      "msrp": 550,
+      "agentCost": 463.05
+    },
+    {
+      "name": "Residential/Commercial Outdoor Camera",
+      "note": "Pro Installation",
+      "msrp": 620,
+      "agentCost": 598.05
+    }
   ]
 }

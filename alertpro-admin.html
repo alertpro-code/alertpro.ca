@@ -362,6 +362,14 @@ let originalJSON = '';
 let isDirty = false;
 let ghConfig = null;
 
+// ── HARDCODED GITHUB CONFIG ────────────────────────────
+// Update GITHUB_TOKEN below with your current Personal Access Token
+const GITHUB_OWNER = "alertpro-code";
+const GITHUB_REPO  = "alertpro.ca";
+const GITHUB_FILE  = "pricing-data.json";
+const GITHUB_TOKEN = "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
+"; // ← only thing you need to update
+
 // ── LOGIN ──────────────────────────────────────────────
 function doLogin() {
   if (document.getElementById('pw').value.trim() === ADMIN_PASSWORD) {
@@ -375,18 +383,9 @@ function doLogin() {
 
 // ── INIT ───────────────────────────────────────────────
 function init() {
-  // Load GitHub config from localStorage
-  const saved = localStorage.getItem('ap_gh_config');
-  if (saved) {
-    ghConfig = JSON.parse(saved);
-    document.getElementById('setup-banner').classList.add('hidden');
-    loadFromGitHub();
-  } else {
-    DATA = JSON.parse(JSON.stringify(STARTER_DATA));
-    originalJSON = JSON.stringify(DATA);
-    document.getElementById('loading').style.display = 'none';
-    buildUI();
-  }
+  ghConfig = { owner: GITHUB_OWNER, repo: GITHUB_REPO, file: GITHUB_FILE, token: GITHUB_TOKEN };
+  document.getElementById('setup-banner').classList.add('hidden');
+  loadFromGitHub();
 }
 
 function saveGitHubConfig() {

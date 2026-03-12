@@ -478,36 +478,34 @@ tbody td { padding: 10px 12px; vertical-align: middle; }
 
     <!-- SUMMARY -->
     <div class="sec-hdr mb16"><div class="sec-hdr-title">Deal Summary</div></div>
-    <div class="summary-grid mb24" style="grid-template-columns:repeat(4,1fr);">
+    <div class="summary-grid mb24" style="grid-template-columns:repeat(3,1fr);">
       <div class="scard green">
-        <div class="scard-label">Your Net Funding</div>
+        <div class="scard-label">Net Funding</div>
         <div class="scard-value" id="s-net">—</div>
         <div class="scard-sub">From monitoring contract</div>
       </div>
       <div class="scard">
-        <div class="scard-label">Hardware Profit (75%)</div>
+        <div class="scard-label">Sales Profit</div>
         <div class="scard-value" id="s-hw-profit">$0.00</div>
-        <div class="scard-sub">Your share of hardware markup</div>
-      </div>
-      <div class="scard">
-        <div class="scard-label">Misc Profit (75%)</div>
-        <div class="scard-value" id="s-misc-profit">$0.00</div>
-        <div class="scard-sub">Your share of misc charges</div>
+        <div class="scard-sub">Hardware (75%) + Install (50%) + Misc (75%)</div>
       </div>
       <div class="scard gold">
         <div class="scard-label">Total Estimated Earnings</div>
         <div class="scard-value" id="s-total">—</div>
-        <div class="scard-sub">Net funding + all profit</div>
+        <div class="scard-sub">Net funding + all sales profit</div>
       </div>
     </div>
 
     <!-- BREAKDOWN -->
-    <div class="sec-hdr mb16"><div class="sec-hdr-title">Funding Breakdown</div></div>
+    <div class="sec-hdr mb16"><div class="sec-hdr-title">Earnings Breakdown</div></div>
     <div class="breakdown mb32">
-      <div class="brow"><span class="brow-label">+ Your Install Share (50% of charged amount)</span><span class="brow-val bval-gold" id="fb-install">$0.00</span></div>
-      <div class="brow"><span class="brow-label">− Base System Subtotal</span><span class="brow-val" id="fb-base-sub">—</span></div>
-      <div class="brow"><span class="brow-label">− HST on Base System (13%)</span><span class="brow-val" id="fb-base-hst">—</span></div>
-      <div class="brow"><span class="brow-label">Net Funding</span><span class="brow-val bval-green" id="fb-net">—</span></div>
+      <div class="brow"><span class="brow-label">Gross Funding (monthly × multiple)</span><span class="brow-val" id="fb-gross">—</span></div>
+      <div class="brow"><span class="brow-label">− Base System Cost (incl. HST)</span><span class="brow-val" id="fb-base-total">—</span></div>
+      <div class="brow" style="font-weight:600;border-top:1px solid var(--border);padding-top:8px;margin-top:4px;"><span class="brow-label">Net Funding</span><span class="brow-val bval-green" id="fb-net">—</span></div>
+      <div class="brow" style="margin-top:12px;"><span class="brow-label">+ Hardware Profit (75% of markup)</span><span class="brow-val bval-gold" id="fb-hw">$0.00</span></div>
+      <div class="brow"><span class="brow-label">+ Install Profit (50% of charged amount)</span><span class="brow-val bval-gold" id="fb-install">$0.00</span></div>
+      <div class="brow"><span class="brow-label">+ Misc Profit (75% of charges)</span><span class="brow-val bval-gold" id="fb-misc">$0.00</span></div>
+      <div class="brow" style="font-weight:700;border-top:1px solid var(--border);padding-top:8px;margin-top:4px;font-size:15px;"><span class="brow-label">Total Estimated Earnings</span><span class="brow-val bval-green" id="fb-total">—</span></div>
     </div>
 
     <!-- ACTIONS -->
@@ -903,17 +901,21 @@ function updateCalc() {
   document.getElementById('install-kept-display').textContent = $f(installKept);
   document.getElementById('install-suggested').textContent    = $f(pkg.installCollected);
 
-  const totalEarnings = net + hwProfit + miscProfit + installKept;
+  const salesProfit   = hwProfit + miscProfit + installKept;
+  const totalEarnings = net + salesProfit;
 
-  document.getElementById('s-net').textContent         = $f(net);
-  document.getElementById('s-hw-profit').textContent   = $f(hwProfit);
-  document.getElementById('s-misc-profit').textContent = $f(miscProfit);
-  document.getElementById('s-total').textContent       = $f(totalEarnings);
+  document.getElementById('s-net').textContent       = $f(net);
+  document.getElementById('s-hw-profit').textContent = $f(salesProfit);
+  document.getElementById('s-total').textContent     = $f(totalEarnings);
 
-  document.getElementById('fb-install').textContent  = installCharged > 0 ? '+' + $f(installKept) + ' (50% of ' + $f(installCharged) + ')' : '$0.00';
-  document.getElementById('fb-base-sub').textContent = '−' + $f(baseSubtotal);
-  document.getElementById('fb-base-hst').textContent = '−' + $f(baseHST);
-  document.getElementById('fb-net').textContent      = $f(net);
+  const gross = pkg.monthly * pkg.multiple;
+  document.getElementById('fb-gross').textContent      = '+' + $f(gross);
+  document.getElementById('fb-base-total').textContent = $f(baseTotalWithTax);
+  document.getElementById('fb-net').textContent        = $f(net);
+  document.getElementById('fb-hw').textContent         = hwProfit > 0 ? '+' + $f(hwProfit) : '$0.00';
+  document.getElementById('fb-install').textContent    = installKept > 0 ? '+' + $f(installKept) + ' (50% of ' + $f(installCharged) + ')' : '$0.00';
+  document.getElementById('fb-misc').textContent       = miscProfit > 0 ? '+' + $f(miscProfit) : '$0.00';
+  document.getElementById('fb-total').textContent      = $f(totalEarnings);
 }
 
 // ── DOWNLOAD EXCEL ────────────────────────────────────

@@ -224,6 +224,9 @@ header {
     <div class="login-tagline">Pricing Management — Restricted Access</div>
     <label class="lbl" for="pw">Admin Password</label>
     <input class="linput" type="password" id="pw" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    <label class="lbl" for="gh-token-login" style="margin-top:8px;">GitHub Token</label>
+    <input class="linput" type="password" id="gh-token-login" placeholder="github_pat_..." onkeydown="if(event.key==='Enter')doLogin()">
+    <div style="font-size:11px;color:var(--muted);margin-bottom:14px;">Saved in your browser — only needed once per device</div>
     <button class="btn-login" onclick="doLogin()">Enter Admin</button>
     <div id="login-err">Incorrect password.</div>
   </div>
@@ -360,32 +363,36 @@ const STARTER_DATA = {"_updated":"2026-03-11","packages":[{"id":"resi-5yr","name
 let DATA = null;
 let originalJSON = '';
 let isDirty = false;
-let ghConfig = null;
-
 // ── HARDCODED GITHUB CONFIG ────────────────────────────
-// Update GITHUB_TOKEN below with your current Personal Access Token
 const GITHUB_OWNER = "alertpro-code";
 const GITHUB_REPO  = "alertpro.ca";
 const GITHUB_FILE  = "pricing-data.json";
-const GITHUB_TOKEN = "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
-"; // ← only thing you need to update
 
-// ── LOGIN ──────────────────────────────────────────────
-function doLogin() {
-  if (document.getElementById('pw').value.trim() === ADMIN_PASSWORD) {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    init();
-  } else {
-    document.getElementById('login-err').style.display = 'block';
-  }
-}
+let ghConfig = null;
 
 // ── INIT ───────────────────────────────────────────────
 function init() {
-  ghConfig = { owner: GITHUB_OWNER, repo: GITHUB_REPO, file: GITHUB_FILE, token: GITHUB_TOKEN };
+  const saved = localStorage.getItem('ap_gh_token');
+  const token = saved || '';
+  ghConfig = { owner: GITHUB_OWNER, repo: GITHUB_REPO, file: GITHUB_FILE, token };
   document.getElementById('setup-banner').classList.add('hidden');
   loadFromGitHub();
+}
+
+// ── LOGIN ──────────────────────────────────────────────
+function doLogin() {
+  if (document.getElementById('pw').value.trim() !== ADMIN_PASSWORD) {
+    document.getElementById('login-err').textContent = 'Incorrect password.';
+    document.getElementById('login-err').style.display = 'block';
+    return;
+  }
+  const tokenInput = document.getElementById('gh-token-login').value.trim();
+  if (tokenInput) {
+    localStorage.setItem('ap_gh_token', tokenInput);
+  }
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  init();
 }
 
 function saveGitHubConfig() {

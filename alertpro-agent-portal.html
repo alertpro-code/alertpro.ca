@@ -630,13 +630,14 @@ async function loadData() {
       document.head.appendChild(s);
     });
 
-    const res = await fetch(EXCEL_URL, { cache: 'no-store', headers: { Accept: 'application/vnd.github.v3+json' } });
+    const res = await fetch(EXCEL_URL + '?t=' + Date.now(), { cache: 'no-store', headers: { Accept: 'application/vnd.github.v3+json' } });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const meta = await res.json();
-    const fileRes = await fetch(meta.download_url, { cache: 'no-store' });
-    if (!fileRes.ok) throw new Error('Download failed');
-    const ab = await fileRes.arrayBuffer();
-    const wb = XLSX.read(ab, { type: 'array' });
+    // Use base64 content directly from API — bypasses CDN cache completely
+    const binary = atob(meta.content.replace(/\n/g, ''));
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    const wb = XLSX.read(bytes.buffer, { type: 'array' });
     DATA = parseExcel(wb);
     document.getElementById('last-updated').textContent = (DATA._updated || '—') + ' (live)';
   } catch(e) {

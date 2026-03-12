@@ -297,6 +297,8 @@ tbody td { padding: 10px 12px; vertical-align: middle; }
 .btn-primary:hover { background: var(--red-dk); }
 .btn-secondary { background: var(--white); color: var(--text); border: 1.5px solid var(--border); }
 .btn-secondary:hover { border-color: #888; }
+.btn-save { background: var(--green-bg); color: var(--green); border: 1.5px solid var(--green-bd); }
+.btn-save:hover { background: #d1fae5; }
 
 /* ─── SPACING UTILITIES ──────────────────────────────── */
 .mb8  { margin-bottom: 8px; }
@@ -511,7 +513,20 @@ tbody td { padding: 10px 12px; vertical-align: middle; }
     <!-- ACTIONS -->
     <div class="actions">
       <button class="btn btn-primary" onclick="downloadExcel()">⬇ Download Quote (Excel)</button>
+      <button class="btn btn-save" onclick="saveQuote()">💾 Save Quote</button>
+      <button class="btn btn-secondary" onclick="toggleQuotesDrawer()">📋 My Quotes</button>
       <button class="btn btn-secondary" onclick="resetForm()">↺ New Quote</button>
+    </div>
+
+    <!-- QUOTES DRAWER -->
+    <div id="quotes-drawer" style="display:none;margin-top:24px;background:var(--white);border-radius:12px;border:1.5px solid var(--border);overflow:hidden;">
+      <div style="padding:16px 20px;background:var(--bg);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-weight:700;font-size:14px;">Saved Quotes</span>
+        <button onclick="loadQuotesList()" style="font-size:12px;color:var(--red);background:none;border:none;cursor:pointer;font-weight:600;">↻ Refresh</button>
+      </div>
+      <div id="quotes-list" style="padding:16px 20px;min-height:60px;">
+        <div style="color:var(--muted);font-size:13px;">Loading quotes...</div>
+      </div>
     </div>
 
   </div>
@@ -522,7 +537,8 @@ tbody td { padding: 10px 12px; vertical-align: middle; }
 // CONFIGURATION
 // ═══════════════════════════════════════════════════════
 const PASSWORD    = "alertpro2025";
-const EXCEL_URL = "https://api.github.com/repos/alertpro-code/alertpro.ca/contents/AlertPro-Pricing-Template-v2.xlsx";
+const EXCEL_URL   = "https://api.github.com/repos/alertpro-code/alertpro.ca/contents/AlertPro-Pricing-Template-v2.xlsx";
+const SHEETS_URL  = "https://script.google.com/macros/s/AKfycbzB7lexxRZ0j6M8vlSAYlyaqu_W8bCTZsHuKKy9AezxH1fqAyylRR7an1fXwxNRwGYL/exec";
 // ═══════════════════════════════════════════════════════
 
 // Embedded fallback — exact numbers from REP_WorkSheet_Feb_24_2026.xlsx
@@ -779,9 +795,9 @@ function buildIncluded() {
 }
 
 // ── MISC CHARGES ──────────────────────────────────────
-function addMiscRow() {
+function addMiscRow(prefillDesc, prefillAmount) {
   const i = miscRows.length;
-  miscRows.push({ desc: '', amount: 0 });
+  miscRows.push({ desc: prefillDesc || '', amount: prefillAmount || 0 });
   const wrap = document.getElementById('misc-rows');
   const div = document.createElement('div');
   div.id = 'misc-row-' + i;
@@ -789,14 +805,16 @@ function addMiscRow() {
   div.innerHTML = `
     <input type="text" placeholder="Description (e.g. Hard install on brick wall)" id="misc-desc-${i}"
       style="flex:1;min-width:200px;padding:8px 12px;border:1.5px solid var(--border);border-radius:7px;font-family:'Inter',sans-serif;font-size:13px;outline:none;"
-      oninput="miscChange(${i})" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'">
+      oninput="miscChange(${i})" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'"
+      value="${(prefillDesc || '').replace(/"/g,'&quot;')}">
     <div style="display:flex;align-items:center;gap:6px;">
       <span style="color:var(--muted);font-weight:700;">$</span>
       <input type="number" min="0" step="1" placeholder="0" id="misc-amt-${i}"
         style="width:100px;padding:8px 10px;border:1.5px solid var(--border);border-radius:7px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;outline:none;text-align:right;"
-        oninput="miscChange(${i})" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'">
+        oninput="miscChange(${i})" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'"
+        value="${prefillAmount || ''}">
     </div>
-    <span id="misc-profit-${i}" style="font-size:12px;color:var(--green);font-weight:600;min-width:80px;"></span>
+    <span id="misc-profit-${i}" style="font-size:12px;color:var(--green);font-weight:600;min-width:80px;">${prefillAmount > 0 ? 'Your share: ' + $f(prefillAmount * 0.75) : ''}</span>
     <button onclick="removeMiscRow(${i})" style="padding:6px 10px;background:transparent;border:1px solid #FECACA;border-radius:6px;color:#EF4444;cursor:pointer;font-size:12px;">✕</button>
   `;
   wrap.appendChild(div);
@@ -1032,6 +1050,7 @@ function downloadExcel() {
 }
 
 function resetForm() {
+  currentQuoteId = null;
   ['cust-name','cust-phone','cust-addr'].forEach(id => { document.getElementById(id).value = ''; });
   document.getElementById('install-charged').value = selectedPkg ? (selectedPkg.installCollected || 0) : '';
   document.getElementById('agent-notes').value = '';
@@ -1051,6 +1070,186 @@ function resetForm() {
   });
   updateCalc();
 }
+// ── QUOTES ────────────────────────────────────────────
+function generateId() {
+  return 'q-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7);
+}
+
+async function saveQuote() {
+  if (!selectedPkg) { alert('Please select a package before saving.'); return; }
+  const name = document.getElementById('cust-name').value.trim();
+  if (!name) { alert('Please enter a customer name before saving.'); return; }
+
+  const { net, totalEarnings, installCharged } = calcEarnings();
+
+  const quote = {
+    id:              currentQuoteId || generateId(),
+    savedAt:         new Date().toLocaleString('en-CA', {dateStyle:'medium', timeStyle:'short'}),
+    customerName:    name,
+    customerPhone:   document.getElementById('cust-phone').value.trim(),
+    customerAddress: document.getElementById('cust-addr').value.trim(),
+    packageId:       selectedPkg.id,
+    packageName:     selectedPkg.name,
+    term:            selectedPkg.term,
+    monthly:         selectedPkg.monthly,
+    netFunding:      net.toFixed(2),
+    installCharged:  installCharged,
+    cameraType:      cameraType,
+    hwRows:          hwRows.filter(r => r.qty > 0).map(r => ({ idx: hwRows.indexOf(r), qty: r.qty, sellPrice: r.sellPrice })),
+    miscRows:        miscRows.filter(r => !r.removed && r.amount > 0).map(r => ({ desc: r.desc, amount: r.amount })),
+    notes:           document.getElementById('agent-notes').value.trim(),
+  };
+
+  currentQuoteId = quote.id;
+
+  const btn = document.querySelector('.btn-save');
+  btn.textContent = '💾 Saving...';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch(SHEETS_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'save', quote })
+    });
+    const data = await res.json();
+    if (data.status === 'ok') {
+      btn.textContent = '✓ Saved!';
+      setTimeout(() => { btn.textContent = '💾 Save Quote'; btn.disabled = false; }, 2000);
+    } else {
+      throw new Error(data.message);
+    }
+  } catch(e) {
+    btn.textContent = '💾 Save Quote';
+    btn.disabled = false;
+    alert('Save failed: ' + e.message);
+  }
+}
+
+let quotesDrawerOpen = false;
+function toggleQuotesDrawer() {
+  quotesDrawerOpen = !quotesDrawerOpen;
+  document.getElementById('quotes-drawer').style.display = quotesDrawerOpen ? 'block' : 'none';
+  if (quotesDrawerOpen) loadQuotesList();
+}
+
+async function loadQuotesList() {
+  const list = document.getElementById('quotes-list');
+  list.innerHTML = '<div style="color:var(--muted);font-size:13px;">Loading...</div>';
+  try {
+    const res = await fetch(SHEETS_URL + '?t=' + Date.now());
+    const data = await res.json();
+    if (!data.quotes || data.quotes.length === 0) {
+      list.innerHTML = '<div style="color:var(--muted);font-size:13px;">No saved quotes yet.</div>';
+      return;
+    }
+    list.innerHTML = data.quotes.slice().reverse().map(q => `
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);">
+        <div>
+          <div style="font-weight:600;font-size:14px;">${q.customerName}</div>
+          <div style="font-size:12px;color:var(--muted);">${q.packageName} · ${q.term} · $${q.monthly}/mo · Net $${q.netFunding}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px;">${q.customerAddress || '—'} &nbsp;|&nbsp; Saved ${q.savedAt}</div>
+        </div>
+        <div style="display:flex;gap:8px;margin-left:16px;flex-shrink:0;">
+          <button onclick="loadQuote(${JSON.stringify(q).replace(/"/g,'&quot;')})" style="font-size:12px;padding:6px 12px;background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd);border-radius:6px;cursor:pointer;font-weight:600;">Load</button>
+          <button onclick="deleteQuote('${q.id}', this)" style="font-size:12px;padding:6px 10px;background:#fff0f0;color:#c0392b;border:1px solid #fcc;border-radius:6px;cursor:pointer;">✕</button>
+        </div>
+      </div>
+    `).join('');
+  } catch(e) {
+    list.innerHTML = '<div style="color:var(--red);font-size:13px;">Could not load quotes. Check your connection.</div>';
+  }
+}
+
+let currentQuoteId = null;
+
+function loadQuote(q) {
+  // Select the package
+  const pkg = DATA.packages.find(p => p.id === q.packageId);
+  if (!pkg) { alert('Package not found — pricing may have changed.'); return; }
+
+  currentQuoteId = q.id;
+
+  // Set customer fields
+  document.getElementById('cust-name').value  = q.customerName  || '';
+  document.getElementById('cust-phone').value = q.customerPhone || '';
+  document.getElementById('cust-addr').value  = q.customerAddress || '';
+  document.getElementById('agent-notes').value = q.notes || '';
+  document.getElementById('install-charged').value = q.installCharged || 0;
+
+  // Select package card
+  document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('selected'));
+  const card = document.querySelector(`.pkg-card[data-id="${pkg.id}"]`);
+  if (card) { card.classList.add('selected'); card.scrollIntoView({behavior:'smooth', block:'nearest'}); }
+  selectedPkg = pkg;
+  renderIncluded(pkg);
+
+  // Camera type
+  cameraType = q.cameraType || 'indoor';
+  const toggle = document.getElementById('camera-toggle-wrap');
+  if (pkg.includesCamera) {
+    toggle.style.display = 'block';
+    document.querySelectorAll('.cam-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.type === cameraType);
+    });
+  } else {
+    toggle.style.display = 'none';
+  }
+
+  // Restore hardware rows
+  hwRows.forEach((r, i) => {
+    r.qty = 0; r.sellPrice = r.item.agentCost;
+    document.getElementById('qty-' + i).value = 0;
+    document.getElementById('px-'  + i).value = r.item.agentCost.toFixed(2);
+    document.getElementById('lt-'  + i).textContent = '—';
+    document.getElementById('mg-'  + i).innerHTML   = '—';
+  });
+  if (q.hwRows) {
+    q.hwRows.forEach(saved => {
+      const r = hwRows[saved.idx];
+      if (!r) return;
+      r.qty = saved.qty;
+      r.sellPrice = saved.sellPrice;
+      document.getElementById('qty-' + saved.idx).value = saved.qty;
+      document.getElementById('px-'  + saved.idx).value = saved.sellPrice.toFixed(2);
+      rowChange(saved.idx);
+    });
+  }
+
+  // Restore misc rows
+  document.getElementById('misc-rows').innerHTML = '';
+  miscRows = [];
+  if (q.miscRows) {
+    q.miscRows.forEach(m => addMiscRow(m.desc, m.amount));
+  }
+
+  updateCalc();
+
+  // Close drawer and scroll to top
+  toggleQuotesDrawer();
+  document.getElementById('app').scrollIntoView({behavior:'smooth'});
+}
+
+async function deleteQuote(id, btn) {
+  if (!confirm('Delete this quote? This cannot be undone.')) return;
+  btn.textContent = '...';
+  btn.disabled = true;
+  try {
+    const res = await fetch(SHEETS_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'delete', id })
+    });
+    const data = await res.json();
+    if (data.status === 'ok') {
+      loadQuotesList();
+      if (currentQuoteId === id) currentQuoteId = null;
+    }
+  } catch(e) {
+    alert('Delete failed: ' + e.message);
+    btn.textContent = '✕';
+    btn.disabled = false;
+  }
+}
+
 </script>
 </body>
 </html>

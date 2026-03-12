@@ -47,13 +47,13 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
   width: 400px;
   background: var(--white);
   border-radius: 16px;
-  padding: 44px 44px 40px;
+  padding: 48px 44px 40px;
   box-shadow: 0 20px 60px rgba(0,0,0,.4);
 }
 .login-logo {
   font-family: 'Inter', sans-serif;
   font-size: 32px; font-weight: 800;
-  color: var(--red); letter-spacing: -0.5px;
+  color: var(--red); letter-spacing: -1px;
   margin-bottom: 4px;
 }
 .login-logo span { color: var(--text); }
@@ -69,8 +69,8 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .btn-login {
   width: 100%; padding: 13px;
   background: var(--red); color: #fff; border: none; border-radius: 8px;
-  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700;
-  letter-spacing: .07em; text-transform: uppercase;
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase;
   cursor: pointer; transition: background .15s;
 }
 .btn-login:hover { background: var(--red-dk); }
@@ -82,11 +82,11 @@ header {
   background: var(--white);
   border-bottom: 1px solid var(--border);
   padding: 0 32px;
-  height: 56px; display: flex; align-items: center; justify-content: space-between;
+  height: 60px; display: flex; align-items: center; justify-content: space-between;
   position: sticky; top: 0; z-index: 200;
   box-shadow: var(--shadow);
 }
-.brand { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 800; color: var(--red); letter-spacing: -.3px; }
+.brand { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 800; color: var(--red); letter-spacing: -.5px; }
 .brand span { color: var(--text); }
 .hdr-right { display: flex; align-items: center; gap: 16px; }
 .hdr-badge {
@@ -105,7 +105,7 @@ header {
   margin-bottom: 16px; padding-bottom: 10px;
   border-bottom: 2px solid var(--border);
 }
-.sec-hdr-title { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: -0.1px; }
+.sec-hdr-title { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); }
 .sec-hdr-sub { font-size: 12px; color: var(--muted); margin-left: auto; }
 
 /* ─── CARD ───────────────────────────────────────────── */
@@ -172,7 +172,7 @@ header {
   padding: 2px 7px; border-radius: 20px;
   display: inline-block; margin-bottom: 8px;
 }
-.pkg-name { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.1px; }
+.pkg-name { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; margin-bottom: 4px; }
 .pkg-term { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
 .pkg-monthly { font-size: 26px; font-weight: 700; color: var(--text); line-height: 1; }
 .pkg-monthly sub { font-size: 12px; font-weight: 500; color: var(--muted); }
@@ -262,7 +262,7 @@ tbody td { padding: 10px 12px; vertical-align: middle; }
 .scard.gold   { background: var(--gold-bg);  border-color: var(--gold-bdr);  }
 .scard.red    { background: var(--red-bg);   border-color: var(--red-bdr);   }
 
-.scard-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 6px; font-family: 'Inter', sans-serif; }
+.scard-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 8px; }
 .scard.green .scard-label { color: var(--green); }
 .scard.gold  .scard-label { color: var(--gold); }
 .scard.red   .scard-label { color: var(--red); }
@@ -272,7 +272,7 @@ tbody td { padding: 10px 12px; vertical-align: middle; }
 .scard.gold  .scard-value { color: var(--gold); }
 .scard.red   .scard-value { color: var(--red); }
 
-.scard-sub { font-size: 11px; color: var(--muted); margin-top: 4px; font-weight: 400; line-height: 1.4; }
+.scard-sub { font-size: 11px; color: var(--muted); margin-top: 5px; }
 
 /* ─── FUNDING BREAKDOWN ──────────────────────────────── */
 .breakdown {
@@ -280,7 +280,7 @@ tbody td { padding: 10px 12px; vertical-align: middle; }
   padding: 20px 24px; max-width: 520px; box-shadow: var(--shadow);
 }
 .brow { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid #F3F4F6; font-size: 13px; }
-.brow:last-child { border-bottom: none; border-top: 2px solid var(--border); padding-top: 13px; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 14px; }
+.brow:last-child { border-bottom: none; border-top: 2px solid var(--border); padding-top: 13px; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; }
 .brow-label { color: var(--muted); }
 .brow-val { font-weight: 600; }
 .bval-green { color: var(--green); }
@@ -290,8 +290,8 @@ tbody td { padding: 10px 12px; vertical-align: middle; }
 .actions { display: flex; gap: 12px; flex-wrap: wrap; }
 .btn {
   padding: 11px 24px; border: none; border-radius: 8px; cursor: pointer;
-  font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: .07em; transition: all .15s;
+  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .06em; transition: all .15s;
 }
 .btn-primary { background: var(--red); color: #fff; }
 .btn-primary:hover { background: var(--red-dk); }
@@ -308,7 +308,7 @@ tbody td { padding: 10px 12px; vertical-align: middle; }
 #loading {
   position: fixed; inset: 0; background: rgba(244,245,247,.9);
   display: flex; align-items: center; justify-content: center; z-index: 999;
-  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; color: var(--muted); letter-spacing: .06em;
+  font-family: 'Inter', sans-serif; font-size: 15px; color: var(--muted); letter-spacing: .08em;
 }
 
 /* ─── RESPONSIVE ─────────────────────────────────────── */
@@ -718,8 +718,11 @@ function buildIncluded() {
 
   if (hasCam) {
     camWrap.style.display = 'block';
-    const indoorCost  = selectedPkg.indoorCameraAgentCost  || selectedPkg.baseCameraAgentCost || 211.95;
-    const outdoorCost = selectedPkg.outdoorCameraAgentCost || 395.55;
+    // Pull camera costs from baseSystemItems — the single source of truth (spreadsheet row 12/13)
+    const indoorItem  = DATA.baseSystemItems.find(i => i.name && i.name.toLowerCase().includes('indoor camera'));
+    const outdoorItem = DATA.baseSystemItems.find(i => i.name && i.name.toLowerCase().includes('outdoor camera'));
+    const indoorCost  = (indoorItem  ? indoorItem.agentCost  : null) || selectedPkg.indoorCameraAgentCost  || 187.00;
+    const outdoorCost = (outdoorItem ? outdoorItem.agentCost : null) || selectedPkg.outdoorCameraAgentCost || 395.55;
     document.getElementById('cam-indoor-cost').textContent  = $f(indoorCost)  + ' agent cost';
     document.getElementById('cam-outdoor-cost').textContent = $f(outdoorCost) + ' agent cost';
   } else {
@@ -968,9 +971,11 @@ function downloadExcel() {
 
   if (pkg.includesCamera) {
     const camLabel = useOutdoor ? 'Camera — Outdoor (Pro Install, incl.)' : 'Camera — Indoor (Easy Install, incl.)';
+    const indoorItem  = DATA.baseSystemItems.find(i => i.name && i.name.toLowerCase().includes('indoor camera'));
+    const outdoorItem = DATA.baseSystemItems.find(i => i.name && i.name.toLowerCase().includes('outdoor camera'));
     const camCost  = useOutdoor
-      ? (pkg.outdoorCameraAgentCost || 395.55)
-      : (pkg.indoorCameraAgentCost  || 211.95);
+      ? ((outdoorItem ? outdoorItem.agentCost : null) || pkg.outdoorCameraAgentCost || 395.55)
+      : ((indoorItem  ? indoorItem.agentCost  : null) || pkg.indoorCameraAgentCost  || 187.00);
     rows.push([camLabel, '$' + camCost.toFixed(2), 'Included']);
   }
 

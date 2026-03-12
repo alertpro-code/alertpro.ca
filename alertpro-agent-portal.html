@@ -908,7 +908,6 @@ function updateCalc() {
   document.getElementById('s-hw-profit').textContent = $f(salesProfit);
   document.getElementById('s-total').textContent     = $f(totalEarnings);
 
-  const gross = pkg.monthly * pkg.multiple;
   document.getElementById('fb-gross').textContent      = '+' + $f(gross);
   document.getElementById('fb-base-total').textContent = $f(baseTotalWithTax);
   document.getElementById('fb-net').textContent        = $f(net);
